@@ -50,9 +50,6 @@ void GameEngine::checkInput(){
 }
 void GameEngine::keyReaction(Pressed key){
 	
-	
-	std::cout << "in keyReaction" << std::endl;
-	
 	switch(key){
 		case Pressed::LEFT:
             if(player_->getAttribute()->getPosition().getXPosition()>0)
@@ -73,7 +70,6 @@ void GameEngine::keyReaction(Pressed key){
 }
 
 void GameEngine::drawObjects(){
-	std::cout << "in drawObjects()" << std::endl;
 	
 	Drawer drawer(display_->getWindow());
     drawer.drawPlayer(player_);

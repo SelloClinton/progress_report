@@ -1,6 +1,9 @@
 #ifndef DRAWER_H_INCLUDED
 #define DRAWER_H_INCLUDED
 
+#include <iostream>
+
+
 #include "Player.h"
 #include "Centipede.h"
 #include "Segment.h"
@@ -23,7 +26,6 @@ class Drawer{
 	
 public:
 		Drawer(shared_ptr<sf::RenderWindow> window);
-//		void drawObjects(shared_ptr<Player> player);
         void drawPlayer(shared_ptr<Player> player);
         void drawCentipede(shared_ptr<Centipede> centipede);
 

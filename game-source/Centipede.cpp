@@ -42,10 +42,12 @@ void Centipede::createCentipede(shared_ptr<Mover> attribute){
 		centipede_.push_back(head_segment);
 		auto separate = 20;
 		
-		auto attr2 = attribute;
-		attr2->getPosition().setPosition(42,150);
+		Position position(23,0);
+		auto attr2 = make_shared<Mover>(position);
+//		attr2->getPosition().setPosition(42,150);
 		auto head_segment2 = make_shared<Segment>(attr2);
 		centipede_.push_back(head_segment2);
+		std::cout << centipede_.size() << std::endl;
 //		auto separate = 20;
 		
 //		for(auto i = 0; i != 2; i++){

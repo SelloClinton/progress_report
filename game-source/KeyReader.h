@@ -13,7 +13,8 @@ enum class Pressed{
 		RIGHT,
 		LEFT,
 		S,
-		ESCAPE
+		ESCAPE,
+		NO_INPUT
 		
 };
 

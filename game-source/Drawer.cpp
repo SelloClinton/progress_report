@@ -22,9 +22,13 @@ void Drawer::drawPlayer(shared_ptr<Player> player){
 void Drawer::drawCentipede(shared_ptr<Centipede> centipede){
     
 	auto segments = centipede->getCentipede();
-	
+
+std::cout << "one -- :" << segments.at(0)->getAttribute()->getPosition().getXPosition() << ", " << segments.at(0)->getAttribute()->getPosition().getYPosition();
+ std::cout<< " --two -- : " << segments.at(1)->getAttribute()->getPosition().getXPosition() << ", " << segments.at(1)->getAttribute()->getPosition().getYPosition() << std::endl;
+
 	for(const auto& segment:segments){
 			drawSegment(segment);
+
 	}
 	
 //    auto head_sprite = object_sprites_.at(1);

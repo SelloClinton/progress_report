@@ -1,8 +1,11 @@
 #ifndef CENTIPEDE_H
 #define CENTIPEDE_H
 
+#include <iostream>
+
 #include "Segment.h"
 #include "Mover.h"
+#include "Position.h"
 
 #include <memory>
 using std::shared_ptr;
