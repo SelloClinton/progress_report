@@ -16,14 +16,6 @@ int main(){
 	
 		GameEngine centipede;
 		centipede.playGame();
-
-//        Position position(10,20);
-//        Mover mover(position);
-//        
-//        mover.getPosition().setPosition(100,200);
-//        cout << mover.getPosition().getXPosition() << endl;
-        
-        
-        
+		
 		return 0;
 }

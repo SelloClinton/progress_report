@@ -9,10 +9,6 @@ Drawer::Drawer(shared_ptr<sf::RenderWindow> window):
 	if(window_ == nullptr) throw WindowNotCreated();
 }
 
-//void Drawer::drawObjects(shared_ptr<Player>player){
-//	
-//		drawPlayer(player);
-//}
 
 void Drawer::drawPlayer(shared_ptr<Player> player){
 		
@@ -23,8 +19,14 @@ void Drawer::drawPlayer(shared_ptr<Player> player){
 	
 }
 
-//void Drawer::drawCentipede(shared_ptr<Centipede> centipede){
-//    
+void Drawer::drawCentipede(shared_ptr<Centipede> centipede){
+    
+	auto segments = centipede->getCentipede();
+	
+	for(const auto& segment:segments){
+			drawSegment(segment);
+	}
+	
 //    auto head_sprite = object_sprites_.at(1);
 ////    auto tail_sprite = object_sprites_.at(0);
 ////    auto it = begin(centipede);
@@ -34,7 +36,13 @@ void Drawer::drawPlayer(shared_ptr<Player> player){
 ////    tail_sprite.setPosition(tail.getAttribute()->getPosition().getXPosition(),tail.getAttribute()->getPosition().getYPosition());
 //    window_->draw(head_sprite);
 ////    window_->draw(tail_sprite);
-//
-//
-//        
-//}
+
+
+        
+}
+
+void Drawer::drawSegment(shared_ptr<Segment> segment){
+	auto segment_sprite = object_sprites_.at(1);
+	segment_sprite.setPosition(segment->getAttribute()->getPosition().getXPosition(),segment->getAttribute()->getPosition().getYPosition());
+	window_->draw(segment_sprite);
+}

@@ -2,7 +2,7 @@
 
 Mover::Mover(Position position):
         position_(position)
-        ,speed_(5)
+        ,speed_(1)
         {}
         
 void Mover::move(Direction direction){

@@ -3,6 +3,7 @@
 
 #include "Player.h"
 #include "Centipede.h"
+#include "Segment.h"
 #include "Position.h"
 #include "Display.h"
 #include "DataBank.h"
@@ -24,13 +25,13 @@ public:
 		Drawer(shared_ptr<sf::RenderWindow> window);
 //		void drawObjects(shared_ptr<Player> player);
         void drawPlayer(shared_ptr<Player> player);
-//        void drawCentipede(shared_ptr<Centipede> centipede);
+        void drawCentipede(shared_ptr<Centipede> centipede);
 
 private:
 		unique_ptr<DataBank> data_;
 		shared_ptr<sf::RenderWindow> window_;
 		Sprites object_sprites_;
-
+		void drawSegment(shared_ptr<Segment> segment);
 //		void drawPlayer(shared_ptr<Player> player);  
 		
 };

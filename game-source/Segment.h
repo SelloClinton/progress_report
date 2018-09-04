@@ -1,4 +1,4 @@
-#ifndef SEMENT_H
+#ifndef SEGMENT_H
 #define SEGMENT_H
 
 #include "Mover.h"

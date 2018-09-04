@@ -1,5 +1,5 @@
-#ifndef SEGMENT_H
-#define SEGMENT_H
+#ifndef CENTIPEDE_H
+#define CENTIPEDE_H
 
 #include "Segment.h"
 #include "Mover.h"

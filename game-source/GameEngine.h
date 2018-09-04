@@ -28,7 +28,7 @@ private:
     shared_ptr<Mover> mover;
     shared_ptr<Mover> mover2;
 	shared_ptr<Player> player_;
-	Centipede centipede_;
+	shared_ptr<Centipede> centipede_;
 	
 	bool game_over_;
 	bool play_;
