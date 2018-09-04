@@ -34,7 +34,8 @@ private:
 	Sprites logo_;
 	Texts instructions_;
 	void loadInstructions();
-	void drawLogo();
+	void loadName();
+//	void drawLogo();
 	void drawText();
 	void checkEvent();
 	bool start_;

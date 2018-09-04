@@ -14,6 +14,7 @@ enum class Pressed{
 		LEFT,
 		S,
 		ESCAPE,
+		SPACE,
 		NO_INPUT
 		
 };

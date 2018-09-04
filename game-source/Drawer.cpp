@@ -9,13 +9,11 @@ Drawer::Drawer(shared_ptr<sf::RenderWindow> window):
 	if(window_ == nullptr) throw WindowNotCreated();
 }
 
-
 void Drawer::drawPlayer(shared_ptr<Player> player){
 		
 	auto player_sprite = object_sprites_.at(0);
     player_sprite.setPosition(player->getAttribute()->getPosition().getXPosition(),player->getAttribute()->getPosition().getYPosition());
 	window_->draw(player_sprite);
-	
 	
 }
 
@@ -23,26 +21,18 @@ void Drawer::drawCentipede(shared_ptr<Centipede> centipede){
     
 	auto segments = centipede->getCentipede();
 
-std::cout << "one -- :" << segments.at(0)->getAttribute()->getPosition().getXPosition() << ", " << segments.at(0)->getAttribute()->getPosition().getYPosition();
- std::cout<< " --two -- : " << segments.at(1)->getAttribute()->getPosition().getXPosition() << ", " << segments.at(1)->getAttribute()->getPosition().getYPosition() << std::endl;
-
 	for(const auto& segment:segments){
 			drawSegment(segment);
-
 	}
-	
-//    auto head_sprite = object_sprites_.at(1);
-////    auto tail_sprite = object_sprites_.at(0);
-////    auto it = begin(centipede);
-//    auto head = centipede->getCentipede().at(0);
-////    auto tail = centipede->getCentipede().at(1);
-//    head_sprite.setPosition(head.getAttribute()->getPosition().getXPosition(),head.getAttribute()->getPosition().getYPosition());
-////    tail_sprite.setPosition(tail.getAttribute()->getPosition().getXPosition(),tail.getAttribute()->getPosition().getYPosition());
-//    window_->draw(head_sprite);
-////    window_->draw(tail_sprite);
-
-
         
+}
+
+void Drawer::drawBullet(shared_ptr<Bullet> bullet){
+	auto bullet_sprite = object_sprites_.at(2);
+    bullet_sprite.setPosition(bullet->getAttribute()->getPosition().getXPosition(),bullet->getAttribute()->getPosition().getYPosition());
+	if(bullet->isShot())
+		window_->draw(bullet_sprite);	
+		
 }
 
 void Drawer::drawSegment(shared_ptr<Segment> segment){

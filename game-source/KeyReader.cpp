@@ -10,6 +10,8 @@ Pressed KeyReader::readKey(shared_ptr<sf::RenderWindow> window){
 					return Pressed::S;
 			if ((event.type == sf::Event::KeyPressed)&&(event.key.code == sf::Keyboard::Escape))
 					return Pressed::ESCAPE;
+//			if ((event.type == sf::Event::KeyPressed)&&(event.key.code == sf::Keyboard::Space))
+//					return Pressed::SPACE;
 		}
 		
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
@@ -18,6 +20,9 @@ Pressed KeyReader::readKey(shared_ptr<sf::RenderWindow> window){
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
 				return Pressed::RIGHT;
+		}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
+				return Pressed::SPACE;
 		}
 
 	return Pressed::NO_INPUT;

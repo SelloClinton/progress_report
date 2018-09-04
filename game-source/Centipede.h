@@ -27,7 +27,8 @@ private:
         Segments centipede_;
 		
 		void createCentipede(shared_ptr<Mover>);
-    
+//		void initialPosition();
+		int number_of_segments;
 };
 
 #endif

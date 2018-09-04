@@ -8,25 +8,13 @@ SplashScreen::SplashScreen(shared_ptr<sf::RenderWindow> window):
 			logo_(data_->getSprites()),
 			start_(false)
 {
-//	if(window_ == nullptr) throw WindowNotCreated;	
 	loadInstructions();
-//	loadLogo();
-//	DataBank databank;
-//cout << "logos = " << logo_.size() << endl;
-//cout << "instructions = " << instructions_.size()<<endl;
-
-
 }
 
 void SplashScreen::drawSplashScreen(){
-	//Display display;
-	//			cout << logo_.size();
 	
 		while((window_->isOpen())&&(!start_)){
 				checkEvent();
-
-//				window_->clear(sf::Color::Black);
-//				drawLogo();
 				drawText();
 				window_->display();
 				window_->clear(sf::Color::Black);
@@ -35,15 +23,9 @@ void SplashScreen::drawSplashScreen(){
 }
 
 void SplashScreen::loadInstructions(){
-	string log = "CENTIPEDE";
-    sf::Text log_;
-    log_.setFont(font_);
-    log_.setString(log);
-    log_.setCharacterSize(25*3.5);
-    log_.setFillColor(sf::Color::Yellow);
-    instructions_.push_back(log_);
-    instructions_.at(0).setPosition(120,150);
     
+	loadName();
+	
     vector<string>instructions = {"---------INSTRUCTIONS-----------", 
 								  "			START --- S",
 								  "			PAUSE --- P",
@@ -68,11 +50,22 @@ void SplashScreen::loadInstructions(){
 	
 }
 
-void SplashScreen::drawLogo(){
-	
-		logo_[2].setPosition(200,20);
-		window_->draw(logo_[2]);
+void SplashScreen::loadName(){
+	string log = "CENTIPEDE";
+    sf::Text log_;
+    log_.setFont(font_);
+    log_.setString(log);
+    log_.setCharacterSize(25*3.5);
+    log_.setFillColor(sf::Color::Yellow);
+    instructions_.push_back(log_);
+    instructions_.at(0).setPosition(120,150);
 }
+
+//void SplashScreen::drawLogo(){
+//	
+//		logo_[2].setPosition(200,20);
+//		window_->draw(logo_[2]);
+//}
 
 void SplashScreen::drawText(){
 		for(auto& instruction:instructions_)

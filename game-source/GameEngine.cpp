@@ -35,6 +35,7 @@ void GameEngine::update(){
 
 	checkInput();
     updateCentipede();
+	player_->getBullet()->updateBullet();
 
 }
 void GameEngine::updateCentipede(){
@@ -62,8 +63,12 @@ void GameEngine::keyReaction(Pressed key){
 		case Pressed::S:
 			play_ = true;
             break;
+		case Pressed::SPACE:
+			player_->shoot();
+			break;
 		case Pressed::ESCAPE:
 			display_->getWindow()->close();
+			break;
 			
 			
 		}
@@ -74,6 +79,7 @@ void GameEngine::drawObjects(){
 	Drawer drawer(display_->getWindow());
     drawer.drawPlayer(player_);
     drawer.drawCentipede(centipede_);
+	drawer.drawBullet(player_->getBullet());
     
 		
 }

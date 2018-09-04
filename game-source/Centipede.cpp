@@ -1,37 +1,19 @@
 #include "Centipede.h"
 
-Centipede::Centipede(shared_ptr<Mover> attribute)
+
+Centipede::Centipede(shared_ptr<Mover> attribute):number_of_segments(5)
 {
-//        auto attr = attribute;
-//        Segment head(attr);
-//        head.getAttribute()->getPosition().setPosition(20,0);
-//        centipede_.push_back(head);
-//        Segment tail(attr);
-//        tail.getAttribute()->getPosition().setPosition(3,0);
-//        centipede_.push_back(tail);
 		createCentipede(attribute);
 }
 
 void Centipede::moveSegments(){
     
-
-        
         for(auto& segment:centipede_){
             if(segment->getAttribute()->getPosition().getXPosition() < 775){
 					segment->getAttribute()->move(Direction::RIGHT);
             }
-		}
-//            if(segment.getAttribute()->getPosition().getXPosition() == 0){
-//                right = true;
-//                left = false;
-//            }
-//            
-//            if((right))
-//                segment.getAttribute()->move(Direction::RIGHT);
-//            else
-//                segment.getAttribute()->move(Direction::LEFT);
-//        }
         
+		}
 }
 
 void Centipede::createCentipede(shared_ptr<Mover> attribute){
@@ -58,3 +40,8 @@ void Centipede::createCentipede(shared_ptr<Mover> attribute){
 //		}
 		
 }
+
+//void Centipede::intializePosition(){
+//	
+//		
+//}
