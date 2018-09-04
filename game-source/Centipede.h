@@ -2,6 +2,7 @@
 #define SEGMENT_H
 
 #include "Segment.h"
+#include "Mover.h"
 
 #include <memory>
 using std::shared_ptr;
@@ -10,7 +11,7 @@ using std::make_shared;
 #include <vector>
 using std::vector;
 
-using Segments = vector<Segment>;
+using Segments = vector<shared_ptr<Segment>>;
 
 class Centipede{
     
@@ -21,7 +22,10 @@ public:
     
 private:
         Segments centipede_;
+		
+		void createCentipede(shared_ptr<Mover>);
     
 };
 
 #endif
+

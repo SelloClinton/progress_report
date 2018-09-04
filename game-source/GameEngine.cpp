@@ -7,7 +7,8 @@ GameEngine::GameEngine():
             ,mover(make_shared<Mover>(position_))
             ,mover2(make_shared<Mover>(pos))
 			,player_(make_shared<Player>(mover))
-            ,centipede_(make_shared<Centipede>(mover2))
+//            ,centipede_(make_shared<Centipede>(mover2))
+			,centipede_(mover2)
 			,play_(false)
 			,game_over_(false)
 {
@@ -38,7 +39,7 @@ void GameEngine::update(){
 
 }
 void GameEngine::updateCentipede(){
-   centipede_->moveSegments();     
+   centipede_.moveSegments();     
 }
 
 void GameEngine::checkInput(){
@@ -77,7 +78,7 @@ void GameEngine::drawObjects(){
 	
 	Drawer drawer(display_->getWindow());
     drawer.drawPlayer(player_);
-    drawer.drawCentipede(centipede_);
+//    drawer.drawCentipede(centipede_);
     
 		
 }

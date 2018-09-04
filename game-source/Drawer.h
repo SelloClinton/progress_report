@@ -24,7 +24,7 @@ public:
 		Drawer(shared_ptr<sf::RenderWindow> window);
 //		void drawObjects(shared_ptr<Player> player);
         void drawPlayer(shared_ptr<Player> player);
-        void drawCentipede(shared_ptr<Centipede> centipede);
+//        void drawCentipede(shared_ptr<Centipede> centipede);
 
 private:
 		unique_ptr<DataBank> data_;
