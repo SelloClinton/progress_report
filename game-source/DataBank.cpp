@@ -1,6 +1,6 @@
 #include "DataBank.h"
 
-DataBank::DataBank():
+DataBank::DataBank()
 			
 {
 	if(!fontLoaded())throw FontNotFound();
