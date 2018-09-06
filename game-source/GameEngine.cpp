@@ -16,7 +16,7 @@ GameEngine::GameEngine():
 
 void GameEngine::playGame(){
 
-	splashScreen();
+//	splashScreen();
 	
 	while(display_->getWindow()->isOpen()){
 			update();
@@ -26,10 +26,10 @@ void GameEngine::playGame(){
 		}
 }
 
-void GameEngine::splashScreen(){
-	SplashScreen welcome_screen(display_->getWindow());
-	welcome_screen.drawSplashScreen();
-}
+//void GameEngine::splashScreen(){
+//	SplashScreen welcome_screen(display_->getWindow());
+//	welcome_screen.drawSplashScreen();
+//}
 
 void GameEngine::update(){
 
@@ -75,8 +75,8 @@ void GameEngine::drawObjects(){
 	
 	Drawer drawer(display_->getWindow());
     drawer.drawPlayer(player_);
-    drawer.drawCentipede(centipede_);
-	drawer.drawBullet(player_->getBullet());
+//    drawer.drawCentipede(centipede_);
+//	drawer.drawBullet(player_->getBullet());
     
 		
 }

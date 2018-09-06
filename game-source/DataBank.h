@@ -16,7 +16,7 @@ using std::vector;
 using std::tuple;
 
 using Texts = vector<sf::Text>;
-using Sprites = vector<sf::Sprite> ;
+using Sprites = vector<shared_ptr<sf::Sprite>>;
 using Textures = vector<sf::Texture>;
 
 class ImageNotFound{};
@@ -27,19 +27,23 @@ class DataBank{
 public:
 	DataBank();
 //	tuple<Sprites,sf::Font>loadData()const;	
+	
+//	Sprites getSprites()const;
+	void loadTextures();
+	void loadSprites();
 	Sprites getSprites()const;
 	Font getFont()const;
 private:
-	sf::Font font_;
+	shared_ptr<sf::Font> font_;
 	Texts texts_;
-	sf::Texture texture_;
+//	shared_ptr<sf::Texture> texture_;
+//	shared_ptr<sf::Sprite> sprite_;
 	Textures textures_;
-	sf::Sprite sprite_;
 	Sprites sprites_;
 
 	bool fontLoaded();
-	bool texturesLoaded();
-	void loadSprites();
+//	void loadTextures();
+//	void loadSprites();
 
 };
 
