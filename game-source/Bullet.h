@@ -13,11 +13,11 @@ class Bullet{
 	
 public:
 		Bullet(shared_ptr<Mover> attribute);
-		shared_ptr<Mover> getAttribute();
+		shared_ptr<Mover> attribute();
 		bool isShot()const;
 		void shoot();
 		void destroyBullet();
-		void updateBullet();
+//		void updateBullet();
 private:
 		shared_ptr<Mover> attribute_;
 		bool shot_;

@@ -1,34 +1,40 @@
 #include "Mover.h"
 
-Mover::Mover(Position position):
-        position_(position)
-        ,speed_(1)
+Mover::Mover(shared_ptr<Position> _position, int speed):
+        position_(_position)
+        ,speed_(speed)
         {}
         
 void Mover::move(Direction direction){
     
+	auto[x_position,y_position] = position_->getPosition();
+	
     switch(direction){
         case Direction::LEFT:
-            setPosition((position_.getXPosition()-getSpeed()),position_.getYPosition());
+			if(auto new_x = x_position-getSpeed(); new_x > 0)
+				setPosition(new_x,y_position);
             break;
         case Direction::RIGHT:
-            setPosition((position_.getXPosition()+getSpeed()),position_.getYPosition());
+			if(auto new_x = x_position+getSpeed(); new_x < 785)
+				setPosition(new_x,y_position);
             break;
         case Direction::DOWN:
-            setPosition((position_.getXPosition()),position_.getYPosition()+getSpeed());
+			setPosition(x_position,y_position+getSpeed());
             break;
         case Direction::UP:
-            setPosition((position_.getXPosition()),position_.getYPosition()-getSpeed());
+            setPosition(x_position,y_position-getSpeed());
             break;
+		default:
+			assert(false);
     }
     
 }
-Position& Mover::getPosition(){
+shared_ptr<Position> Mover::position(){
         return position_;
 }
 
 void Mover::setPosition(int x, int y){
-        position_.setPosition(x,y);
+        position_->setPosition(x,y);
 }
 
 int Mover::getSpeed(){

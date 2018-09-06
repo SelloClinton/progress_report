@@ -23,8 +23,8 @@ public:
 	void playGame();
 private:
 	shared_ptr<Display> display_;
-	Position position_;
-    Position pos;
+	shared_ptr<Position> position_;
+    shared_ptr<Position> pos;
     shared_ptr<Mover> mover;
     shared_ptr<Mover> mover2;
 	shared_ptr<Player> player_;

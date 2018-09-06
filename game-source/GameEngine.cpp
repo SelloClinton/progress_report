@@ -2,10 +2,10 @@
 
 GameEngine::GameEngine():
 			display_(make_shared<Display>())
-			,position_(display_->getWidth()/2,(display_->getHeight()-50))
-            ,pos(0,0)
-            ,mover(make_shared<Mover>(position_))
-            ,mover2(make_shared<Mover>(pos))
+			,position_(make_shared<Position>(display_->getWidth()/2,(display_->getHeight()-50)))
+            ,pos(make_shared<Position>(0,0))
+            ,mover(make_shared<Mover>(position_,5))
+            ,mover2(make_shared<Mover>(pos,2))
 			,player_(make_shared<Player>(mover))
 			,centipede_(make_shared<Centipede>(mover2))
 			,play_(false)
@@ -35,7 +35,7 @@ void GameEngine::update(){
 
 	checkInput();
     updateCentipede();
-	player_->getBullet()->updateBullet();
+	player_->updateBullet();
 
 }
 void GameEngine::updateCentipede(){
@@ -53,12 +53,10 @@ void GameEngine::keyReaction(Pressed key){
 	
 	switch(key){
 		case Pressed::LEFT:
-            if(player_->getAttribute()->getPosition().getXPosition()>0)
-                player_->getAttribute()->move(Direction::LEFT);
+				player_->attribute()->move(Direction::LEFT);
 			break;
 		case Pressed::RIGHT:
-            if(player_->getAttribute()->getPosition().getXPosition()<775)
-                player_->getAttribute()->move(Direction::RIGHT);
+				player_->attribute()->move(Direction::RIGHT);
 			break;
 		case Pressed::S:
 			play_ = true;
@@ -69,7 +67,6 @@ void GameEngine::keyReaction(Pressed key){
 		case Pressed::ESCAPE:
 			display_->getWindow()->close();
 			break;
-			
 			
 		}
 }

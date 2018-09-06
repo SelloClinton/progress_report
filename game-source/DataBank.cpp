@@ -1,6 +1,7 @@
 #include "DataBank.h"
 
-DataBank::DataBank()
+DataBank::DataBank():
+			
 {
 	if(!fontLoaded())throw FontNotFound();
 	if(!texturesLoaded())throw ImageNotFound();
@@ -39,21 +40,21 @@ void DataBank::loadSprites(){
 	sprite_.setTexture(textures_.at(0));
 	sprite_.setTextureRect(sf::IntRect(21,9,7,8));
 	sprite_.setScale(2.5,2.5);
+	sprites_.push_back(sprite_);
 	
 	//head_segment sprite
-	sprites_.push_back(sprite_);
 	sprite_.setTexture(textures_.at(0));
 	sprite_.setTextureRect(sf::IntRect(4,18,7,8));
 	sprite_.setScale(2.5,2.5);
+	sprites_.push_back(sprite_);
 	
 	//bullet sprite
-	sprites_.push_back(sprite_);
 	sprite_.setTexture(textures_.at(0));
 	sprite_.setTextureRect(sf::IntRect(24,1,1,7));
 	sprite_.setScale(2.5,2.5);
+	sprites_.push_back(sprite_);
 	
 	//"logo" sprite
-	sprites_.push_back(sprite_);
 	sprite_.setTexture(textures_.at(1));
 	sprites_.push_back(sprite_);
 }

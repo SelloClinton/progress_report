@@ -4,6 +4,6 @@ Segment::Segment(shared_ptr<Mover> attribute):
 		attribute_(attribute)
 		{}
 		
-shared_ptr<Mover> Segment::getAttribute(){
+shared_ptr<Mover> Segment::attribute(){
         return attribute_;
 }

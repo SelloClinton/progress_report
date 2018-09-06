@@ -9,8 +9,8 @@ tuple<int,int> Position::getPosition()const{
 }
 
 void Position::setPosition(int x, int y){
-		x_position_ = x;
-		y_position_ = y;
+		setXPosition(x);
+		setYPosition(y);
 }
 
 int Position::getXPosition()const{

@@ -12,7 +12,7 @@ class Segment{
     
 public:
 		Segment(shared_ptr<Mover> attribute);
-        shared_ptr<Mover> getAttribute();
+        shared_ptr<Mover> attribute();
 private:
         shared_ptr<Mover> attribute_;
 };

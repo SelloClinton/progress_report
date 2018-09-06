@@ -1,12 +1,12 @@
 #ifndef MOVER_H
 #define MOVER_H
+
 #include "Position.h"
 #include <memory>
 using std::shared_ptr;
 using std::make_shared;
 
-
-//#include "Movement.h"
+#include <cassert> 
 
 enum class Direction{
 		LEFT,
@@ -18,12 +18,12 @@ enum class Direction{
 class Mover{
     
 public:
-        Mover(Position position);
+        Mover(shared_ptr<Position> _position, int speed);
         void move(Direction direction);
-        Position& getPosition();
+        shared_ptr<Position> position();
         
 private:
-        Position position_;
+        shared_ptr<Position> position_;
         int speed_;
         void setPosition(int x, int y);
         int getSpeed();
