@@ -14,7 +14,7 @@ void Drawer::drawPlayer(shared_ptr<Player> player){
 	auto player_sprite = object_sprites_.at(0);
 //    player_sprite.setPosition(player->getAttribute()->getPosition().getXPosition(),player->getAttribute()->getPosition().getYPosition());
 	player_sprite.setPosition(x_position,y_position);
-//	player_sprite.setOrigin(Constants::PLAYER_WIDTH_/2,Constants::PLAYER_HEIGHT_/2);
+//S	player_sprite.setOrigin(Constants::PLAYER_WIDTH_/2,Constants::PLAYER_HEIGHT_/2);
 	window_->draw(player_sprite);
 	
 }

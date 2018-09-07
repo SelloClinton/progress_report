@@ -215,11 +215,12 @@ TEST_CASE("Cannot move down when y = screen height"){
 		CHECK(new_y == new_y_pos);
 		CHECK_FALSE(old_y_pos != new_y_pos);	
 }
-//TEST_CASE("Mover's position cannot be outside screen borders"){
-//		auto position = make_shared<Position>(-10,-50);
-//		auto speed = 5;
-//		CHECK_THROWS_AS(Mover(position,speed),NegativePosition);
-//}
+//************************end of Mover tests (10 tests)*******************************
+
+//***********************Player Tests*************************************************
+
+
+
 
 
 
