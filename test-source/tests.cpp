@@ -63,7 +63,163 @@ TEST_CASE("Default position is origin"){
 }
 //*************************end of Position tests(5 tests)*********************************
 
+//**************************Mover tests********************************************
+TEST_CASE("Speed cannot be less than or equal to zero"){
+	
+		auto position = make_shared<Position>(150,350);
+		auto negative_speed = -10;
+		CHECK_THROWS_AS(Mover(position,negative_speed),NegativeZeroSpeed);
+		auto zero_speed = 0;
+		CHECK_THROWS_AS(Mover(position,zero_speed),NegativeZeroSpeed);
+}
+TEST_CASE("Position attribute returns correct values"){
 
+		auto position = make_shared<Position>(400,300);
+		auto speed = 3;
+		auto position_attribute = make_shared<Mover>(position,speed);
+		auto x = 400;
+		auto y = 300;
+		
+		auto[x_attribute,y_attribute] = position_attribute->position()->getPosition();
+
+		CHECK(x == x_attribute);
+		CHECK(y == y_attribute);
+		CHECK_FALSE(x_attribute == y_attribute);
+}
+
+TEST_CASE("Position attribute changes accordingly when moving left"){
+	
+		auto position = make_shared<Position>(400,300);
+		auto speed = 5;
+		
+		auto move_attribute = make_shared<Mover>(position,speed);
+		auto[old_x_pos,old_y_pos] = move_attribute->position()->getPosition();
+		move_attribute->move(Direction::LEFT);
+		auto[new_x_pos,new_y_pos] = move_attribute->position()->getPosition();
+		
+		auto new_x = 395;
+		auto new_y = 300;
+		CHECK(new_x == new_x_pos);
+		CHECK(new_y == new_y_pos);
+		CHECK_FALSE(old_x_pos == new_x_pos);
+}
+
+TEST_CASE("Cannot move left when x position is zero"){
+		auto position = make_shared<Position>((Constants::PLAYER_WIDTH_/2),300);
+		auto speed = 5;
+		
+		auto move_attribute = make_shared<Mover>(position,speed);
+		auto[old_x_pos,old_y_pos] = move_attribute->position()->getPosition();
+		move_attribute->move(Direction::LEFT);
+		auto[new_x_pos,new_y_pos] = move_attribute->position()->getPosition();
+		
+		auto new_x = Constants::PLAYER_WIDTH_/2;
+		auto new_y = 300;
+		CHECK(new_x == new_x_pos);
+		CHECK(new_y == new_y_pos);
+		CHECK_FALSE(old_x_pos != new_x_pos);		
+}
+
+TEST_CASE("Position attribute returns correct values after moving right"){
+	
+		auto position = make_shared<Position>(300,400);
+		auto speed = 5;
+		
+		auto move_attribute = make_shared<Mover>(position,speed);
+		auto[old_x_pos,old_y_pos] = move_attribute->position()->getPosition();
+		move_attribute->move(Direction::RIGHT);
+		auto[new_x_pos,new_y_pos] = move_attribute->position()->getPosition();
+		
+		auto new_x = 305;
+		auto new_y = 400;
+		CHECK(new_x == new_x_pos);
+		CHECK(new_y == new_y_pos);
+		CHECK_FALSE(old_x_pos == new_x_pos);
+}
+
+TEST_CASE("Cannot move right when x = Display width"){
+		auto position = make_shared<Position>(Constants::DISPLAY_WIDTH_-(Constants::PLAYER_WIDTH_/2),500);
+		auto speed = 5;
+		
+		auto move_attribute = make_shared<Mover>(position,speed);
+		auto[old_x_pos,old_y_pos] = move_attribute->position()->getPosition();
+		move_attribute->move(Direction::RIGHT);
+		auto[new_x_pos,new_y_pos] = move_attribute->position()->getPosition();
+		
+		auto new_x = Constants::DISPLAY_WIDTH_-(Constants::PLAYER_WIDTH_/2);
+		auto new_y = 500;
+		CHECK(new_x == new_x_pos);
+		CHECK(new_y == new_y_pos);
+		CHECK_FALSE(old_x_pos != new_x_pos);		
+}
+
+TEST_CASE("Position attribute changes accordingly when moving up"){
+		auto position = make_shared<Position>(300,400);
+		auto speed = 5;
+		
+		auto move_attribute = make_shared<Mover>(position,speed);
+		auto[old_x_pos,old_y_pos] = move_attribute->position()->getPosition();
+		move_attribute->move(Direction::UP);
+		auto[new_x_pos,new_y_pos] = move_attribute->position()->getPosition();
+		
+		auto new_x = 300;
+		auto new_y = 395;
+		CHECK(new_x == new_x_pos);
+		CHECK(new_y == new_y_pos);
+		CHECK_FALSE(old_y_pos == new_y_pos);
+}
+
+TEST_CASE("Cannot move up at y = 0"){
+		auto position = make_shared<Position>(300,Constants::PLAYER_HEIGHT_/2);
+		auto speed = 5;
+		
+		auto move_attribute = make_shared<Mover>(position,speed);
+		auto[old_x_pos,old_y_pos] = move_attribute->position()->getPosition();
+		move_attribute->move(Direction::UP);
+		auto[new_x_pos,new_y_pos] = move_attribute->position()->getPosition();
+		
+		auto new_x = 300;
+		auto new_y = Constants::PLAYER_HEIGHT_/2;
+		CHECK(new_x == new_x_pos);
+		CHECK(new_y == new_y_pos);
+		CHECK_FALSE(old_y_pos != new_y_pos);
+}
+
+TEST_CASE("Position attributes changes accordingly when moving down"){
+		auto position = make_shared<Position>(200,300);
+		auto speed = 5;
+		
+		auto move_attribute = make_shared<Mover>(position,speed);
+		auto[old_x_pos,old_y_pos] = move_attribute->position()->getPosition();
+		move_attribute->move(Direction::DOWN);
+		auto[new_x_pos,new_y_pos] = move_attribute->position()->getPosition();
+		
+		auto new_x = 200;
+		auto new_y = 305;
+		CHECK(new_x == new_x_pos);
+		CHECK(new_y == new_y_pos);
+		CHECK_FALSE(old_y_pos == new_y_pos);		
+}
+TEST_CASE("Cannot move down when y = screen height"){
+		auto position = make_shared<Position>(300,Constants::DISPLAY_HEIGHT_-(Constants::PLAYER_HEIGHT_/2));
+		auto speed = 5;
+		
+		auto move_attribute = make_shared<Mover>(position,speed);
+		auto[old_x_pos,old_y_pos] = move_attribute->position()->getPosition();
+		move_attribute->move(Direction::DOWN);
+		auto[new_x_pos,new_y_pos] = move_attribute->position()->getPosition();
+		
+		auto new_x = 300;
+		auto new_y = Constants::DISPLAY_HEIGHT_-(Constants::PLAYER_HEIGHT_/2);
+		CHECK(new_x == new_x_pos);
+		CHECK(new_y == new_y_pos);
+		CHECK_FALSE(old_y_pos != new_y_pos);	
+}
+//TEST_CASE("Mover's position cannot be outside screen borders"){
+//		auto position = make_shared<Position>(-10,-50);
+//		auto speed = 5;
+//		CHECK_THROWS_AS(Mover(position,speed),NegativePosition);
+//}
 
 
 

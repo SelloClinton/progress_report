@@ -29,6 +29,9 @@ private:
         int speed_;
         void setPosition(int x, int y);
         int getSpeed();
+		bool minXBound(int x_coord);
+		bool maxXBound(int x_coord);
+		bool maxYBound(int y_coord);
 };
 
 #endif 

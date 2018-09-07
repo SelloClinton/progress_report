@@ -8,6 +8,7 @@
 #include "Display.h"
 #include "DataBank.h"
 #include "Bullet.h"
+#include "Constants.h"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>

@@ -14,18 +14,20 @@ void Mover::move(Direction direction){
 	
     switch(direction){
         case Direction::LEFT:
-			if(auto new_x = x_position-getSpeed(); new_x > 0)
+			if(auto new_x = x_position-getSpeed(); !minXBound(new_x))
 				setPosition(new_x,y_position);
             break;
         case Direction::RIGHT:
-			if(auto new_x = x_position+getSpeed(); new_x < 785)
+			if(auto new_x = x_position+getSpeed(); !maxXBound(new_x))
 				setPosition(new_x,y_position);
             break;
         case Direction::DOWN:
-			setPosition(x_position,y_position+getSpeed());
+			if(auto new_y = y_position+getSpeed(); !maxYBound(new_y)) 
+			setPosition(x_position,new_y);
             break;
         case Direction::UP:
-            setPosition(x_position,y_position-getSpeed());
+			if(auto new_y = y_position-getSpeed(); !minXBound(new_y)) 
+				setPosition(x_position,y_position-getSpeed());
             break;
 		default:
 			assert(false);
@@ -42,4 +44,22 @@ void Mover::setPosition(int x, int y){
 
 int Mover::getSpeed(){
         return speed_;
+}
+
+bool Mover::minXBound(int x_coord){
+		if(x_coord < Constants::PLAYER_WIDTH_/2)
+			return true;
+		return false;
+}
+
+bool Mover::maxXBound(int x_coord){
+		if(x_coord  >  Constants::DISPLAY_WIDTH_-2*(Constants::PLAYER_WIDTH_))
+			return true;
+		return false;
+}
+
+bool Mover::maxYBound(int y_coord){
+		if(y_coord > Constants::DISPLAY_HEIGHT_-(Constants::PLAYER_HEIGHT_/2))
+			return true;
+		return false;
 }

@@ -38,7 +38,7 @@ void DataBank::loadSprites(){
 	
 	//player sprite
 	sprite_.setTexture(textures_.at(0));
-	sprite_.setTextureRect(sf::IntRect(21,9,7,8));
+	sprite_.setTextureRect(sf::IntRect(21,9,8,8));
 	sprite_.setScale(2.5,2.5);
 	sprites_.push_back(sprite_);
 	
