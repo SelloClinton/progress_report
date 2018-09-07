@@ -3,7 +3,10 @@
 Mover::Mover(shared_ptr<Position> _position, int speed):
         position_(_position)
         ,speed_(speed)
-        {}
+{
+	if (speed <=0)
+		throw NegativeZeroSpeed();
+}
         
 void Mover::move(Direction direction){
     

@@ -2,7 +2,7 @@
 
 GameEngine::GameEngine():
 			display_(make_shared<Display>())
-			,position_(make_shared<Position>(Constants::DISPLAY_WIDTH/2,(Constants::DISPLAY_HEIGHT_-50)))
+			,position_(make_shared<Position>(Constants::DISPLAY_WIDTH_/2,(Constants::DISPLAY_HEIGHT_-50)))
             ,pos(make_shared<Position>(0,0))
             ,mover(make_shared<Mover>(position_,5))
             ,mover2(make_shared<Mover>(pos,2))

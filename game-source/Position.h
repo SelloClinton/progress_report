@@ -1,9 +1,13 @@
 #ifndef POSITION_H
 #define POSITION_H
 
+#include "Constants.h"
+
 #include <tuple>
 using std::tuple;
 
+class NegativePosition{};
+class OutOfBounds{};
 
 class Position{
 public:

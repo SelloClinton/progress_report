@@ -3,7 +3,7 @@
 
 class Constants{
 	public:
-		static const int DISPLAY_WIDTH;
+		static const int DISPLAY_WIDTH_;
 		static const int DISPLAY_HEIGHT_;
 		static const int BULLET_WIDTH_;
 		static const int BULLET_HEIGHT_;
