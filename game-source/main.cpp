@@ -2,7 +2,7 @@
 #include "GameEngine.h"
 #include "Player.h"
 #include "position.h"
-//#include "Movement.h"
+#include "Constants.h"
 #include "Mover.h"
 #include "Player.h"
 
@@ -16,6 +16,8 @@ int main(){
 	
 		GameEngine centipede;
 		centipede.playGame();
+		
+//	cout << Constants::DISPLAY_WIDTH << endl;
 		
 		return 0;
 }

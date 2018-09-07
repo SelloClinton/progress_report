@@ -9,6 +9,7 @@
 #include "Position.h"
 #include "SplashScreen.h"
 #include "Centipede.h"
+#include "Constants.h"
 
 #include <memory>
 using std::shared_ptr;
