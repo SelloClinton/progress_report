@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
+#include "Constants.h"
 #include <memory>
 using std::shared_ptr;
 using std::make_shared;
@@ -21,7 +22,7 @@ public:
 	
 private:
 	shared_ptr<sf::RenderWindow> window_;
-	const static int DISPLAY_WIDTH_;
-	const static int DISPLAY_HEIGHT_;
+//	const static int DISPLAY_WIDTH_;
+//	const static int DISPLAY_HEIGHT_;
 };
 #endif // DISPLAY_H_INCLUDED

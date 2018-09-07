@@ -2,6 +2,7 @@
 #define BOX_H
 #include <tuple>
 #include "Position.h"
+#include "Constants.h"
 #include <cassert>
 using std::get;
 
