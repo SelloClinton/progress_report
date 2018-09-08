@@ -40,7 +40,7 @@ void GameEngine::update(){
 
 }
 void GameEngine::updateCentipede(){
-//   centipede_->moveSegments();     
+   centipede_->moveSegments();     
 }
 
 void GameEngine::checkInput(){

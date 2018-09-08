@@ -6,4 +6,7 @@ const int Constants::BULLET_WIDTH_ = 1;
 const int Constants::BULLET_HEIGHT_ = 7;
 const int Constants::PLAYER_WIDTH_ = 8;
 const int Constants::PLAYER_HEIGHT_ = 8;
+const int Constants::PLAYER_SPEED_ = 5;
+const int Constants::BULLET_SPEED_ = 5;
+const int Constants::SEGMENT_SPEED_ = 3;
 const int Constants::INITIAL_SIZE_OF_CENTIPEDE_ = 10;

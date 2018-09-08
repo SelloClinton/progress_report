@@ -23,13 +23,15 @@ public:
         Mover(shared_ptr<Position> _position, int speed);
         void move(Direction direction);
         shared_ptr<Position> position();
+		bool minXBound(int x_coord);
+		bool maxXBound(int x_coord);
 private:
         shared_ptr<Position> position_;
         int speed_;
         void setPosition(int x, int y);
         int getSpeed();
-		bool minXBound(int x_coord);
-		bool maxXBound(int x_coord);
+//		bool minXBound(int x_coord);
+//		bool maxXBound(int x_coord);
 		bool maxYBound(int y_coord);
 };
 

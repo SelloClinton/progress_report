@@ -33,6 +33,13 @@ private:
 //		void createCentipede(shared_ptr<Mover>);
 		void initializePosition();
         int centipede_size_;
+        void faceRight(shared_ptr<Segment>segment);
+        void faceLeft(shared_ptr<Segment>segment);
+        bool leftFlag_;
+        bool rightFlag_;
+        bool isFacingLeft(shared_ptr<Segment>segment,int x_position);
+        bool isFacingRight(shared_ptr<Segment>segment, int x_position);
+        
 };
 
 #endif

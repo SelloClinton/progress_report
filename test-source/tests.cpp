@@ -361,12 +361,12 @@ TEST_CASE("Segment movement attribute (up and down)"){
 
 //************************************Centipede tests*******************************************
 
-//TEST_CASE("Centipede size cannot be <= 0"){
-//        int  centipedeSize = -15;
-//        auto centipede = make_shared<Centipede>(centipedeSize);
-//        CHECK_THROWS_AS(Centipede{centipedeSize},InsufficientCentipedeSize);
-//        
-//}//24
+TEST_CASE("Centipede size cannot be <= 0"){
+        int  centipedeSize = -15;
+        auto centipede = make_shared<Centipede>(centipedeSize);
+        CHECK_THROWS_AS(Centipede{centipedeSize},InsufficientCentipedeSize);
+        
+}//24
 
 //*********************************centipede tests*****************************************
 //TEST_CASE("Centipede knows its size(getCentipede)"){
