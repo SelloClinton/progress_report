@@ -3,8 +3,8 @@
 
 Centipede::Centipede(int centipedeSize):
 			centipede_size_{centipedeSize}
-            ,rightFlag_(true)
-            ,leftFlag_(false)
+//            ,rightFlag_(true)
+//            ,leftFlag_(false)
 {
         if (centipede_size_ < 0)
             throw InsufficientCentipedeSize{};
@@ -14,32 +14,26 @@ Centipede::Centipede(int centipedeSize):
 void Centipede::moveSegments(){
     
        for(auto& segment:centipede_){
-            auto x_position = get<0>(segment->attribute()->position()->getPosition());
-            
-            if (x_position == 775){    //||(segment->attribute()->maxXBound(x_position))){
+           auto x_position = get<0>(segment->attribute()->position()->getPosition()); 
+        if(x_position == 775){
                 segment->attribute()->move(Direction::DOWN);
                 segment->attribute()->move(Direction::DOWN);
                 segment->attribute()->move(Direction::DOWN);
                 segment->attribute()->move(Direction::LEFT);
-                segment->attribute()->move(Direction::LEFT);
-                faceLeft(segment);
-            }
-            else if (x_position == 7){
+                segment->faceLeft();
+        }
+        else if (x_position == 10){
                 segment->attribute()->move(Direction::DOWN);
                 segment->attribute()->move(Direction::DOWN);
                 segment->attribute()->move(Direction::DOWN);
                 segment->attribute()->move(Direction::RIGHT);
-                faceRight(segment);
-            }
-
-            else if (isFacingLeft(segment,x_position)){
+                segment->faceRight();
+        }
+        else if (segment->isFacingLeft()){
                 segment->attribute()->move(Direction::LEFT);
-            }
-            else// (isFacingRight(segment,x_position))
-            {
-                segment->attribute()->move(Direction::RIGHT);
-            }
-
+        }
+        else
+            segment->attribute()->move(Direction::RIGHT);
 
 //            if(auto x_pos = get<0>(segment->attribute()->position()->getPosition()); x_pos < 775){
 //					segment->attribute()->move(Direction::RIGHT);
@@ -59,31 +53,31 @@ void Centipede::initializePosition(){
     }
 }
 
-void Centipede::faceRight(shared_ptr<Segment>segment){
-    rightFlag_ = true;
-    leftFlag_ = false;
-}
-void Centipede::faceLeft(shared_ptr<Segment>segment){
-        rightFlag_ = false;
-        leftFlag_ = true;
-}
-bool Centipede::isFacingLeft(shared_ptr<Segment>segment, int x_position){
-        if (((!segment->attribute()->minXBound(x_position))||
-            (!segment->attribute()->maxXBound(x_position)))
-            &&(leftFlag_)&&(!rightFlag_)
-            )
-                return true;
-        else
-            return false;
-}
-bool Centipede::isFacingRight(shared_ptr<Segment>segment, int x_position){
-        if (((!segment->attribute()->minXBound(x_position))||
-            (!segment->attribute()->maxXBound(x_position)))
-            &&(rightFlag_)&&(!leftFlag_)
-            )
-                return true;
-        else
-            return false;
-                
-}
+//void Centipede::faceRight(shared_ptr<Segment>segment){
+//    rightFlag_ = true;
+//    leftFlag_ = false;
+//}
+//void Centipede::faceLeft(shared_ptr<Segment>segment){
+//        rightFlag_ = false;
+//        leftFlag_ = true;
+//}
+//bool Centipede::isFacingLeft(shared_ptr<Segment>segment, int x_position){
+//        if (((!segment->attribute()->minXBound(x_position))||
+//            (!segment->attribute()->maxXBound(x_position)))
+//            &&(leftFlag_)&&(!rightFlag_)
+//            )
+//                return true;
+//        else
+//            return false;
+//}
+//bool Centipede::isFacingRight(shared_ptr<Segment>segment, int x_position){
+//        if (((!segment->attribute()->minXBound(x_position))||
+//            (!segment->attribute()->maxXBound(x_position)))
+//            &&(rightFlag_)&&(!leftFlag_)
+//            )
+//                return true;
+//        else
+//            return false;
+//                
+//}
 

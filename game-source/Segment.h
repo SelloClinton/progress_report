@@ -13,8 +13,14 @@ class Segment{
 public:
 		Segment(shared_ptr<Mover> attribute);
         shared_ptr<Mover> attribute();
+        void faceLeft();
+        void faceRight();
+        bool isFacingLeft();
+        bool isFacingRight();
 private:
         shared_ptr<Mover> attribute_;
+        bool right_flag_;
+        bool left_flag_;
 };
 
 #endif 
