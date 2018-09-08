@@ -2,6 +2,8 @@
 #include "doctest.h"
 #include "../game-source/Position.h"
 #include "../game-source/Mover.h"
+#include "../game-source/Bullet.h"
+
 
 #include <memory>
 using namespace std;
@@ -217,7 +219,75 @@ TEST_CASE("Cannot move down when y = screen height"){
 }
 //************************end of Mover tests (10 tests)*******************************
 
-//***********************Player Tests*************************************************
+//***********************Bullet Tests*************************************************
+TEST_CASE("Position attribute of bullet returns correct values upon construction"){
+    
+    auto bullet_position = make_shared<Position>(50,100);
+    auto speed = 5;
+    auto mover = make_shared<Mover>(bullet_position,speed);
+    auto bullet = make_shared<Bullet>(mover);
+    
+    auto[x_position,y_position] = bullet->attribute()->position()->getPosition();
+    auto x = 50;
+    auto y = 100;
+    
+    CHECK(x == x_position);
+    CHECK(y == y_position);
+}
+
+TEST_CASE("Position attribute of bullet returns correct values after using setter function"){
+        
+    auto bullet_setter_position = make_shared<Position>(150,250);
+    auto speed_ = 5;
+    auto mover = make_shared<Mover>(bullet_setter_position,speed_);
+    auto bullet = make_shared<Bullet>(mover);
+    auto[old_x,old_y] = bullet->attribute()->position()->getPosition();
+    bullet->attribute()->position()->setPosition(800,600);
+    auto[new_x,new_y] = bullet->attribute()->position()->getPosition();
+    auto x = 800;
+    auto y = 600;
+    
+    CHECK(x == new_x);
+    CHECK(y == new_y);
+    CHECK_FALSE(new_x == old_x);
+    CHECK_FALSE(new_y == old_y);
+}
+
+TEST_CASE("Move attribute of bullet changes its position as expected when moving"){
+        
+    auto bullet_mover_position = make_shared<Position>(400,300);
+    auto speed = 5;
+    auto bullet_mover = make_shared<Mover>(bullet_mover_position,speed);
+    auto bullet_ = make_shared<Bullet>(bullet_mover);
+    auto[x_initial,y_initial] = bullet_->attribute()->position()->getPosition();
+    bullet_->attribute()->move(Direction::UP);
+    auto[x_final,y_final] = bullet_->attribute()->position()->getPosition();
+    auto y = 295;
+    CHECK(y == y_final);
+    CHECK_FALSE(y_initial == y_final);
+    
+}
+
+TEST_CASE("cannot move bullet when y = 0"){
+        
+        auto position = make_shared<Position>();
+        auto speed = 3;
+        auto mover = make_shared<Mover>(position,speed);
+        auto bullet = make_shared<Bullet>(mover);
+        auto[x_i,y_i] = bullet->attribute()->position()->getPosition();
+        bullet->attribute()->move(Direction::UP);
+        auto[x_f,y_f] = bullet->attribute()->position()->getPosition();
+        CHECK(x_i == x_f);
+        CHECK(y_i == y_f);
+} //maybe its life after testing player;
+
+
+
+
+
+
+
+
 
 
 
