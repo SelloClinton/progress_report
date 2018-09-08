@@ -3,6 +3,7 @@
 #include "../game-source/Position.h"
 #include "../game-source/Mover.h"
 #include "../game-source/Bullet.h"
+#include "../game-source/Segment.h"
 
 
 #include <memory>
@@ -279,9 +280,81 @@ TEST_CASE("cannot move bullet when y = 0"){
         auto[x_f,y_f] = bullet->attribute()->position()->getPosition();
         CHECK(x_i == x_f);
         CHECK(y_i == y_f);
-} //maybe its life after testing player;
+} //maybe its life after testing player...4 bullet tests- total tests = 19
 
+//*************************Segment Tests***************************************
+TEST_CASE("Position atttribute of segment behaves correctly (getter)"){
+    
+        auto seg_position = make_shared<Position>(450,550);
+        auto speed = 5;
+        auto seg_mover = make_shared<Mover>(seg_position,speed);
+        auto segment = make_shared<Segment>(seg_mover);
+        auto[x_position,y_position] = segment->attribute()->position()->getPosition(); 
+        auto x = 450;
+        auto y = 550;
+        CHECK(x == x_position);
+        CHECK(y == y_position);
+        
+}//20
 
+TEST_CASE("Segment position attribute (setter)"){
+        
+        auto seg_position = make_shared<Position>();
+        auto speed = 3;
+        auto seg_mover = make_shared<Mover>(seg_position,speed);
+        auto segment = make_shared<Segment>(seg_mover);
+        auto[x_initial,y_initial] = segment->attribute()->position()->getPosition(); 
+        segment->attribute()->position()->setPosition(150,350);
+        auto[x_final,y_final] = segment->attribute()->position()->getPosition();
+        auto x = 150;
+        auto y = 350;
+        CHECK(x == x_final);
+        CHECK(y == y_final);
+        CHECK_FALSE(x_initial == x_final);
+        CHECK_FALSE(y_initial == y_final);
+}//21
+
+TEST_CASE("Segment movement attribute (left and right"){
+    
+        auto position = make_shared<Position>();
+        auto speed = 5;
+        auto mover = make_shared<Mover>(position,speed);
+        auto segment = make_shared<Segment>(mover);
+        auto[x_initial,y_initial] = segment->attribute()->position()->getPosition();
+        segment->attribute()->move(Direction::RIGHT);
+        segment->attribute()->move(Direction::RIGHT);
+        auto[x_final_right,y_final_right] = segment->attribute()->position()->getPosition();
+        auto x = 10;
+        CHECK(x == x_final_right);
+        CHECK(y_initial == y_final_right);
+        segment->attribute()->move(Direction::LEFT);
+        auto[x_final_left,y_final_left] = segment->attribute()->position()->getPosition();
+        auto x2 = 5;
+        CHECK(x2 == x_final_left);
+        CHECK_FALSE(x_final_left == x_final_right);
+        
+}//22
+
+TEST_CASE("Segment movement attribute (up and down)"){
+
+        auto position = make_shared<Position>();
+        auto speed = 5;
+        auto mover = make_shared<Mover>(position,speed);
+        auto segment = make_shared<Segment>(mover);
+        auto[x_initial,y_initial] = segment->attribute()->position()->getPosition();
+        segment->attribute()->move(Direction::DOWN);
+        segment->attribute()->move(Direction::DOWN);
+        auto[x_final_down,y_final_down] = segment->attribute()->position()->getPosition();
+        auto y = 10;
+        CHECK(y == y_final_down);
+        CHECK(x_initial == x_final_down);
+        segment->attribute()->move(Direction::UP);
+        auto[x_final_up,y_final_up] = segment->attribute()->position()->getPosition();
+        auto y2 = 5;
+        CHECK(y2 == y_final_up);
+        CHECK_FALSE(y_final_up == y_final_down);
+        
+}//23
 
 
 
