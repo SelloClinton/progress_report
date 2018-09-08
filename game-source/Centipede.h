@@ -6,6 +6,7 @@
 #include "Segment.h"
 #include "Mover.h"
 #include "Position.h"
+#include "Constants.h"
 
 #include <tuple>
 using namespace std;
@@ -18,18 +19,20 @@ using std::vector;
 
 using Segments = vector<shared_ptr<Segment>>;
 
+class InsufficientCentipedeSize{};
+
 class Centipede{
     
 public:
-        Centipede(shared_ptr<Mover> _attribute);
+        Centipede(int centipedeSize);
         void moveSegments();
+//        int size()const{centipede_size_;}
         Segments getCentipede(){return centipede_;}
-    
 private:
         Segments centipede_;
-		void createCentipede(shared_ptr<Mover>);
-//		void initialPosition();
-		int number_of_segments;
+//		void createCentipede(shared_ptr<Mover>);
+		void initializePosition();
+        int centipede_size_;
 };
 
 #endif

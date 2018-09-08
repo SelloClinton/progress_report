@@ -23,7 +23,6 @@ public:
         Mover(shared_ptr<Position> _position, int speed);
         void move(Direction direction);
         shared_ptr<Position> position();
-        
 private:
         shared_ptr<Position> position_;
         int speed_;

@@ -4,9 +4,12 @@
 #include "../game-source/Mover.h"
 #include "../game-source/Bullet.h"
 #include "../game-source/Segment.h"
+#include "../game-source/Centipede.h"
+
 
 
 #include <memory>
+#include <vector>
 using namespace std;
 
 //***********************Position tests*******************************
@@ -334,7 +337,7 @@ TEST_CASE("Segment movement attribute (left and right"){
         CHECK_FALSE(x_final_left == x_final_right);
         
 }//22
-
+//
 TEST_CASE("Segment movement attribute (up and down)"){
 
         auto position = make_shared<Position>();
@@ -354,8 +357,31 @@ TEST_CASE("Segment movement attribute (up and down)"){
         CHECK(y2 == y_final_up);
         CHECK_FALSE(y_final_up == y_final_down);
         
-}//23
+}//23********************************end of segment test***********************************
 
+//************************************Centipede tests*******************************************
+
+//TEST_CASE("Centipede size cannot be <= 0"){
+//        int  centipedeSize = -15;
+//        auto centipede = make_shared<Centipede>(centipedeSize);
+//        CHECK_THROWS_AS(Centipede{centipedeSize},InsufficientCentipedeSize);
+//        
+//}//24
+
+//*********************************centipede tests*****************************************
+//TEST_CASE("Centipede knows its size(getCentipede)"){
+//    
+//        auto centipedeSize = 3;
+//        auto centipede = make_shared<Centipede>(centipedeSize);
+//        auto  centipede_size = centipede->size();
+//        
+//        CHECK(centipedeSize = centipede_size);
+////        CHECK(1 == 1);
+//}//25
+
+//TEST_CASE(""){
+//        
+//}
 
 
 

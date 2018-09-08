@@ -7,7 +7,8 @@ GameEngine::GameEngine():
             ,mover(make_shared<Mover>(position_,5))
             ,mover2(make_shared<Mover>(pos,2))
 			,player_(make_shared<Player>(mover))
-			,centipede_(make_shared<Centipede>(mover2))
+//			,centipede_(make_shared<Centipede>(mover2))
+            ,centipede_(make_shared<Centipede>(Constants::INITIAL_SIZE_OF_CENTIPEDE_))
 			,play_(false)
 			,game_over_(false)
 {

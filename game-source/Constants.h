@@ -9,13 +9,7 @@ class Constants{
 		static const int BULLET_HEIGHT_;
 		static const int PLAYER_WIDTH_;
 		static const int PLAYER_HEIGHT_;
-		
-		
-//			auto bullet_x_increment = 1;
-//	auto bullet_y_increment = 7;
-//	auto player_x_increment = 7;
-//	auto player_y_increment = 8;
-		
+        static const int INITIAL_SIZE_OF_CENTIPEDE_;
 };
 
 #endif
