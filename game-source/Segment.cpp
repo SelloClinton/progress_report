@@ -10,12 +10,10 @@ shared_ptr<Mover> Segment::attribute(){
         return attribute_;
 }
 void Segment::faceLeft(){
-
         right_flag_ = false;
         left_flag_ = true;
 }
 void Segment::faceRight(){
-
     right_flag_ = true;
     left_flag_ = false;
 }

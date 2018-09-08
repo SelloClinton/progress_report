@@ -30,15 +30,8 @@ public:
         Segments getCentipede(){return centipede_;}
 private:
         Segments centipede_;
-//		void createCentipede(shared_ptr<Mover>);
 		void initializePosition();
         int centipede_size_;
-//        void faceRight(shared_ptr<Segment>segment);
-//        void faceLeft(shared_ptr<Segment>segment);
-//        bool rightFlag_;
-//        bool leftFlag_;
-//        bool isFacingLeft(shared_ptr<Segment>segment,int x_position);
-//        bool isFacingRight(shared_ptr<Segment>segment, int x_position);
         
 };
 

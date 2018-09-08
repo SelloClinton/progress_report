@@ -2,9 +2,7 @@
 
 
 Centipede::Centipede(int centipedeSize):
-			centipede_size_{centipedeSize}
-//            ,rightFlag_(true)
-//            ,leftFlag_(false)
+			centipede_size_(centipedeSize)
 {
         if (centipede_size_ < 0)
             throw InsufficientCentipedeSize{};
@@ -53,31 +51,4 @@ void Centipede::initializePosition(){
     }
 }
 
-//void Centipede::faceRight(shared_ptr<Segment>segment){
-//    rightFlag_ = true;
-//    leftFlag_ = false;
-//}
-//void Centipede::faceLeft(shared_ptr<Segment>segment){
-//        rightFlag_ = false;
-//        leftFlag_ = true;
-//}
-//bool Centipede::isFacingLeft(shared_ptr<Segment>segment, int x_position){
-//        if (((!segment->attribute()->minXBound(x_position))||
-//            (!segment->attribute()->maxXBound(x_position)))
-//            &&(leftFlag_)&&(!rightFlag_)
-//            )
-//                return true;
-//        else
-//            return false;
-//}
-//bool Centipede::isFacingRight(shared_ptr<Segment>segment, int x_position){
-//        if (((!segment->attribute()->minXBound(x_position))||
-//            (!segment->attribute()->maxXBound(x_position)))
-//            &&(rightFlag_)&&(!leftFlag_)
-//            )
-//                return true;
-//        else
-//            return false;
-//                
-//}
 

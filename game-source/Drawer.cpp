@@ -29,13 +29,19 @@ void Drawer::drawCentipede(shared_ptr<Centipede> centipede){
         
 }
 
-void Drawer::drawBullet(shared_ptr<Bullet> bullet){
-	auto[x_position,y_position] = bullet->attribute()->position()->getPosition();
-	auto bullet_sprite = object_sprites_.at(2);
-	bullet_sprite.setPosition(x_position,y_position);
-//    bullet_sprite.setPosition(bullet->getAttribute()->getPosition().getXPosition(),bullet->getAttribute()->getPosition().getYPosition());
-	if(bullet->isShot())
-		window_->draw(bullet_sprite);	
+void Drawer::drawBullet(shared_ptr<Player>player){
+    
+    auto bullets = player->getBullets();
+    
+    for(const auto& bullet:bullets){
+            drawBullets(bullet);
+    }
+//	auto[x_position,y_position] = bullet->attribute()->position()->getPosition();
+//	auto bullet_sprite = object_sprites_.at(2);
+//	bullet_sprite.setPosition(x_position,y_position);
+////    bullet_sprite.setPosition(bullet->getAttribute()->getPosition().getXPosition(),bullet->getAttribute()->getPosition().getYPosition());
+//	if(bullet->isShot())
+//		window_->draw(bullet_sprite);	
 		
 }
 
@@ -46,4 +52,13 @@ void Drawer::drawSegment(shared_ptr<Segment> segment){
 	segment_sprite.setPosition(x_position,y_position);
 //	segment_sprite.setPosition(segment->getAttribute()->getPosition().getXPosition(),segment->getAttribute()->getPosition().getYPosition());
 	window_->draw(segment_sprite);
+}
+
+void Drawer::drawBullets(shared_ptr<Bullet>bullet){
+	auto[x_position,y_position] = bullet->attribute()->position()->getPosition();
+	auto bullet_sprite = object_sprites_.at(2);
+	bullet_sprite.setPosition(x_position,y_position);
+//    bullet_sprite.setPosition(bullet->getAttribute()->getPosition().getXPosition(),bullet->getAttribute()->getPosition().getYPosition());
+	if(bullet->isShot())
+		window_->draw(bullet_sprite);
 }

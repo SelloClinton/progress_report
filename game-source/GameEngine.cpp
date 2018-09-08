@@ -77,7 +77,7 @@ void GameEngine::drawObjects(){
 	Drawer drawer(display_->getWindow());
     drawer.drawPlayer(player_);
     drawer.drawCentipede(centipede_);
-	drawer.drawBullet(player_->getBullet());
+	drawer.drawBullet(player_);
     
 		
 }

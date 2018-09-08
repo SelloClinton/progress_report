@@ -6,22 +6,24 @@
 #include "Bullet.h"
 
 #include <tuple>
+#include <vector>
 using namespace std;
 #include <memory>
 using std::shared_ptr;
 using std::make_shared;
 
+using Bullets = vector<shared_ptr<Bullet>>;
+
 class Player{
 	
 public:
 		Player(shared_ptr<Mover> attribute);
-        shared_ptr<Mover> attribute();
+        shared_ptr<Mover>attribute();
 		void shoot();
 		void updateBullet();
-		shared_ptr<Bullet> getBullet(){return bullet_;}
+		Bullets getBullets(){return bullets_;}
 private:
         shared_ptr<Mover> attribute_;
-		shared_ptr<Bullet> bullet_;
-//		void updateBullet();
+		Bullets bullets_;
 };
 #endif // PLAYER_H
