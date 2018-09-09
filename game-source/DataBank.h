@@ -1,10 +1,9 @@
 #ifndef DATABANK_H
 #define DATABANK_H
 
+
 #include <SFML/Graphics.hpp>
 using namespace sf;
-
-
 
 #include <iostream>
 #include <memory>
@@ -16,8 +15,8 @@ using std::vector;
 using std::tuple;
 
 using Texts = vector<sf::Text>;
-using Sprites = vector<sf::Sprite> ;
-using Textures = vector<sf::Texture>;
+using Sprites = vector<shared_ptr<sf::Sprite>> ;
+using Textures = vector<shared_ptr<sf::Texture>>;
 
 class ImageNotFound{};
 class FontNotFound{};
@@ -30,11 +29,11 @@ public:
 	Sprites getSprites()const;
 	Font getFont()const;
 private:
-	sf::Font font_;
+	static shared_ptr<sf::Font> font_;
 	Texts texts_;
-	sf::Texture texture_;
+	static shared_ptr<sf::Texture> texture_;
 	Textures textures_;
-	sf::Sprite sprite_;
+	static shared_ptr<sf::Sprite> sprite_;
 	Sprites sprites_;
 
 	bool fontLoaded();
