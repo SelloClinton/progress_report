@@ -13,7 +13,7 @@ shared_ptr<Mover> Player::attribute(){
 
 void Player::shoot(){
     auto[x_position,y_position] = attribute_->position()->getPosition();
-    auto bullet_position = make_shared<Position>(x_position,y_position);
+    auto bullet_position = make_shared<Position>(x_position+(Constants::PLAYER_WIDTH_),y_position-(Constants::PLAYER_HEIGHT_));
     auto bullet_mover = make_shared<Mover>(bullet_position,Constants::BULLET_SPEED_);
     auto bullet = make_shared<Bullet>(bullet_mover);
 	bullet->shoot();	
@@ -23,7 +23,7 @@ void Player::shoot(){
 void Player::updateBullet(){
 	
     for(auto& bullet:bullets_){
-        if(auto bullet_y_position = get<1>(bullet->attribute()->position()->getPosition()); bullet_y_position > 300)
+        if(auto bullet_y_position = get<1>(bullet->attribute()->position()->getPosition()); bullet_y_position > 0)
             bullet->attribute()->move(Direction::UP);
         else
             bullet->destroyBullet();

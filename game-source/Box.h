@@ -23,7 +23,7 @@ public:
 		tuple<int,int,int,int>getBox(int x,int y, Object object);
 private:
 //		shared_ptr<Position> position_;
-		tuple<int,int,int,int>createBox(Object object);
+		tuple<int,int,int,int>createBox(int x, int y, Object object);
 
 };
 #endif
