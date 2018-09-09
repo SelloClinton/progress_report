@@ -1,12 +1,12 @@
 #include "Box.h"
 
-Box::Box():
+Box::Box()
 //	position_(position)
 {
 }
 	
 tuple<int,int,int,int> Box::getBox(int x, int y, Object object){
-	auto[min_x,min_y,max_x,max_y] =  createBox(int x, int y, object);
+	auto[min_x,min_y,max_x,max_y] =  createBox(x, y, object);
 	return {min_x,min_y,max_x,max_y};
 }
 

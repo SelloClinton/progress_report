@@ -17,10 +17,13 @@ public:
         void faceRight();
         bool isFacingLeft();
         bool isFacingRight();
+		bool isLive();
+		void destroySegment();
 private:
         shared_ptr<Mover> attribute_;
         bool right_flag_;
         bool left_flag_;
+		bool live;
 };
 
 #endif 

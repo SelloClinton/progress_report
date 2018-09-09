@@ -37,6 +37,7 @@ void GameEngine::update(){
 	checkInput();
     updateCentipede();
 	player_->updateBullet();
+	auto collision_status = checkCollision();
 
 }
 void GameEngine::updateCentipede(){
@@ -78,4 +79,29 @@ void GameEngine::drawObjects(){
     drawer.drawPlayer(player_);
     drawer.drawCentipede(centipede_);
 	drawer.drawBullet(player_);
+}
+
+bool GameEngine::checkCollision(){
+	
+//	auto centipede = centipede_->getCentipede();
+//	auto bullets = player_->getBullets();
+	
+	for(auto& segment:centipede_->getCentipede()){
+		
+		auto [segment_x_position,segment_y_position] = segment->attribute()->position()->getPosition();
+	
+		
+			for(auto& bullet:player_->getBullets()){
+				
+				auto [bullet_x_position,bullet_y_position] = bullet->attribute()->position()->getPosition();
+				auto collision = make_shared<Collision>(segment_x_position,segment_y_position,Object::SEGMENT,bullet_x_position,bullet_y_position,Object::BULLET);
+				auto status =  collision->collided();
+				
+				if(status){
+					segment->destroySegment();//std::cout << "collided" << std::endl;
+					bullet->destroyBullet();
+					}
+			}
+	}
+		
 }

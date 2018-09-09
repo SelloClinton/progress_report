@@ -4,6 +4,7 @@ Segment::Segment(shared_ptr<Mover> attribute):
 		attribute_(attribute)
         ,right_flag_(true)
         ,left_flag_(false)
+		,live(true)
 		{}
 		
 shared_ptr<Mover> Segment::attribute(){
@@ -26,4 +27,12 @@ bool Segment::isFacingRight(){
     if((right_flag_)&&(!left_flag_))
         return true;
     return false;
+}
+
+bool Segment::isLive(){
+		return live;
+}
+
+void Segment::destroySegment(){
+		live = false;
 }

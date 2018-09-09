@@ -1,36 +1,50 @@
 #include "Collision.h"
 
-Collision::Collision(shared_ptr<Position>position_A, Object objectA, shared_ptr<Position>position_A, Object objectB):
-            object_position_A_(position_A)
-            ,object_A_(objectA)
-           ,object_position_B_(position_B)
-           ,object_B_(objectB)
-           ,box_A(make_shared<Box>());
-           ,box_B(make_shared<Box>())
-//           ,min_x_A_(get<0>(box_A->getBox()))
+Collision::Collision(int xPositionA,int yPositionA,Object objectA, int xPositionB, int yPositionB, Object objectB):
+			x_position_A_(xPositionA)
+			,y_position_A_(yPositionA)
+			,object_A_(objectA)
+			,x_position_B_(xPositionB)
+			,y_position_B_(yPositionB)
+			,object_B_(objectB)
 {
-    auto[x_position_A,y_position_A] = object_position_A->getPosition();
-    min_x_A_ = get<0>(x_position_A,y_position_A,object_A_);
-    min_y_A_ = get<1>(x_position_A,y_position_B,object_A_);
-    max_x_A
-    auto[min_x_A,min_y_A,max_x_A,max_y_A_] = createBoxes(x_position_A,y_position_A,object_A_); 
-    auto[x_position_B,y_position_B] = position_B->getPosition();
-    auto[min_x_B,min_y_B,max_x_B,max_y_B_] = createBoxes(x_position_B,y_position_B,objectB);
-    
-//    createBoxes();
+	createBoxes();
 }
             
 bool Collision::collided(){
-
-//    auto[x_position_A,y_position_A] = position_A->getPosition();
-//    auto[min_x_A,min_y_A,max_x_A,max_y_A_] = createBoxes(x_position_A,y_position_A,objectA); 
-//    auto[x_position_B,y_position_B] = position_B->getPosition();
-//    auto[min_x_B,min_y_B,max_x_B,max_y_B_] = createBoxes(x_position_B,y_position_B,objectB);
+	
+		auto d1_x = min_x_B_ - max_x_A_;
+		auto d1_y = min_y_B_ - max_y_A_;
+		
+		auto d2_x = min_x_A_ - max_x_B_;
+		auto d2_y = min_y_A_ - max_y_B_;
+		
+		if ((d1_x > 0)||(d1_y < 0))
+			return false;
+		if ((d2_x > 0)||(d2_y < 0))
+			return false;
+		return true;
     
 }
 
-void Collision::createBoxes(int x, int y, Object object){
+void Collision::createBoxes(){
     
-    auto box = make_shared<Box>();
-    auto[mix_x,min_y,max_x,max_y] = box->getBox(int x_position,int y_position,Object object);
+    auto box_A = make_shared<Box>();
+
+	auto[minXA,minYA,maxXA,maxYA] = box_A->getBox(x_position_A_,y_position_A_,object_A_);
+	
+    min_x_A_ =	minXA;		
+    min_y_A_ = 	minYA;		
+    max_x_A_= 	maxXA;			
+	max_y_A_= 	maxYA;				
+	
+	
+    auto box_B = make_shared<Box>();
+
+	auto[minXB,minYB,maxXB,maxYB] = box_B->getBox(x_position_B_,y_position_B_,object_B_);
+	
+    min_x_B_ = minXB;					
+    min_y_B_ = minYB;					
+    max_x_B_ = maxXB;				
+	max_y_B_= maxYB;						
 }

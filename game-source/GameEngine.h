@@ -10,6 +10,8 @@
 #include "SplashScreen.h"
 #include "Centipede.h"
 #include "Constants.h"
+#include "Box.h"
+#include "Collision.h"
 
 #include <memory>
 using std::shared_ptr;
@@ -40,6 +42,8 @@ private:
 	void checkInput();
 	void keyReaction(Pressed key);
 	void drawObjects();
+	
+	bool checkCollision();
 };
 
 #endif
