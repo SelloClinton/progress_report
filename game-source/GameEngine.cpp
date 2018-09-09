@@ -78,6 +78,4 @@ void GameEngine::drawObjects(){
     drawer.drawPlayer(player_);
     drawer.drawCentipede(centipede_);
 	drawer.drawBullet(player_);
-    
-		
 }
