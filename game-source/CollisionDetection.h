@@ -1,5 +1,5 @@
-#ifndef COLLISION_H
-#define COLLISION_H
+#ifndef COLLISIONDETECTION_H
+#define COLLISIONDETECTION_H
 
 #include "Box.h"
 #include "Position.h"
@@ -10,22 +10,18 @@ using std::make_shared;
 #include <tuple>
 using std::get;
 
-class Collision{
+class CollisionDetection{
 public:
-        Collision(int x_position_A,int y_position_A,Object objectA, int x_position_B, int y_position_B, Object objectB);	//shared_ptr<Position>position_A, Object objectA, shared_ptr<Position>position_B, Object objectB);
+        CollisionDetection(int x_position_A,int y_position_A,Object objectA, int x_position_B, int y_position_B, Object objectB);	//shared_ptr<Position>position_A, Object objectA, shared_ptr<Position>position_B, Object objectB);
         bool collided();
 private:
-//    shared_ptr<Position> object_position_A_;
 	int x_position_A_;
 	int y_position_A_;
     Object object_A_;
 	int x_position_B_;
 	int y_position_B_;
     Object object_B_;
-//    shared_ptr<Position> object_position_B_;
 
-//    shared_ptr<Box>box_A;
-//    shared_ptr<Box>box_B;
     int min_x_A_;
     int min_y_A_;
 	int max_x_A_;

@@ -90,7 +90,7 @@ bool GameEngine::checkCollision(){
 			for(auto& bullet:player_->getBullets()){
 				
 				auto [bullet_x_position,bullet_y_position] = bullet->attribute()->position()->getPosition();
-				auto collision = make_shared<Collision>(segment_x_position,segment_y_position,Object::SEGMENT,bullet_x_position,bullet_y_position,Object::BULLET);
+				auto collision = make_shared<CollisionDetection>(segment_x_position,segment_y_position,Object::SEGMENT,bullet_x_position,bullet_y_position,Object::BULLET);
 				auto status =  collision->collided();
 				
 				if(status){
@@ -103,8 +103,6 @@ bool GameEngine::checkCollision(){
 
 	auto collision_reactor = make_shared<CollisionReaction>();
 	collision_reactor->updateBullets(player_->getBullets());
+	collision_reactor->updateSegments(centipede_->getCentipede());
 	
-	
-	
-					
 }

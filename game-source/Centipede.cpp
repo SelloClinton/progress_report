@@ -4,7 +4,7 @@
 Centipede::Centipede(int centipedeSize):
 			centipede_size_(centipedeSize)
 {
-        if (centipede_size_ < 0)
+        if (centipede_size_ <= 0)
             throw InsufficientCentipedeSize{};
         initializePosition();
 }

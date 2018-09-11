@@ -1,6 +1,6 @@
-#include "Collision.h"
+#include "CollisionDetection.h"
 
-Collision::Collision(int xPositionA,int yPositionA,Object objectA, int xPositionB, int yPositionB, Object objectB):
+CollisionDetection::CollisionDetection(int xPositionA,int yPositionA,Object objectA, int xPositionB, int yPositionB, Object objectB):
 			x_position_A_(xPositionA)
 			,y_position_A_(yPositionA)
 			,object_A_(objectA)
@@ -11,7 +11,7 @@ Collision::Collision(int xPositionA,int yPositionA,Object objectA, int xPosition
 	createBoxes();
 }
             
-bool Collision::collided(){
+bool CollisionDetection::collided(){
 	
 		auto d1_x = min_x_B_ - max_x_A_;
 		auto d1_y = min_y_B_ - max_y_A_;
@@ -27,7 +27,7 @@ bool Collision::collided(){
     
 }
 
-void Collision::createBoxes(){
+void CollisionDetection::createBoxes(){
     
     auto box_A = make_shared<Box>();
 

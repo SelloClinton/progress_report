@@ -13,7 +13,6 @@ using namespace std;
 using std::shared_ptr;
 using std::make_shared;
 
-//using Bullets = vector<shared_ptr<Bullet>>;
 using Bullets = list<shared_ptr<Bullet>>;
 
 class Player{
@@ -23,7 +22,7 @@ public:
         shared_ptr<Mover>attribute();
 		void shoot();
 		void updateBullet();
-		Bullets getBullets()const{return bullets_;}
+		Bullets& getBullets(){return bullets_;}
 private:
         shared_ptr<Mover> attribute_;
 		Bullets bullets_;

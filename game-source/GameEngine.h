@@ -11,7 +11,7 @@
 #include "Centipede.h"
 #include "Constants.h"
 #include "Box.h"
-#include "Collision.h"
+#include "CollisionDetection.h"
 #include "CollisionReaction.h"
 
 #include <memory>

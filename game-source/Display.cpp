@@ -28,11 +28,3 @@ void Display::checkEvent(){
 			
 		}
 }
-
-//int Display::getWidth()const{
-//		return DISPLAY_WIDTH_;
-//}
-//
-//int Display::getHeight()const{
-//		return DISPLAY_HEIGHT_;
-//}

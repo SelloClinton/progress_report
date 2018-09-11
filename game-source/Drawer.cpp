@@ -43,14 +43,14 @@ void Drawer::drawSegment(shared_ptr<Segment> segment){
 	auto[x_position,y_position] = segment->attribute()->position()->getPosition();
 	auto segment_sprite = object_sprites_.at(1);
 	segment_sprite.setPosition(x_position,y_position);
-	if(segment->isLive())
-		window_->draw(segment_sprite);
+//	if(segment->isLive())
+	window_->draw(segment_sprite);
 }
 
 void Drawer::drawBullets(shared_ptr<Bullet>bullet){
 	auto[x_position,y_position] = bullet->attribute()->position()->getPosition();
 	auto bullet_sprite = object_sprites_.at(2);
 	bullet_sprite.setPosition(x_position,y_position);
-	if(bullet->isShot())
-		window_->draw(bullet_sprite);
+//	if(bullet->isShot())
+	window_->draw(bullet_sprite);
 }
