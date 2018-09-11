@@ -23,7 +23,7 @@ public:
         shared_ptr<Mover>attribute();
 		void shoot();
 		void updateBullet();
-		Bullets getBullets(){return bullets_;}
+		Bullets getBullets()const{return bullets_;}
 private:
         shared_ptr<Mover> attribute_;
 		Bullets bullets_;

@@ -18,7 +18,7 @@ public:
 			void updateBullets(list<shared_ptr<Bullet>> bullets);
 			void updateSegments(list<shared_ptr<Segment>> segments);
 			
-	private:
+
 	
 	
 };

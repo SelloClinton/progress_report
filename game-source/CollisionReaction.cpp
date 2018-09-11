@@ -5,10 +5,10 @@ CollisionReaction::CollisionReaction()
 
 void CollisionReaction::updateBullets(list<shared_ptr<Bullet>> bullets){
 	
-	for(auto iter = begin(bullets); iter != end(bullets); iter++){
+	for(auto bullets_iterator = begin(bullets); bullets_iterator != end(bullets); bullets_iterator++){
 	
-		if (!(iter->isShot()))
-			iter = bullets.erase(iter);
+		if (!((*bullets_iterator)->isShot()))
+			bullets_iterator = bullets.erase(bullets_iterator);
 	}
 }
 

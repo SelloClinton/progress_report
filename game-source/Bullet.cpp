@@ -9,7 +9,7 @@ shared_ptr<Mover> Bullet::attribute(){
         return attribute_;
 }
 
-bool Bullet::isShot(){
+bool Bullet::isShot()const{
 	
 		return shot_;
 }
@@ -20,11 +20,3 @@ void Bullet::shoot(){
 void Bullet::destroyBullet(){
 		shot_ = false;
 }
-
-//void Bullet::updateBullet(){
-//		if(attribute_->getPosition().getYPosition() > 0)
-//			attribute_->move(Direction::UP);
-//		else
-//			destroyBullet();
-//	
-//}

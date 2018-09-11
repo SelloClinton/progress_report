@@ -15,6 +15,8 @@
 #include "CollisionReaction.h"
 
 #include <memory>
+#include <list>
+using namespace std;
 using std::shared_ptr;
 using std::make_shared;
 using std::unique_ptr;
