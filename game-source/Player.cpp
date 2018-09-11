@@ -23,7 +23,7 @@ void Player::shoot(){
 void Player::updateBullet(){
 	
     for(auto& bullet:bullets_){
-        if(auto bullet_y_position = get<1>(bullet->attribute()->position()->getPosition()); bullet_y_position > 0)
+        if(auto bullet_y_position = get<1>(bullet->attribute()->position()->getPosition()); bullet_y_position > 50)
             bullet->attribute()->move(Direction::UP);
         else
             bullet->destroyBullet();

@@ -12,6 +12,7 @@
 #include "Constants.h"
 #include "Box.h"
 #include "Collision.h"
+#include "CollisionReaction.h"
 
 #include <memory>
 using std::shared_ptr;

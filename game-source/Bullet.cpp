@@ -9,7 +9,7 @@ shared_ptr<Mover> Bullet::attribute(){
         return attribute_;
 }
 
-bool Bullet::isShot()const{
+bool Bullet::isShot(){
 	
 		return shot_;
 }

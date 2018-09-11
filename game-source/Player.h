@@ -6,13 +6,15 @@
 #include "Bullet.h"
 
 #include <tuple>
+#include <list>
 #include <vector>
 using namespace std;
 #include <memory>
 using std::shared_ptr;
 using std::make_shared;
 
-using Bullets = vector<shared_ptr<Bullet>>;
+//using Bullets = vector<shared_ptr<Bullet>>;
+using Bullets = list<shared_ptr<Bullet>>;
 
 class Player{
 	

@@ -95,9 +95,20 @@ bool GameEngine::checkCollision(){
 				
 				if(status){
 					segment->destroySegment();
-					bullet->destroyBullet();
+	//				bullet->destroyBullet();
 					}
 			}
 	}
-		
+	
+	
+	auto collision_reactor = make_shared<CollisionReaction>();
+	collision_reactor->updateBullets(player_->getBullets());
+	
+//		for(auto iter = begin(player_->getBullets()); iter != end(player_->getBullets()); iter++){
+//			
+//				if (!iter->isShot())
+//					iter = player_->getBullets().erase(iter);
+//			}
+	
+					
 }
