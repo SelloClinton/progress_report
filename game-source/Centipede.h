@@ -26,12 +26,12 @@ class Centipede{
 public:
         Centipede(int centipedeSize);
         void moveSegments();
-//        int size()const{centipede_size_;}
         Segments getCentipede(){return centipede_;}
 private:
         Segments centipede_;
-		void initializePosition();
         int centipede_size_;
+		void initializePosition();
+		void moveDown(shared_ptr<Segment>segment);
         
 };
 

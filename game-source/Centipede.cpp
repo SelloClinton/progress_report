@@ -13,17 +13,13 @@ void Centipede::moveSegments(){
     
        for(auto& segment:centipede_){
            auto x_position = get<0>(segment->attribute()->position()->getPosition()); 
-        if(x_position == 775){
-                segment->attribute()->move(Direction::DOWN);
-                segment->attribute()->move(Direction::DOWN);
-                segment->attribute()->move(Direction::DOWN);
+        if(x_position >= 774){
+				moveDown(segment);
                 segment->attribute()->move(Direction::LEFT);
                 segment->faceLeft();
         }
-        else if (x_position == 10){
-                segment->attribute()->move(Direction::DOWN);
-                segment->attribute()->move(Direction::DOWN);
-                segment->attribute()->move(Direction::DOWN);
+        else if (x_position <= 8){
+				moveDown(segment);
                 segment->attribute()->move(Direction::RIGHT);
                 segment->faceRight();
         }
@@ -33,9 +29,6 @@ void Centipede::moveSegments(){
         else
             segment->attribute()->move(Direction::RIGHT);
 
-//            if(auto x_pos = get<0>(segment->attribute()->position()->getPosition()); x_pos < 775){
-//					segment->attribute()->move(Direction::RIGHT);
-//            }
 		}
 }
 void Centipede::initializePosition(){ 
@@ -49,6 +42,13 @@ void Centipede::initializePosition(){
         centipede_.push_back(segment);
         separator+=2;
     }
+}
+
+void Centipede::moveDown(shared_ptr<Segment>segment){
+				segment->attribute()->move(Direction::DOWN);
+                segment->attribute()->move(Direction::DOWN);
+                segment->attribute()->move(Direction::DOWN);
+                segment->attribute()->move(Direction::DOWN);	
 }
 
 
