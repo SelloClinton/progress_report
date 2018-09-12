@@ -33,6 +33,8 @@ private:
         int centipede_size_;
 		void initializePosition();
 		void moveDown(shared_ptr<Segment>segment);
+		void turnRight(shared_ptr<Segment>segment);
+		void turnLeft(shared_ptr<Segment>segment);
         
 };
 
