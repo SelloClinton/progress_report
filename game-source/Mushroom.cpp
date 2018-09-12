@@ -3,6 +3,7 @@
 Mushroom::Mushroom(shared_ptr<Position>position):
 		  position_(position)
 		  ,number_of_lives(4)
+		  ,live_(false)
 		  {}
 		  
 bool Mushroom::isLive()const{

@@ -2,7 +2,6 @@
 
 Bullet::Bullet(shared_ptr<Mover> attribute):
 		attribute_(attribute)
-//		,shot_(false)
 {
 	attribute_->destroy();
 }
