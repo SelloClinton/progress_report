@@ -14,9 +14,10 @@ public:
 		Mushroom(shared_ptr<Position>position);
 		shared_ptr<Position>position();
 		bool isLive()const;
+		void destroy();
 		void weaken();
 private:
-		shared_ptr<Position>position_;
+		shared_ptr<Position> position_;
 		int number_of_lives;
 		bool live_;
 };

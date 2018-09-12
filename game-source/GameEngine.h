@@ -13,6 +13,8 @@
 #include "Box.h"
 #include "CollisionDetection.h"
 #include "CollisionReaction.h"
+#include "Field.h"
+#include "Mushroom.h"
 
 #include <memory>
 #include <list>
@@ -35,6 +37,7 @@ private:
     shared_ptr<Mover> mover2;
 	shared_ptr<Player> player_;
 	shared_ptr<Centipede> centipede_;
+	shared_ptr<Field> field_;
 	
 	bool game_over_;
 	bool play_;

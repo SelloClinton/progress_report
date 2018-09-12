@@ -1,12 +1,15 @@
 #ifndef FIELD_H
 #define FIELD_H
 
+
+#include "Position.h"
 #include "Mushroom.h"
 #include "Constants.h"
-#include "Position.h"
+#include "Mover.h"
 
+#include <iostream>
 #include <list>
-using std::list;
+using namespace std;
 
 #include <memory>
 using std::shared_ptr;

@@ -8,6 +8,7 @@ GameEngine::GameEngine():
             ,mover2(make_shared<Mover>(pos,2))
 			,player_(make_shared<Player>(mover))
             ,centipede_(make_shared<Centipede>(Constants::INITIAL_SIZE_OF_CENTIPEDE_))
+			,field_(make_shared<Field>(Constants::NUMBER_OF_MUSHROOMS))
 			,play_(false)
 			,game_over_(false)
 {
@@ -77,7 +78,8 @@ void GameEngine::drawObjects(){
 	Drawer drawer(display_->getWindow());
     drawer.drawPlayer(player_);
     drawer.drawCentipede(centipede_);
-	drawer.drawBullet(player_);
+	drawer.drawBullets(player_);
+	drawer.drawField(field_);
 }
 
 bool GameEngine::checkCollision(){

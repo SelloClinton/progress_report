@@ -54,6 +54,12 @@ void DataBank::loadSprites(){
 	sprite_.setScale(2.5,2.5);
 	sprites_.push_back(sprite_);
 	
+	//mushroom(full) sprite
+	sprite_.setTexture(textures_.at(0));
+	sprite_.setTextureRect(sf::IntRect(68,72,8,8));
+	sprite_.setScale(2.5,2.5);
+	sprites_.push_back(sprite_);
+	
 	//"logo" sprite
 	sprite_.setTexture(textures_.at(1));
 	sprites_.push_back(sprite_);

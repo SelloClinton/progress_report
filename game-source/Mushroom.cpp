@@ -6,6 +6,9 @@ Mushroom::Mushroom(shared_ptr<Position>position):
 		  ,live_(false)
 		  {}
 		  
+shared_ptr<Position> Mushroom::position(){
+		return position_;
+}
 bool Mushroom::isLive()const{
 		return live_;
 }
