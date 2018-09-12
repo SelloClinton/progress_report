@@ -16,8 +16,8 @@ void Centipede::moveSegments(){
         if(x_position >= 774){
 			turnLeft(segment);
         }
-        else if (x_position <= 8){
-			turnLeft(segment);
+        else if (x_position <= 4){
+			turnRight(segment);
         }
         else if (segment->isFacingLeft()){
 			segment->attribute()->move(Direction::LEFT);
