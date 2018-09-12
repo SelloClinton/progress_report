@@ -94,8 +94,8 @@ bool GameEngine::checkCollision(){
 				auto status =  collision->collided();
 				
 				if(status){
-					segment->destroySegment();
-					bullet->destroyBullet();
+					segment->attribute()->destroy();
+					bullet->attribute()->destroy();
 					}
 			}
 	}

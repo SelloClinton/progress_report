@@ -14,12 +14,12 @@ class Bullet{
 public:
 		Bullet(shared_ptr<Mover> attribute);
 		shared_ptr<Mover> attribute();
-		bool isShot()const;
-		void shoot();
-		void destroyBullet();
+//		bool isShot()const;
+//		void shoot();
+//		void destroyBullet();
 private:
 		shared_ptr<Mover> attribute_;
-		bool shot_;
+//		bool shot_;
 };
 
 #endif

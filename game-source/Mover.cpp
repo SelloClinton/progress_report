@@ -3,6 +3,7 @@
 Mover::Mover(shared_ptr<Position> _position, int speed):
         position_(_position)
         ,speed_(speed)
+		,live_(true)
 {
 	if (speed <=0)
 		throw NegativeZeroSpeed();
@@ -36,6 +37,16 @@ void Mover::move(Direction direction){
 }
 shared_ptr<Position> Mover::position(){
         return position_;
+}
+
+bool Mover::isLive(){
+		return live_;
+}
+void Mover::setLive(){
+		live_ = true;
+}
+void Mover::destroy(){
+		live_ = false;
 }
 
 void Mover::setPosition(int x, int y){

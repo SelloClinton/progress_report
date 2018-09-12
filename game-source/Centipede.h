@@ -18,7 +18,6 @@ using std::make_shared;
 #include <vector>
 using std::vector;
 
-//using Segments = vector<shared_ptr<Segment>>;
 using Segments = list<shared_ptr<Segment>>;
 
 class InsufficientCentipedeSize{};
