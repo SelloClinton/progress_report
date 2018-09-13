@@ -76,10 +76,11 @@ void GameEngine::keyReaction(Pressed key){
 void GameEngine::drawObjects(){
 	
 	Drawer drawer(display_->getWindow());
+	drawer.drawField(field_);
     drawer.drawPlayer(player_);
     drawer.drawCentipede(centipede_);
 	drawer.drawBullets(player_);
-	drawer.drawField(field_);
+
 }
 
 bool GameEngine::checkCollision(){

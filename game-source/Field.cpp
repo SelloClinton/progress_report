@@ -11,32 +11,18 @@ Mushrooms& Field::getMushrooms(){
 		return mushrooms_;
 }
 
-void Field::createMushrooms(int numberOfMushrooms){		//this causes some delay while loading...why?!
+void Field::createMushrooms(int numberOfMushrooms){
 	generateXPositions(numberOfMushrooms);
 	generateYPositions(numberOfMushrooms);
-//	createPositions();
+	createPositions();
 	
-		auto x_iter =  begin(xPositions_);
-		auto y_iter = begin(yPositions_);
-		
-		while((x_iter != end(xPositions_))&&(y_iter != end(yPositions_))){
-			auto x_position = *x_iter;
-			auto y_position = *y_iter;
-			cout << "x : " << x_position << "  y : " << y_position << endl;
-			auto position = make_shared<Position>(x_position,y_position);
-			auto mushroom = make_shared<Mushroom>(position);
+	
+	for(auto position_iter = begin(positions_); position_iter != end(positions_); position_iter++){
+			
+			auto mushroom = make_shared<Mushroom>(*position_iter);
 			mushrooms_.push_back(mushroom);
-			x_iter++;
-			y_iter++;
-		}
+	}
 	
-//	for(auto position_iter = begin(positions_); position_iter != end(positions_); position_iter++){
-//			
-//			auto mushroom = make_shared<Mushroom>(*position_iter);
-//			mushrooms_.push_back(mushroom);
-//	}
-	
-//	cout << "Mushrooms size : " << mushrooms_.size() << endl;
 }
 
 void Field::generateXPositions(int numberOfMushrooms){
@@ -53,10 +39,7 @@ void Field::generateXPositions(int numberOfMushrooms){
 					xPositions_.push_back(random_multiple_of_four);
 					validPosition++;
 			}
-//		xPositions_.push_back(0);
-//		validPosition++;				
 	}
-//	cout << "xPositions size : " << xPositions_.size() << endl;
 }
 
 void Field::generateYPositions(int numberOfMushrooms){
@@ -68,30 +51,20 @@ void Field::generateYPositions(int numberOfMushrooms){
 		auto random_multiple_of_four = rand() %(Constants::DISPLAY_HEIGHT_-50)+1;
 		yPositions_.push_back(random_multiple_of_four);
 	}
-//	cout << "Ypositions size: " << yPositions_.size() << endl;
 }
 
-//void Field::createPositions(){
-//		
-//	
-//		auto x_iter =  begin(xPositions_);
-//		auto y_iter = begin(yPositions_);
-//		
-//		while(x_iter != end(xPositions_)){
-//			auto x_position = *x_iter;
-//			auto y_position = *y_iter;
-//			auto position = make_shared<Position>(x_position,y_position);
-//			x_iter++;
-//			y_iter++;
-//		}
-//	
-////	for(auto x_iter = begin(xPositions_), y_iter = begin(yPositions_); x_iter != end(xPositions_), y_iter != end(yPositions_); x_iter++,y_iter++){
-////		
-////			auto x_position = *x_iter;
-////			auto y_position = *y_iter;
-////			auto position = make_shared<Position>(x_position,y_position);
-////			positions_.push_back(position);
-////			x_iter++;
-////			y_iter++;
-////	}
-//}
+void Field::createPositions(){
+		
+	
+		auto x_iter =  begin(xPositions_);
+		auto y_iter = begin(yPositions_);
+		
+		while((x_iter != end(xPositions_)&&(y_iter != end(yPositions_)))){
+			auto x_position = *x_iter;
+			auto y_position = *y_iter;
+			auto position = make_shared<Position>(x_position,y_position);
+			positions_.push_back(position);
+			x_iter++;
+			y_iter++;
+		}
+}
