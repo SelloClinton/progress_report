@@ -27,7 +27,7 @@ void Mover::move(Direction direction){
 			setPosition(x_position,new_y);
             break;
         case Direction::UP:
-//			if(auto new_y = y_position-getSpeed(); !minXBound(new_y)) 
+			if(auto new_y = y_position-getSpeed(); !minXBound(new_y)) 
 				setPosition(x_position,y_position-getSpeed());
             break;
 		default:

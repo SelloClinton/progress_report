@@ -50,6 +50,7 @@ private:
 	void drawObjects();
 	
 	bool checkCollision();
+	void checkPlayerCollision();
 };
 
 #endif

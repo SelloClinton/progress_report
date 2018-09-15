@@ -38,6 +38,7 @@ void GameEngine::update(){
     updateCentipede();
 	player_->updateBullet();
 	auto collision_status = checkCollision();
+	checkPlayerCollision();
 
 }
 void GameEngine::updateCentipede(){
@@ -108,4 +109,17 @@ bool GameEngine::checkCollision(){
 	collision_reactor->updateBullets(player_->getBullets());
 	collision_reactor->updateSegments(centipede_->getCentipede());
 	
+}
+
+void GameEngine::checkPlayerCollision(){
+		for (auto& segment:centipede_->getCentipede()){
+			auto[seg_x_position,seg_y_position] = segment->attribute()->position()->getPosition();
+			
+			auto[player_x_position,player_y_position] = player_->attribute()->position()->getPosition();
+			auto collision_detector = make_shared<CollisionDetection>(seg_x_position,seg_y_position,Object::SEGMENT,player_x_position,player_y_position,Object::PLAYER); 
+			auto status = collision_detector->collided();
+			
+			if(status)
+				std::cout << "collided with player!" << std::endl;
+			}
 }

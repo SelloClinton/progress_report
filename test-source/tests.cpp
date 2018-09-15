@@ -362,9 +362,9 @@ TEST_CASE("Segment movement attribute (up and down)"){
 //************************************Centipede tests*******************************************
 
 TEST_CASE("Centipede size cannot be <= 0"){
-        int  centipedeSize = -15;
+        const int  centipedeSize = -15;
         auto centipede = make_shared<Centipede>(centipedeSize);
-        CHECK_THROWS_AS(Centipede{centipedeSize},InsufficientCentipedeSize);
+        CHECK_THROWS_AS(Centipede(-15),InsufficientCentipedeSize);
         
 }//24
 
