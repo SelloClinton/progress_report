@@ -52,7 +52,7 @@ void GameEngine::checkInput(){
 
 		keyReaction(input);
 }
-void GameEngine::keyReaction(Pressed key){
+void GameEngine::keyReaction(Pressed key){	//take to Update, with pressed key
 	
 	switch(key){
 		case Pressed::LEFT:

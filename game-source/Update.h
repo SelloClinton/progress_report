@@ -5,8 +5,9 @@
 #include "Centipede.h"
 #include "segment.h"
 #include "CollisionDetection.h"
-#include "CollisionReaction
+#include "CollisionReaction.h"
 #include "Bullet.h"
+#include "GameEngine.h"
 
 #include <memory>
 using std::shared_ptr;
@@ -15,8 +16,8 @@ using std::make_shared;
 class Update{
 	
 	public:
-		Update(shared_ptr<Player> player,shared_ptr<Centipede>centipede,shared_ptr<Field> field,Pressed key);
-		updateGame();
+		Update(shared_ptr<Player> player,shared_ptr<Centipede>centipede,shared_ptr<Field> field);
+		void updateGame();
 	private:
 		shared_ptr<Player>player_;
 		shared_ptr<Centipede> centipede_;

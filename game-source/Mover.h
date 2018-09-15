@@ -2,6 +2,8 @@
 #define MOVER_H
 
 #include "Position.h"
+#include "Enums.h"
+
 #include <memory>
 using std::shared_ptr;
 using std::make_shared;
@@ -10,12 +12,12 @@ using std::make_shared;
 
 class NegativeZeroSpeed{};
 
-enum class Direction{
-		LEFT,
-		RIGHT,
-		UP,
-		DOWN
-	};
+//enum class Direction{
+//		LEFT,
+//		RIGHT,
+//		UP,
+//		DOWN
+//};
     
 class Mover{
     

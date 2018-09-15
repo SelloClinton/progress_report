@@ -1,6 +1,9 @@
 #ifndef KEYREADER_H
 #define KEYREADER_H
 
+
+#include "Enums.h"
+
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <memory>
@@ -8,16 +11,16 @@
 using std::shared_ptr;
 
 
-enum class Pressed{
-	
-		RIGHT,
-		LEFT,
-		S,
-		ESCAPE,
-		SPACE,
-		NO_INPUT
-		
-};
+//enum class Pressed{
+//	
+//		RIGHT,
+//		LEFT,
+//		S,
+//		ESCAPE,
+//		SPACE,
+//		NO_INPUT
+//		
+//};
 
 class KeyReader{
 	

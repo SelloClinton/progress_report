@@ -5,18 +5,12 @@
 #include <tuple>
 #include "Position.h"
 #include "Constants.h"
+#include "Enums.h"
 #include <cassert>
 using std::get;
 using std::shared_ptr;
 using std::make_shared;
 
-
-enum class Object{
-		PLAYER,
-		BULLET,
-		SEGMENT,
-		MUSHROOM
-};
 
 class Box{
 public:

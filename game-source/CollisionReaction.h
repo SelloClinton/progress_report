@@ -17,9 +17,5 @@ public:
 			CollisionReaction();
 			void updateBullets(list<shared_ptr<Bullet>>& bullets);
 			void updateSegments(list<shared_ptr<Segment>>& segments);
-			
-
-	
-	
 };
 #endif
