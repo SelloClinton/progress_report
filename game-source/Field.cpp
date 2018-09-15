@@ -50,7 +50,7 @@ void Field::generateYPositions(int numberOfMushrooms){
 	while(valid_y_positions != numberOfMushrooms){
 		
 			auto random_multiple_of_16 = rand() %(Constants::DISPLAY_HEIGHT_-50)+1;
-			if (random_multiple_of_16%16 == 0){
+			if ((random_multiple_of_16%16 == 0)&&(random_multiple_of_16 >=32)){
 			yPositions_.push_back(random_multiple_of_16);
 			valid_y_positions++;	
 		}

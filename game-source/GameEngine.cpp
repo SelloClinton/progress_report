@@ -9,7 +9,7 @@ GameEngine::GameEngine():
 			,player_(make_shared<Player>(mover))
             ,centipede_(make_shared<Centipede>(Constants::INITIAL_SIZE_OF_CENTIPEDE_))
 			,field_(make_shared<Field>(Constants::NUMBER_OF_MUSHROOMS))
-			,play_(false)
+			,playing_(true)
 			,game_over_(false)
 {
 		if (display_== nullptr) throw WindowNotCreated();
@@ -18,13 +18,40 @@ GameEngine::GameEngine():
 void GameEngine::playGame(){
 
 	splashScreen();
-	
+
+//	while(display_->getWindow()->isOpen()){
+//			auto input = checkInput();
+//			update();
+//			drawObjects();
+//			display_->getWindow()->display();
+//            display_->getWindow()->clear();
+//		}
+		
+		
 	while(display_->getWindow()->isOpen()){
-			update();
-			drawObjects();
-			display_->getWindow()->display();
-            display_->getWindow()->clear();
-		}
+			
+				if((playing_)&&(!game_over_)){
+					checkInput();
+					handleInput();
+					update();
+					drawObjects();
+					display_->getWindow()->display();
+					display_->getWindow()->clear();
+					
+				}
+				else if ((!playing_)&&(!game_over_)){
+					checkInput();
+					handleInput();
+					drawObjects();
+					display_->getWindow()->display();
+					display_->getWindow()->clear();
+				}
+				else if((!playing_)&&(game_over_)){
+					splashScreen();
+					checkInput();
+					handleInput();
+				}
+	}
 }
 
 void GameEngine::splashScreen(){
@@ -34,11 +61,12 @@ void GameEngine::splashScreen(){
 
 void GameEngine::update(){
 
-	checkInput();
+//	checkInput();
     updateCentipede(field_);
 	player_->updateBullet();
 	auto collision_status = checkCollision();
 	checkPlayerCollision();
+	gameStatus();
 
 }
 void GameEngine::updateCentipede(shared_ptr<Field> field){
@@ -48,31 +76,61 @@ void GameEngine::updateCentipede(shared_ptr<Field> field){
 void GameEngine::checkInput(){
 		KeyReader key_read;
 
-		auto input = key_read.readKey(display_->getWindow());
-
-		keyReaction(input);
+		key_ = key_read.readKey(display_->getWindow());
+		
 }
-void GameEngine::keyReaction(Pressed key){	//take to Update, with pressed key
-	
-	switch(key){
-		case Pressed::LEFT:
-				player_->attribute()->move(Direction::LEFT);
-			break;
+
+void GameEngine::handleInput(){
+	switch(key_){
 		case Pressed::RIGHT:
+			if(playing_)
 				player_->attribute()->move(Direction::RIGHT);
 			break;
-		case Pressed::S:
-			play_ = true;
-            break;
+		case Pressed::LEFT:
+			if(playing_)
+				player_->attribute()->move(Direction::LEFT);
+			break;
 		case Pressed::SPACE:
-			player_->shoot();
+			if(playing_)
+				player_->shoot();
+			break;
+		case Pressed::P:
+			playing_ = false;
+			break;
+		case Pressed::R:
+			playing_ = true;
+            break;
+		case Pressed::S:
+			playing_ = true;
+			game_over_ = false;
 			break;
 		case Pressed::ESCAPE:
 			display_->getWindow()->close();
 			break;
-			
-		}
+		}	
+		
 }
+//void GameEngine::keyReaction(Pressed key){	//take to Update, with pressed key
+//	
+//	switch(key){
+//		case Pressed::LEFT:
+//				player_->attribute()->move(Direction::LEFT);
+//			break;
+//		case Pressed::RIGHT:
+//				player_->attribute()->move(Direction::RIGHT);
+//			break;
+//		case Pressed::S:
+//			play_ = true;
+//            break;
+//		case Pressed::SPACE:
+//			player_->shoot();
+//			break;
+//		case Pressed::ESCAPE:
+//			display_->getWindow()->close();
+//			break;
+//			
+//		}
+//}
 
 void GameEngine::drawObjects(){
 	
@@ -119,7 +177,19 @@ void GameEngine::checkPlayerCollision(){
 			auto collision_detector = make_shared<CollisionDetection>(seg_x_position,seg_y_position,Object::SEGMENT,player_x_position,player_y_position,Object::PLAYER); 
 			auto status = collision_detector->collided();
 			
-			if(status)
-				std::cout << "collided with player!" << std::endl;
+			if(status){
+				player_->attribute()->destroy();
+				}
+
 			}
+}
+
+void GameEngine::gameStatus(){
+		if (!player_->attribute()->isLive()){
+						game_over_ = true;
+						playing_ = false;
+						std::cout << "game over!" << std::endl;
+			
+			}
+
 }

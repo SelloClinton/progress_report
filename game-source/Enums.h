@@ -11,10 +11,12 @@ enum class Object{
 enum class Pressed{
 		RIGHT,
 		LEFT,
+		SPACE,
+		P,
+		R,
 		S,
 		ESCAPE,
-		SPACE,
-		NO_INPUT
+		NONE
 };
 enum class Direction{
 		LEFT,

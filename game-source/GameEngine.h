@@ -38,19 +38,22 @@ private:
 	shared_ptr<Player> player_;
 	shared_ptr<Centipede> centipede_;
 	shared_ptr<Field> field_;
-	
+	Pressed key_;
 	bool game_over_;
-	bool play_;
+	bool playing_;
 	
 	void splashScreen();
 	void update();
     void updateCentipede(shared_ptr<Field> field);
 	void checkInput();
-	void keyReaction(Pressed key);
+//	void keyReaction(Pressed key);
+	void handleInput();
 	void drawObjects();
 	
 	bool checkCollision();
 	void checkPlayerCollision();
+	
+	void gameStatus();
 };
 
 #endif
