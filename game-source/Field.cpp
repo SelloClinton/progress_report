@@ -45,11 +45,15 @@ void Field::generateXPositions(int numberOfMushrooms){
 void Field::generateYPositions(int numberOfMushrooms){
 	
 	//corresponding multiples are yet to be discovered
+	auto valid_y_positions = 0;
 	srand(time(NULL));
-	for(auto i = 0; i != numberOfMushrooms; i++){
-
-		auto random_multiple_of_four = rand() %(Constants::DISPLAY_HEIGHT_-50)+1;
-		yPositions_.push_back(random_multiple_of_four);
+	while(valid_y_positions != numberOfMushrooms){
+		
+			auto random_multiple_of_16 = rand() %(Constants::DISPLAY_HEIGHT_-50)+1;
+			if (random_multiple_of_16%4 == 0){
+			yPositions_.push_back(random_multiple_of_16);
+			valid_y_positions++;	
+		}
 	}
 }
 
