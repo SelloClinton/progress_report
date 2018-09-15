@@ -35,14 +35,14 @@ void GameEngine::splashScreen(){
 void GameEngine::update(){
 
 	checkInput();
-    updateCentipede();
+    updateCentipede(field_);
 	player_->updateBullet();
 	auto collision_status = checkCollision();
 	checkPlayerCollision();
 
 }
-void GameEngine::updateCentipede(){
-   centipede_->moveSegments();     
+void GameEngine::updateCentipede(shared_ptr<Field> field){
+   centipede_->moveSegments(field_);     
 }
 
 void GameEngine::checkInput(){

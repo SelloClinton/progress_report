@@ -14,7 +14,8 @@ using std::make_shared;
 enum class Object{
 		PLAYER,
 		BULLET,
-		SEGMENT
+		SEGMENT,
+		MUSHROOM
 };
 
 class Box{

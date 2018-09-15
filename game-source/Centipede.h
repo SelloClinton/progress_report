@@ -7,6 +7,8 @@
 #include "Mover.h"
 #include "Position.h"
 #include "Constants.h"
+#include "Field.h"
+#include "CollisionDetection.h"
 
 #include <tuple>
 #include <list>
@@ -26,7 +28,7 @@ class Centipede{
     
 public:
         Centipede(int centipedeSize);
-        void moveSegments();
+        void moveSegments(shared_ptr<Field> field);
         Segments& getCentipede(){return centipede_;}
 private:
         Segments centipede_;

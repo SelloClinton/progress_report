@@ -44,7 +44,7 @@ private:
 	
 	void splashScreen();
 	void update();
-    void updateCentipede();
+    void updateCentipede(shared_ptr<Field> field);
 	void checkInput();
 	void keyReaction(Pressed key);
 	void drawObjects();

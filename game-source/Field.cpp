@@ -50,9 +50,10 @@ void Field::generateYPositions(int numberOfMushrooms){
 	while(valid_y_positions != numberOfMushrooms){
 		
 			auto random_multiple_of_16 = rand() %(Constants::DISPLAY_HEIGHT_-50)+1;
-			if (random_multiple_of_16%4 == 0){
+			if (random_multiple_of_16%16 == 0){
 			yPositions_.push_back(random_multiple_of_16);
 			valid_y_positions++;	
+			std::cout << "mushY: " << random_multiple_of_16 << std::endl;
 		}
 	}
 }
