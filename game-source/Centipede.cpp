@@ -13,16 +13,19 @@ void Centipede::moveSegments(shared_ptr<Field> field){
 	
     
        for(auto& segment:centipede_){
-		   auto[segx,segy] = segment->attribute()->position()->getPosition();
+		  auto[segx,segy] = segment->attribute()->position()->getPosition();
 		  auto mushrooms = field->getMushrooms();
+		  
 		  for(auto& mushroom:mushrooms){
+			  
 				auto[mushx,mushy] = mushroom->position()->getPosition();
 				auto collision_detector = make_shared<CollisionDetection>(segx,segy,Object::SEGMENT,mushx,mushy,Object::MUSHROOM);
 				auto status = collision_detector->collided();
 				
-				if(status)
-					std::cout << "collided with mushroom " << std::endl;
-			  
+				if((status)&&(segment->isFacingLeft()))
+					turnRight(segment);
+				else if((status)&&(segment->isFacingRight()))
+					turnLeft(segment);
 		}
 		
 
