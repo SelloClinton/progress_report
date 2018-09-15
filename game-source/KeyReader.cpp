@@ -12,8 +12,10 @@ Pressed KeyReader::readKey(shared_ptr<sf::RenderWindow> window){
 					return Pressed::ESCAPE;
 			if ((event.type == sf::Event::KeyPressed)&&(event.key.code == sf::Keyboard::Space))
 				return Pressed::SPACE;
-			
-				
+			if ((event.type == sf::Event::KeyPressed)&&(event.key.code == sf::Keyboard::P))
+				return Pressed::P;			
+			if ((event.type == sf::Event::KeyPressed)&&(event.key.code == sf::Keyboard::R))
+				return Pressed::R;			
 			}
 		
 		

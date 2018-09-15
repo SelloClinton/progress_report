@@ -46,8 +46,9 @@ void GameEngine::playGame(){
 					display_->getWindow()->display();
 					display_->getWindow()->clear();
 				}
-				else if((!playing_)&&(game_over_)){
+				else if(game_over_){
 					splashScreen();
+					std::cout<<"after splash" << std::endl;
 					checkInput();
 					handleInput();
 				}
