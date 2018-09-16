@@ -45,6 +45,32 @@ void Drawer::drawField(shared_ptr<Field> field){
 			drawMushroom(mushroom);
 		}
 }
+
+void Drawer::drawPauseMessage(){
+	
+	sf::Text text;
+	auto font = data_->getFont();
+	text.setFillColor(sf::Color::Green);
+	text.setFont(font);
+	text.setCharacterSize(25);
+	text.setString("GAME PAUSED --- PRESS   R   TO RESUME");
+	text.setPosition(100,250);
+	window_->draw(text);
+	
+}
+void Drawer::drawGameOverMessage(const string& wonOrLost){
+	sf::Text text;
+	auto font = data_->getFont();
+	text.setFont(font);
+	text.setFillColor(sf::Color::Yellow);
+	text.setCharacterSize(25);
+	if (auto str = "won"; wonOrLost == str)
+		text.setString("GAME OVER --- YOU WON! --- PRESS 	S 	TO RESTART");
+	else
+		text.setString("GAME OVER --- YOU LOST! --- PRESS 	S	 TO RESTART");
+	text.setPosition(50,250);
+	window_->draw(text);
+}
 void Drawer::drawSegment(shared_ptr<Segment> segment){
 	
 	auto[x_position,y_position] = segment->attribute()->position()->getPosition();

@@ -11,6 +11,7 @@
 #include "Constants.h"
 #include "Mushroom.h"
 #include "Field.h"
+#include "Constants.h"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -33,9 +34,12 @@ public:
         void drawCentipede(shared_ptr<Centipede> centipede);
 		void drawBullets(shared_ptr<Player> player);
 		void drawField(shared_ptr<Field> field);
+		void drawPauseMessage();
+		void drawGameOverMessage(const string& wonOrLost);
 
 private:
 		unique_ptr<DataBank> data_;
+		sf::Text text_;
 		shared_ptr<sf::RenderWindow> window_;
 		Sprites object_sprites_;
 		void drawSegment(shared_ptr<Segment> segment); 

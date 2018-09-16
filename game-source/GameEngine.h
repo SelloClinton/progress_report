@@ -51,6 +51,7 @@ private:
 	void handleInput();
 	void drawObjects();
 	void displayPauseMessage();
+	void displayGameOverMessage();
 	bool checkCollision();
 	void checkPlayerCollision();
 	

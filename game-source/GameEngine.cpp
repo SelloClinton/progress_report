@@ -44,15 +44,18 @@ void GameEngine::playGame(){
 					checkInput();
 					handleInput();
 					drawObjects();
-					display_->getWindow()->display();
-					display_->getWindow()->clear();
+					displayPauseMessage();
+//					display_->getWindow()->display();
+//					display_->getWindow()->clear();
 				}
 				else if(game_over_){
-					splashScreen();
-					std::cout<<"after splash" << std::endl;
+				//	splashScreen();
+					
 					checkInput();
 					handleInput();
-					display_->getWindow()->display();
+					drawObjects();
+					displayGameOverMessage();
+//					display_->getWindow()->display();
 //					display_->getWindow()->clear();
 				}
 	}
@@ -144,7 +147,21 @@ void GameEngine::drawObjects(){
 
 }
 void GameEngine::displayPauseMessage(){
-	
+	drawer_->drawPauseMessage();
+	display_->getWindow()->display();
+	display_->getWindow()->clear();
+}
+void GameEngine::displayGameOverMessage(){
+	if(auto over = "won";player_->attribute()->isLive()){
+		drawer_->drawGameOverMessage(over);
+		display_->getWindow()->display();
+		display_->getWindow()->clear();
+	}
+	else if(auto over = "lost";!player_->attribute()->isLive()){
+		drawer_->drawGameOverMessage(over);
+		display_->getWindow()->display();
+		display_->getWindow()->clear();
+	}
 }
 bool GameEngine::checkCollision(){
 	
@@ -192,8 +209,7 @@ void GameEngine::gameStatus(){
 		if (!player_->attribute()->isLive()){
 						game_over_ = true;
 						playing_ = false;
-						std::cout << "game over!" << std::endl;
 			
-			}
+		}
 
 }
