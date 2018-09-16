@@ -31,6 +31,7 @@ public:
 	void playGame();
 private:
 	shared_ptr<Display> display_;
+	shared_ptr<Drawer> drawer_;
 	shared_ptr<Position> position_;
     shared_ptr<Position> pos;
     shared_ptr<Mover> mover;
@@ -49,7 +50,7 @@ private:
 //	void keyReaction(Pressed key);
 	void handleInput();
 	void drawObjects();
-	
+	void displayPauseMessage();
 	bool checkCollision();
 	void checkPlayerCollision();
 	

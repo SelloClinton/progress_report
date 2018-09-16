@@ -2,6 +2,7 @@
 
 GameEngine::GameEngine():
 			display_(make_shared<Display>())
+			,drawer_(make_shared<Drawer>(display_->getWindow()))
 			,position_(make_shared<Position>(Constants::DISPLAY_WIDTH_/2,(Constants::DISPLAY_HEIGHT_-50)))
             ,pos(make_shared<Position>(0,0))
             ,mover(make_shared<Mover>(position_,5))
@@ -39,7 +40,7 @@ void GameEngine::playGame(){
 					display_->getWindow()->clear();
 					
 				}
-				else if ((!playing_)&&(!game_over_)){
+				else if ((!playing_)&&(!game_over_)){//paused
 					checkInput();
 					handleInput();
 					drawObjects();
@@ -51,6 +52,8 @@ void GameEngine::playGame(){
 					std::cout<<"after splash" << std::endl;
 					checkInput();
 					handleInput();
+					display_->getWindow()->display();
+//					display_->getWindow()->clear();
 				}
 	}
 }
@@ -134,15 +137,15 @@ void GameEngine::handleInput(){
 //}
 
 void GameEngine::drawObjects(){
-	
-	Drawer drawer(display_->getWindow());
-	drawer.drawField(field_);
-    drawer.drawPlayer(player_);
-    drawer.drawCentipede(centipede_);
-	drawer.drawBullets(player_);
+	drawer_->drawField(field_);
+    drawer_->drawPlayer(player_);
+    drawer_->drawCentipede(centipede_);
+	drawer_->drawBullets(player_);
 
 }
-
+void GameEngine::displayPauseMessage(){
+	
+}
 bool GameEngine::checkCollision(){
 	
 	for(auto& segment:centipede_->getCentipede()){
