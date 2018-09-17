@@ -191,7 +191,7 @@ bool GameEngine::checkCollision(){
 
 	auto collision_reactor = make_shared<CollisionReaction>();
 	collision_reactor->updateBullets(player_->getBullets());
-	collision_reactor->updateSegments(centipede_->getCentipede());
+	collision_reactor->updateSegments(centipede_->getCentipede(), field_->getMushrooms());
 	
 }
 

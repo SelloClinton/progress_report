@@ -12,15 +12,22 @@ void CollisionReaction::updateBullets(list<shared_ptr<Bullet>>& bullets){
 	}
 }
 
-void CollisionReaction::updateSegments(list<shared_ptr<Segment>>& segments){
+void CollisionReaction::updateSegments(list<shared_ptr<Segment>>& segments, list<shared_ptr<Mushroom>>& field){
 
 	for(auto segments_iterator = begin(segments); segments_iterator != end(segments); segments_iterator++){
 	
-		if (!((*segments_iterator)->attribute()->isLive()))
+		if (!((*segments_iterator)->attribute()->isLive())){
+			auto[mush_x,mush_y] = (*segments_iterator)->attribute()->position()->getPosition();
+			auto mush_position = make_shared<Position>(mush_x,mush_y);
+			auto mushroom = make_shared<Mushroom>(mush_position);
+			field.push_back(mushroom);
 			segments_iterator = segments.erase(segments_iterator);
-	}	
+			
+		}
+	}
+}	
 	
-}
+
 
 void CollisionReaction::updateMushrooms(list<shared_ptr<Mushroom>>& mushrooms){
 	
