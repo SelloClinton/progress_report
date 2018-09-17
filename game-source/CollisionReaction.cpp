@@ -21,3 +21,12 @@ void CollisionReaction::updateSegments(list<shared_ptr<Segment>>& segments){
 	}	
 	
 }
+
+void CollisionReaction::updateMushrooms(list<shared_ptr<Mushroom>>& mushrooms){
+	
+		for(auto mushroom_iterator = begin(mushrooms); mushroom_iterator != end(mushrooms); mushroom_iterator++){
+			
+			if (!((*mushroom_iterator)->isLive()))
+				mushroom_iterator = mushrooms.erase(mushroom_iterator);
+		}
+}

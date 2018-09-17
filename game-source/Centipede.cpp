@@ -11,7 +11,6 @@ Centipede::Centipede(int centipedeSize):
 
 void Centipede::moveSegments(shared_ptr<Field> field){
 	
-    
        for(auto& segment:centipede_){
 		  auto[segx,segy] = segment->attribute()->position()->getPosition();
 		  auto mushrooms = field->getMushrooms();
@@ -49,7 +48,7 @@ void Centipede::initializePosition(){
     for(auto i = 0; i != centipede_size_; i++){
 		
         auto segment_x_position = (Constants::DISPLAY_WIDTH_/2)-separator*(Constants::PLAYER_WIDTH_);
-        auto position = make_shared<Position>(segment_x_position,480);
+        auto position = make_shared<Position>(segment_x_position,0);
         auto mover = make_shared<Mover>(position,Constants::SEGMENT_SPEED_);
         auto segment = make_shared<Segment>(mover);
         centipede_.push_back(segment);

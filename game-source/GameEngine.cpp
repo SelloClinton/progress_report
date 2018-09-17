@@ -31,7 +31,7 @@ void GameEngine::playGame(){
 		
 	while(display_->getWindow()->isOpen()){
 			
-				if((playing_)&&(!game_over_)){
+				if((playing_)&&(!game_over_)){//playing
 					checkInput();
 					handleInput();
 					update();
@@ -48,7 +48,7 @@ void GameEngine::playGame(){
 //					display_->getWindow()->display();
 //					display_->getWindow()->clear();
 				}
-				else if(game_over_){
+				else if(game_over_){//game over
 				//	splashScreen();
 					
 					checkInput();
@@ -73,6 +73,7 @@ void GameEngine::update(){
 	player_->updateBullet();
 	auto collision_status = checkCollision();
 	checkPlayerCollision();
+	checkBulletMushroomCollision();
 	gameStatus();
 
 }
@@ -108,7 +109,7 @@ void GameEngine::handleInput(){
 			playing_ = true;
             break;
 		case Pressed::S:
-			playing_ = true;
+			//playing_ = true;
 			game_over_ = false;
 			break;
 		case Pressed::ESCAPE:
@@ -165,21 +166,25 @@ void GameEngine::displayGameOverMessage(){
 }
 bool GameEngine::checkCollision(){
 	
-	for(auto& segment:centipede_->getCentipede()){
+	auto centipede = centipede_->getCentipede();
+	auto bullets = player_->getBullets();
+	
+	for(auto& segment:centipede){
 		
 		auto [segment_x_position,segment_y_position] = segment->attribute()->position()->getPosition();
 	
 		
-			for(auto& bullet:player_->getBullets()){
+			for(auto& bullet:bullets){
 				
 				auto [bullet_x_position,bullet_y_position] = bullet->attribute()->position()->getPosition();
-				auto collision = make_shared<CollisionDetection>(segment_x_position,segment_y_position,Object::SEGMENT,bullet_x_position,bullet_y_position,Object::BULLET);
+				auto collision = make_shared<CollisionDetection>(bullet_x_position,bullet_y_position,Object::BULLET
+																,segment_x_position,segment_y_position,Object::SEGMENT);
 				auto status =  collision->collided();
 				
 				if(status){
 					segment->attribute()->destroy();
 					bullet->attribute()->destroy();
-					}
+				}
 			}
 	}
 	
@@ -195,7 +200,8 @@ void GameEngine::checkPlayerCollision(){
 			auto[seg_x_position,seg_y_position] = segment->attribute()->position()->getPosition();
 			
 			auto[player_x_position,player_y_position] = player_->attribute()->position()->getPosition();
-			auto collision_detector = make_shared<CollisionDetection>(seg_x_position,seg_y_position,Object::SEGMENT,player_x_position,player_y_position,Object::PLAYER); 
+			auto collision_detector = make_shared<CollisionDetection>(seg_x_position,seg_y_position,Object::SEGMENT
+																	,player_x_position,player_y_position,Object::PLAYER); 
 			auto status = collision_detector->collided();
 			
 			if(status){
@@ -206,10 +212,36 @@ void GameEngine::checkPlayerCollision(){
 }
 
 void GameEngine::gameStatus(){
-		if (!player_->attribute()->isLive()){
+		if ((!player_->attribute()->isLive())||(centipede_->getCentipede().empty())){
 						game_over_ = true;
 						playing_ = false;
 			
 		}
 
+}
+
+void GameEngine::checkBulletMushroomCollision(){
+	
+	auto bullets = player_->getBullets();
+	auto mushrooms = field_->getMushrooms();
+		for(auto& bullet: bullets){
+			auto[bullet_x,bullet_y] = bullet->attribute()->position()->getPosition();
+		
+			for(auto& mushroom: mushrooms){
+					auto[mushroom_x,mushroom_y] = mushroom->position()->getPosition();
+				
+					auto collision_detector = make_shared<CollisionDetection>(bullet_x,bullet_y,Object::BULLET,
+																			   mushroom_x,mushroom_y,Object::MUSHROOM);
+					auto status = collision_detector->collided();
+					
+					if(status){
+						bullet->attribute()->destroy();
+						mushroom->weaken();
+					}
+					
+			}
+		}
+	auto collision_reactor = make_shared<CollisionReaction>();
+	collision_reactor->updateBullets(player_->getBullets());
+	collision_reactor->updateMushrooms(field_->getMushrooms());				
 }

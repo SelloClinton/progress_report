@@ -27,6 +27,8 @@ void Player::updateBullet(){
             bullet->attribute()->move(Direction::UP);
         else
             bullet->attribute()->destroy();
+	auto[x,y] = bullet->attribute()->position()->getPosition();
+//	std::cout << "x:"<<x<<", y:"<<y<<std::endl;
     }
 
 	

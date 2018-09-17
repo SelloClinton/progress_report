@@ -3,6 +3,7 @@
 
 #include "Bullet.h"
 #include "Segment.h"
+#include "Mushroom.h"
 
 #include <list>
 #include <memory>
@@ -17,5 +18,6 @@ public:
 			CollisionReaction();
 			void updateBullets(list<shared_ptr<Bullet>>& bullets);
 			void updateSegments(list<shared_ptr<Segment>>& segments);
+			void updateMushrooms(list<shared_ptr<Mushroom>>& mushrooms);
 };
 #endif

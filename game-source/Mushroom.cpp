@@ -3,7 +3,7 @@
 Mushroom::Mushroom(shared_ptr<Position>position):
 		  position_(position)
 		  ,number_of_lives(4)
-		  ,live_(false)
+		  ,live_(true)
 		  {}
 		  
 shared_ptr<Position> Mushroom::position(){
@@ -18,7 +18,8 @@ void Mushroom::destroy(){
 }
 
 void Mushroom::weaken(){
-	if(number_of_lives > 0)
+	if(number_of_lives > 1)
 		--number_of_lives;
-	destroy();
+	else
+		destroy();
 }

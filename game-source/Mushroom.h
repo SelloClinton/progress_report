@@ -2,6 +2,7 @@
 #define MUSHROOM_H
 
 #include "Position.h"
+#include <iostream>
 #include <cstdlib>
 #include <ctime>
 #include <memory>

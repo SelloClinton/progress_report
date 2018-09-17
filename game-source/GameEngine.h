@@ -54,8 +54,8 @@ private:
 	void displayGameOverMessage();
 	bool checkCollision();
 	void checkPlayerCollision();
-	
 	void gameStatus();
+	void checkBulletMushroomCollision();
 };
 
 #endif

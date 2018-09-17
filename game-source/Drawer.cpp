@@ -62,12 +62,12 @@ void Drawer::drawGameOverMessage(const string& wonOrLost){
 	sf::Text text;
 	auto font = data_->getFont();
 	text.setFont(font);
-	text.setFillColor(sf::Color::Yellow);
+	text.setFillColor(sf::Color::Red);
 	text.setCharacterSize(25);
 	if (auto str = "won"; wonOrLost == str)
-		text.setString("GAME OVER --- YOU WON! --- PRESS 	S 	TO RESTART");
+		text.setString("YOU WON!--PRESS ESCAPE TO GO TO MAIN MENU");
 	else
-		text.setString("GAME OVER --- YOU LOST! --- PRESS 	S	 TO RESTART");
+		text.setString("YOU LOST!--PRESS ESCAPE TO GO TO MAIN MENU");
 	text.setPosition(50,250);
 	window_->draw(text);
 }

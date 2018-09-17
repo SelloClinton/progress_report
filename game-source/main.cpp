@@ -14,8 +14,11 @@ using namespace std;
 
 int main(){
 	
+	while(true){
 		GameEngine centipede;
 		centipede.playGame();
+		}
+
 		
 //	cout << Constants::DISPLAY_WIDTH << endl;
 		
