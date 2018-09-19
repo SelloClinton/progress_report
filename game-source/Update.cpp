@@ -7,8 +7,9 @@ void Update::updateGame(shared_ptr<Player>player,Pressed key,shared_ptr<Centiped
 	updatePlayer(player,key);
 	updateCentipede(centipede,field);
 	checkBulletSegmentCollision(centipede->getCentipede(),player->getBullets());
-	auto field_ = field->getMushrooms(); 
 	handleBulletSegmentCollision(centipede->getCentipede(), player->getBullets(), field->getMushrooms());
+	checkBulletMushroomCollision(player->getBullets(),field->getMushrooms());
+	handleBulletMushroomsCollision(player->getBullets(),field->getMushrooms());
 }
 
 void Update::updatePlayer(shared_ptr<Player> player,Pressed key){
@@ -55,6 +56,27 @@ void Update::handleBulletSegmentCollision(list<shared_ptr<Segment>>& segments,li
 	auto collision_reactor = make_shared<CollisionReaction>();
 	collision_reactor->updateBullets(bullets);
 	collision_reactor->updateSegments(segments,mushrooms);
+}
+void Update::checkBulletMushroomCollision(list<shared_ptr<Bullet>> bullets,list<shared_ptr<Mushroom>> mushrooms){
+		
+	for(auto& bullet:bullets){
+			auto[bullet_x,bullet_y] = bullet->attribute()->position()->getPosition();
+			for(auto& mushroom:mushrooms){
+					auto[mushroom_x,mushroom_y] = mushroom->position()->getPosition();
+					auto collision_detector = make_shared<CollisionDetection>(bullet_x,bullet_y,Object::BULLET,
+																				mushroom_x,mushroom_y,Object::MUSHROOM);
+					auto status = collision_detector->collided();
+					if(status){
+							bullet->attribute()->destroy();
+							mushroom->weaken();
+					}
+			}
+	}
+}
+void Update::handleBulletMushroomsCollision(list<shared_ptr<Bullet>>& bullets, list<shared_ptr<Mushroom>>& mushrooms){
+	auto collision_reactor = make_shared<CollisionReaction>();
+	collision_reactor->updateBullets(bullets);
+	collision_reactor->updateMushrooms(mushrooms);
 }
 //void Update::checkSegmentPlayerCollision(shared_ptr<Segment> segment){
 //		

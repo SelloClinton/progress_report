@@ -83,7 +83,7 @@ void GameEngine::update(){
 	
 //	auto collision_status = checkCollision();
 	checkPlayerCollision();
-	checkBulletMushroomCollision();
+//	checkBulletMushroomCollision();
 	gameStatus();
 
 }
