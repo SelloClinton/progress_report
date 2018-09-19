@@ -15,12 +15,18 @@ public:
         shared_ptr<Mover> attribute();
         void faceLeft();
         void faceRight();
+		void faceDown();
+		void faceUp();
         bool isFacingLeft();
         bool isFacingRight();
+		bool isMovingDown();
+		bool isMovingUp();
 private:
         shared_ptr<Mover> attribute_;
         bool right_flag_;
         bool left_flag_;
+		bool down_flag_;
+		bool up_flag_;
 };
 
 #endif 

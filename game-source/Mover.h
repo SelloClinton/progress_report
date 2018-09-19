@@ -23,6 +23,7 @@ public:
 		void destroy();
 		bool minXBound(int x_coord);
 		bool maxXBound(int x_coord);
+		bool maxYBound(int y_coord);
 private:
         shared_ptr<Position> position_;
         int speed_;
@@ -31,7 +32,7 @@ private:
         int getSpeed();
 //		bool minXBound(int x_coord);
 //		bool maxXBound(int x_coord);
-		bool maxYBound(int y_coord);
+//		bool maxYBound(int y_coord);
 };
 
 #endif 

@@ -9,6 +9,7 @@
 #include "Constants.h"
 #include "Field.h"
 #include "CollisionDetection.h"
+#include "Mushroom.h"
 
 #include <tuple>
 #include <list>
@@ -35,8 +36,11 @@ private:
         int centipede_size_;
 		void initializePosition();
 		void moveDown(shared_ptr<Segment>segment);
+		void moveUp(shared_ptr<Segment> segment);
 		void turnRight(shared_ptr<Segment>segment);
 		void turnLeft(shared_ptr<Segment>segment);
+		void keepUp(shared_ptr<Segment> segment);
+		void handleMushroom(shared_ptr<Segment> segment, list<shared_ptr<Mushroom>> mushrooms);
         
 };
 

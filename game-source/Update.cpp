@@ -96,3 +96,12 @@ void Update::checkSegmentPlayerCollision(list<shared_ptr<Segment>> segments, sha
 			player->attribute()->destroy();
 	}	
 }
+
+//void Update::checkSegmentMushroomCollision(list<shared_ptr<Segment>> segments, list<shared_ptr<Mushroom>> mushrooms){
+//		
+//	for(auto& segment:segments){
+//		
+//			auto[seg_x,seg_y] = segment->attribute()->position()->getPosition();
+//			for()
+//	}
+//}
