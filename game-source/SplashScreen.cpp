@@ -27,10 +27,11 @@ void SplashScreen::loadInstructions(){
 	loadName();
 	
     vector<string>instructions = {"---------INSTRUCTIONS-----------", 
-								  "			START --- S",
-								  "			PAUSE --- P",
-								  "			RESUME --- R",
-								  "			EXIT --- ESCAPE"};
+								  "			START---S",
+								  "MOVEMENT---LEFT/RIGHT ARROW",
+								  "			PAUSE---P",
+								  "			RESUME---R",
+								  "			EXIT---ESCAPE"};
 	
 	    unsigned int  font_size = 25;
     for(const auto& instruction:instructions)
@@ -61,11 +62,6 @@ void SplashScreen::loadName(){
     instructions_.at(0).setPosition(120,150);
 }
 
-//void SplashScreen::drawLogo(){
-//	
-//		logo_[2].setPosition(200,20);
-//		window_->draw(logo_[2]);
-//}
 
 void SplashScreen::drawText(){
 		for(auto& instruction:instructions_)

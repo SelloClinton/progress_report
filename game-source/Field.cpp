@@ -38,14 +38,12 @@ void Field::generateXPositions(int numberOfMushrooms){
 			if (random_multiple_of_four%4 == 0){
 					xPositions_.push_back(random_multiple_of_four);
 					validPosition++;
-				//	std::cout << "mushroom_x: " << random_multiple_of_four << std::endl;
 			}
 	}
 }
 
 void Field::generateYPositions(int numberOfMushrooms){
 	
-	//corresponding multiples are yet to be discovered
 	auto valid_y_positions = 0;
 	srand(time(NULL));
 	while(valid_y_positions != numberOfMushrooms){
@@ -54,7 +52,6 @@ void Field::generateYPositions(int numberOfMushrooms){
 			if ((random_multiple_of_16%4 == 0)&&(random_multiple_of_16 >=32)){
 				yPositions_.push_back(random_multiple_of_16);
 				valid_y_positions++;	
-			//	std::cout << "mushroom_y: " << random_multiple_of_16 << std::endl;
 		}
 	}
 }

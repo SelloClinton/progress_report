@@ -4,7 +4,6 @@ Segment::Segment(shared_ptr<Mover> attribute):
 		attribute_(attribute)
         ,right_flag_(true)
         ,left_flag_(false)
-//		,live(true)
 {
 	attribute_->setLive();
 }

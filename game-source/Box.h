@@ -1,6 +1,6 @@
 #ifndef BOX_H
 #define BOX_H
-//
+
 #include <memory>
 #include <tuple>
 #include "Position.h"

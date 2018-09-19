@@ -55,7 +55,6 @@ void Update::checkBulletSegmentCollision(list<shared_ptr<Segment>> segments, lis
 		
 }
 void Update::handleBulletSegmentCollision(list<shared_ptr<Segment>>& segments,list<shared_ptr<Bullet>>& bullets, list<shared_ptr<Mushroom>>& mushrooms){
-//	auto collision_reactor = make_shared<CollisionReaction>();
 	collision_reactor_->updateBullets(bullets);
 	collision_reactor_->updateSegments(segments,mushrooms);
 }
@@ -76,7 +75,6 @@ void Update::checkBulletMushroomCollision(list<shared_ptr<Bullet>> bullets,list<
 	}
 }
 void Update::handleBulletMushroomsCollision(list<shared_ptr<Bullet>>& bullets, list<shared_ptr<Mushroom>>& mushrooms){
-//	auto collision_reactor = make_shared<CollisionReaction>();
 	collision_reactor_->updateBullets(bullets);
 	collision_reactor_->updateMushrooms(mushrooms);
 }
@@ -92,6 +90,3 @@ void Update::checkSegmentPlayerCollision(list<shared_ptr<Segment>> segments, sha
 				player->attribute()->destroy();
 	}	
 }
-//void Update::handleSegmentPlayerCollision(shared_ptr<Segment> segment){
-//	
-//}

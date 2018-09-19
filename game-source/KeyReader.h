@@ -11,17 +11,6 @@
 using std::shared_ptr;
 
 
-//enum class Pressed{
-//	
-//		RIGHT,
-//		LEFT,
-//		S,
-//		ESCAPE,
-//		SPACE,
-//		NO_INPUT
-//		
-//};
-
 class KeyReader{
 	
 public:

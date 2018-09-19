@@ -15,6 +15,7 @@ void Drawer::drawPlayer(shared_ptr<Player> player){
 	auto player_sprite = object_sprites_.at(0);
 	player_sprite.setPosition(x_position,y_position);
 	window_->draw(player_sprite);
+
 	
 }
 
@@ -56,6 +57,7 @@ void Drawer::drawPauseMessage(){
 	text.setString("GAME PAUSED --- PRESS   R   TO RESUME");
 	text.setPosition(100,250);
 	window_->draw(text);
+
 	
 }
 void Drawer::drawGameOverMessage(const string& wonOrLost){
@@ -70,6 +72,7 @@ void Drawer::drawGameOverMessage(const string& wonOrLost){
 		text.setString("YOU LOST!--PRESS ESCAPE TO GO TO MAIN MENU");
 	text.setPosition(50,250);
 	window_->draw(text);
+
 }
 void Drawer::drawSegment(shared_ptr<Segment> segment){
 	
@@ -77,6 +80,7 @@ void Drawer::drawSegment(shared_ptr<Segment> segment){
 	auto segment_sprite = object_sprites_.at(1);
 	segment_sprite.setPosition(x_position,y_position);
 	window_->draw(segment_sprite);
+
 }
 
 void Drawer::drawBullet(shared_ptr<Bullet>bullet){
@@ -84,6 +88,7 @@ void Drawer::drawBullet(shared_ptr<Bullet>bullet){
 	auto bullet_sprite = object_sprites_.at(2);
 	bullet_sprite.setPosition(x_position,y_position);
 	window_->draw(bullet_sprite);
+
 }
 
 void Drawer::drawMushroom(shared_ptr<Mushroom> mushroom){

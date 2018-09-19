@@ -25,8 +25,7 @@ class FontNotFound{};
 class DataBank{
 	
 public:
-	DataBank();
-//	tuple<Sprites,sf::Font>loadData()const;	
+	DataBank();	
 	Sprites getSprites()const;
 	Font getFont()const;
 private:

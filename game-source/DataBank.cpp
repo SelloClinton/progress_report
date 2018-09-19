@@ -9,9 +9,6 @@ DataBank::DataBank()
 
 }
 
-//tuple<Sprites,sf::Font> DataBank::loadData()const{
-//	return{sprites_,font_};
-//}
 Sprites DataBank::getSprites()const{
 		return sprites_;
 }

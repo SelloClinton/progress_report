@@ -11,13 +11,6 @@ using std::make_shared;
 #include <cassert> 
 
 class NegativeZeroSpeed{};
-
-//enum class Direction{
-//		LEFT,
-//		RIGHT,
-//		UP,
-//		DOWN
-//};
     
 class Mover{
     
