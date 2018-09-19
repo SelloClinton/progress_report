@@ -28,7 +28,7 @@ void SplashScreen::loadInstructions(){
 	
     vector<string>instructions = {"---------INSTRUCTIONS-----------", 
 								  "			START---S",
-								  "MOVEMENT---LEFT/RIGHT ARROW",
+								  "MOVEMENT---LEFT/RIGHT/UP/DOWN ARROW",
 								  "			PAUSE---P",
 								  "			RESUME---R",
 								  "			EXIT---ESCAPE"};
