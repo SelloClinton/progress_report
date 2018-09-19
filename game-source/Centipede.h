@@ -39,8 +39,9 @@ private:
 		void moveUp(shared_ptr<Segment> segment);
 		void turnRight(shared_ptr<Segment>segment);
 		void turnLeft(shared_ptr<Segment>segment);
-		void keepUp(shared_ptr<Segment> segment);
 		void handleMushroom(shared_ptr<Segment> segment, list<shared_ptr<Mushroom>> mushrooms);
+		void keepUp(shared_ptr<Segment> segment,list<shared_ptr<Mushroom>>mushrooms);
+		void keepDown(shared_ptr<Segment> segment,list<shared_ptr<Mushroom>> mushrooms);
         
 };
 

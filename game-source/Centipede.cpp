@@ -72,9 +72,6 @@ void Centipede::turnLeft(shared_ptr<Segment>segment){
 		segment->attribute()->move(Direction::LEFT);
 		segment->faceLeft();	
 }
-void Centipede::keepUp(shared_ptr<Segment> segment){
-		
-}
 
 void Centipede::handleMushroom(shared_ptr<Segment> segment, list<shared_ptr<Mushroom>> mushrooms){
 	
@@ -96,4 +93,11 @@ void Centipede::handleMushroom(shared_ptr<Segment> segment, list<shared_ptr<Mush
 				}
 				
 		}
+}
+void Centipede::keepUp(shared_ptr<Segment> segment,list<shared_ptr<Mushroom>>mushrooms){
+		
+}
+
+void Centipede::keepDown(shared_ptr<Segment> segment,list<shared_ptr<Mushroom>>mushrooms){
+		
 }
