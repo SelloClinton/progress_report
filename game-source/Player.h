@@ -24,7 +24,6 @@ public:
 		Player(shared_ptr<Mover> attribute);
         shared_ptr<Mover>attribute();
 		void moveUp();
-		void moveDown();
 		void shoot();
 		void updateBullet();
 		Bullets& getBullets(){return bullets_;}

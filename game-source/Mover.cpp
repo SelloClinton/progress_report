@@ -70,7 +70,7 @@ bool Mover::maxXBound(int x_coord){
 }
 
 bool Mover::maxYBound(int y_coord){
-		if(y_coord > Constants::DISPLAY_HEIGHT_-(Constants::PLAYER_HEIGHT_/2))
+		if(y_coord > Constants::DISPLAY_HEIGHT_-2*(Constants::PLAYER_HEIGHT_))
 			return true;
 		return false;
 }

@@ -12,6 +12,7 @@ enum class Pressed{
 		RIGHT,
 		LEFT,
 		UP,
+		DOWN,
 		SPACE,
 		P,
 		R,

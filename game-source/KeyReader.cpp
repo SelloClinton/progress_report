@@ -29,7 +29,9 @@ Pressed KeyReader::readKey(shared_ptr<sf::RenderWindow> window){
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
 				return Pressed::UP;
 	}
-
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+				return Pressed::DOWN;
+	}
 	return Pressed::NONE;
 
 		
