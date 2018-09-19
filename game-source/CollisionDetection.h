@@ -12,7 +12,7 @@ using std::get;
 
 class CollisionDetection{
 public:
-        CollisionDetection(int x_position_A,int y_position_A,Object objectA, int x_position_B, int y_position_B, Object objectB);	//shared_ptr<Position>position_A, Object objectA, shared_ptr<Position>position_B, Object objectB);
+        CollisionDetection(int x_position_A,int y_position_A,Object objectA, int x_position_B, int y_position_B, Object objectB);	
         bool collided();
 private:
 	int x_position_A_;

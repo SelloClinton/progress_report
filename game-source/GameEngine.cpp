@@ -174,52 +174,52 @@ void GameEngine::displayGameOverMessage(){
 		display_->getWindow()->clear();
 	}
 }
-bool GameEngine::checkCollision(){
-	
-	auto centipede = centipede_->getCentipede();
-	auto bullets = player_->getBullets();
-	
-	for(auto& segment:centipede){
-		
-		auto [segment_x_position,segment_y_position] = segment->attribute()->position()->getPosition();
-	
-		
-			for(auto& bullet:bullets){
-				
-				auto [bullet_x_position,bullet_y_position] = bullet->attribute()->position()->getPosition();
-				auto collision = make_shared<CollisionDetection>(bullet_x_position,bullet_y_position,Object::BULLET
-																,segment_x_position,segment_y_position,Object::SEGMENT);
-				auto status =  collision->collided();
-				
-				if(status){
-					segment->attribute()->destroy();
-					bullet->attribute()->destroy();
-				}
-			}
-	}
-	
+//bool GameEngine::checkCollision(){
+//	
+//	auto centipede = centipede_->getCentipede();
+//	auto bullets = player_->getBullets();
+//	
+//	for(auto& segment:centipede){
+//		
+//		auto [segment_x_position,segment_y_position] = segment->attribute()->position()->getPosition();
+//	
+//		
+//			for(auto& bullet:bullets){
+//				
+//				auto [bullet_x_position,bullet_y_position] = bullet->attribute()->position()->getPosition();
+//				auto collision = make_shared<CollisionDetection>(bullet_x_position,bullet_y_position,Object::BULLET
+//																,segment_x_position,segment_y_position,Object::SEGMENT);
+//				auto status =  collision->collided();
+//				
+//				if(status){
+//					segment->attribute()->destroy();
+//					bullet->attribute()->destroy();
+//				}
+//			}
+//	}
+//	
+//
+//	auto collision_reactor = make_shared<CollisionReaction>();
+//	collision_reactor->updateBullets(player_->getBullets());
+//	collision_reactor->updateSegments(centipede_->getCentipede(), field_->getMushrooms());
+//	
+//}
 
-	auto collision_reactor = make_shared<CollisionReaction>();
-	collision_reactor->updateBullets(player_->getBullets());
-	collision_reactor->updateSegments(centipede_->getCentipede(), field_->getMushrooms());
-	
-}
-
-void GameEngine::checkPlayerCollision(){
-		for (auto& segment:centipede_->getCentipede()){
-			auto[seg_x_position,seg_y_position] = segment->attribute()->position()->getPosition();
-			
-			auto[player_x_position,player_y_position] = player_->attribute()->position()->getPosition();
-			auto collision_detector = make_shared<CollisionDetection>(seg_x_position,seg_y_position,Object::SEGMENT
-																	,player_x_position,player_y_position,Object::PLAYER); 
-			auto status = collision_detector->collided();
-			
-			if(status){
-				player_->attribute()->destroy();
-				}
-
-			}
-}
+//void GameEngine::checkPlayerCollision(){
+//		for (auto& segment:centipede_->getCentipede()){
+//			auto[seg_x_position,seg_y_position] = segment->attribute()->position()->getPosition();
+//			
+//			auto[player_x_position,player_y_position] = player_->attribute()->position()->getPosition();
+//			auto collision_detector = make_shared<CollisionDetection>(seg_x_position,seg_y_position,Object::SEGMENT
+//																	,player_x_position,player_y_position,Object::PLAYER); 
+//			auto status = collision_detector->collided();
+//			
+//			if(status){
+//				player_->attribute()->destroy();
+//				}
+//
+//			}
+//}
 
 void GameEngine::gameStatus(){
 		if ((!player_->attribute()->isLive())||(centipede_->getCentipede().empty())){
@@ -230,28 +230,28 @@ void GameEngine::gameStatus(){
 
 }
 
-void GameEngine::checkBulletMushroomCollision(){
-	
-	auto bullets = player_->getBullets();
-	auto mushrooms = field_->getMushrooms();
-		for(auto& bullet: bullets){
-			auto[bullet_x,bullet_y] = bullet->attribute()->position()->getPosition();
-		
-			for(auto& mushroom: mushrooms){
-					auto[mushroom_x,mushroom_y] = mushroom->position()->getPosition();
-				
-					auto collision_detector = make_shared<CollisionDetection>(bullet_x,bullet_y,Object::BULLET,
-																			   mushroom_x,mushroom_y,Object::MUSHROOM);
-					auto status = collision_detector->collided();
-					
-					if(status){
-						bullet->attribute()->destroy();
-						mushroom->weaken();
-					}
-					
-			}
-		}
-	auto collision_reactor = make_shared<CollisionReaction>();
-	collision_reactor->updateBullets(player_->getBullets());
-	collision_reactor->updateMushrooms(field_->getMushrooms());				
-}
+//void GameEngine::checkBulletMushroomCollision(){
+//	
+//	auto bullets = player_->getBullets();
+//	auto mushrooms = field_->getMushrooms();
+//		for(auto& bullet: bullets){
+//			auto[bullet_x,bullet_y] = bullet->attribute()->position()->getPosition();
+//		
+//			for(auto& mushroom: mushrooms){
+//					auto[mushroom_x,mushroom_y] = mushroom->position()->getPosition();
+//				
+//					auto collision_detector = make_shared<CollisionDetection>(bullet_x,bullet_y,Object::BULLET,
+//																			   mushroom_x,mushroom_y,Object::MUSHROOM);
+//					auto status = collision_detector->collided();
+//					
+//					if(status){
+//						bullet->attribute()->destroy();
+//						mushroom->weaken();
+//					}
+//					
+//			}
+//		}
+//	auto collision_reactor = make_shared<CollisionReaction>();
+//	collision_reactor->updateBullets(player_->getBullets());
+//	collision_reactor->updateMushrooms(field_->getMushrooms());				
+//}

@@ -10,7 +10,7 @@ CollisionDetection::CollisionDetection(int xPositionA,int yPositionA,Object obje
 {
 	createBoxes();
 }
-            
+	
 bool CollisionDetection::collided(){
 	
 		auto d1_x = min_x_B_ - max_x_A_;

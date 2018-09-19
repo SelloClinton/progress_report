@@ -1,8 +1,9 @@
 #include "Update.h"
 
-Update::Update()
-
+Update::Update():
+		collision_reactor_(make_shared<CollisionReaction>())
 		{}
+		
 void Update::updateGame(shared_ptr<Player>player,Pressed key,shared_ptr<Centipede> centipede,shared_ptr<Field> field){
 	updatePlayer(player,key);
 	updateCentipede(centipede,field);
@@ -54,9 +55,9 @@ void Update::checkBulletSegmentCollision(list<shared_ptr<Segment>> segments, lis
 		
 }
 void Update::handleBulletSegmentCollision(list<shared_ptr<Segment>>& segments,list<shared_ptr<Bullet>>& bullets, list<shared_ptr<Mushroom>>& mushrooms){
-	auto collision_reactor = make_shared<CollisionReaction>();
-	collision_reactor->updateBullets(bullets);
-	collision_reactor->updateSegments(segments,mushrooms);
+//	auto collision_reactor = make_shared<CollisionReaction>();
+	collision_reactor_->updateBullets(bullets);
+	collision_reactor_->updateSegments(segments,mushrooms);
 }
 void Update::checkBulletMushroomCollision(list<shared_ptr<Bullet>> bullets,list<shared_ptr<Mushroom>> mushrooms){
 		
@@ -75,9 +76,9 @@ void Update::checkBulletMushroomCollision(list<shared_ptr<Bullet>> bullets,list<
 	}
 }
 void Update::handleBulletMushroomsCollision(list<shared_ptr<Bullet>>& bullets, list<shared_ptr<Mushroom>>& mushrooms){
-	auto collision_reactor = make_shared<CollisionReaction>();
-	collision_reactor->updateBullets(bullets);
-	collision_reactor->updateMushrooms(mushrooms);
+//	auto collision_reactor = make_shared<CollisionReaction>();
+	collision_reactor_->updateBullets(bullets);
+	collision_reactor_->updateMushrooms(mushrooms);
 }
 void Update::checkSegmentPlayerCollision(list<shared_ptr<Segment>> segments, shared_ptr<Player> player){
 	

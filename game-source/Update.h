@@ -30,6 +30,7 @@ class Update{
 //		shared_ptr<Centipede> centipede_;
 //		shared_ptr<Field> field_;
 //		bool playing_;
+		shared_ptr<CollisionReaction> collision_reactor_;
 			
 		void updatePlayer(shared_ptr<Player> player, Pressed key); //player movement and shooting
 		void updateCentipede(shared_ptr<Centipede> centipede, shared_ptr<Field> field);//centipede movement
@@ -39,6 +40,6 @@ class Update{
 		void handleBulletMushroomsCollision(list<shared_ptr<Bullet>>& bullets, list<shared_ptr<Mushroom>>& mushrooms);
 
 		void checkSegmentPlayerCollision(list<shared_ptr<Segment>> segments, shared_ptr<Player> player);
-		void handleSegmentPlayerCollision(list<shared_ptr<Segment>> segments, shared_ptr<Player> player);
+//		void handleSegmentPlayerCollision(list<shared_ptr<Segment>> segments, shared_ptr<Player> player);
 };
 #endif
