@@ -15,6 +15,7 @@
 #include "CollisionReaction.h"
 #include "Field.h"
 #include "Mushroom.h"
+#include "Update.h"
 
 #include <memory>
 #include <list>

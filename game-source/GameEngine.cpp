@@ -33,7 +33,7 @@ void GameEngine::playGame(){
 			
 				if((playing_)&&(!game_over_)){//playing
 					checkInput();
-					handleInput();
+//					handleInput();
 					update();
 					drawObjects();
 					display_->getWindow()->display();
@@ -42,7 +42,7 @@ void GameEngine::playGame(){
 				}
 				else if ((!playing_)&&(!game_over_)){//paused
 					checkInput();
-					handleInput();
+//					handleInput();
 					drawObjects();
 					displayPauseMessage();
 //					display_->getWindow()->display();
@@ -69,8 +69,17 @@ void GameEngine::splashScreen(){
 void GameEngine::update(){
 
 //	checkInput();
-    updateCentipede(field_);
-	player_->updateBullet();
+//    updateCentipede(field_);
+//	player_->updateBullet();
+//	auto collision_status = checkCollision();
+//	checkPlayerCollision();
+//	checkBulletMushroomCollision();
+//	gameStatus();
+	
+	
+	
+	auto updator = make_shared<Update>();
+	updator->updateGame(player_,key_,centipede_,field_);
 	auto collision_status = checkCollision();
 	checkPlayerCollision();
 	checkBulletMushroomCollision();
@@ -82,26 +91,26 @@ void GameEngine::updateCentipede(shared_ptr<Field> field){
 }
 
 void GameEngine::checkInput(){
+	
 		KeyReader key_read;
-
 		key_ = key_read.readKey(display_->getWindow());
 		
 }
 
 void GameEngine::handleInput(){
 	switch(key_){
-		case Pressed::RIGHT:
-			if(playing_)
-				player_->attribute()->move(Direction::RIGHT);
-			break;
-		case Pressed::LEFT:
-			if(playing_)
-				player_->attribute()->move(Direction::LEFT);
-			break;
-		case Pressed::SPACE:
-			if(playing_)
-				player_->shoot();
-			break;
+//		case Pressed::RIGHT:
+//			if(playing_)
+//				player_->attribute()->move(Direction::RIGHT);
+//			break;
+//		case Pressed::LEFT:
+//			if(playing_)
+//				player_->attribute()->move(Direction::LEFT);
+//			break;
+//		case Pressed::SPACE:
+//			if(playing_)
+//				player_->shoot();
+//			break;
 		case Pressed::P:
 			playing_ = false;
 			break;

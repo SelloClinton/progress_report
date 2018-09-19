@@ -8,26 +8,35 @@
 #include "CollisionReaction.h"
 #include "Bullet.h"
 #include "GameEngine.h"
+#include "Field.h"
+#include "Enums.h"
+#include "Mushroom.h"
 
 #include <memory>
 using std::shared_ptr;
 using std::make_shared;
+#include <list>
+using std::list;
 
 class Update{
 	
 	public:
-		Update(shared_ptr<Player> player,shared_ptr<Centipede>centipede,shared_ptr<Field> field);
-		void updateGame();
+		Update();
+		void updateGame(shared_ptr<Player>player,Pressed key,shared_ptr<Centipede> centipede,shared_ptr<Field> field);
 	private:
-		shared_ptr<Player>player_;
-		shared_ptr<Centipede> centipede_;
-		shared_ptr<Field> field_;
+//		shared_ptr<Player>player_;
+//		shared_ptr<Centipede> centipede_;
+//		shared_ptr<Field> field_;
+//		bool playing_;
 			
-		void updatePlayer();
-		void updateCentipede(shared_ptr<Field> field);
+		void updatePlayer(shared_ptr<Player> player, Pressed key); //player movement and shooting
+		void updateCentipede(shared_ptr<Centipede> centipede, shared_ptr<Field> field);//centipede movement
+		
 		void checkBulletSegmentCollision(shared_ptr<Segment> segment, shared_ptr<Bullet> bullet);
-		void handleBulletSegmentCollision(shared_ptr<Segment> segment,shared_ptr<Bullet> bullet);
-		void checkSegmentPlayerCollision(shared_ptr<Segment> segment);
-		void handleSegmentPlayerCollision(shared_ptr<Segment> segment);
+		void handleBulletSegmentCollision(list<shared_ptr<Segment>> segments,list<shared_ptr<Bullet>> bullets);
+		void checkBulletMushroomCollision(list<shared_ptr<Bullet>> bullets, list<shared_ptr<Mushroom>> mushrooms);
+		void handleBulletMushroomsCollision(list<shared_ptr<Bullet>> bullets, list<shared_ptr<Mushroom>> mushrooms);
+		void checkSegmentPlayerCollision(list<shared_ptr<Segment>> segments, shared_ptr<Player> player);
+		void handleSegmentPlayerCollision(list<shared_ptr<Segment>> segments, shared_ptr<Player> player);
 };
 #endif
