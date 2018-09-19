@@ -82,7 +82,7 @@ void GameEngine::update(){
 	updator->updateGame(player_,key_,centipede_,field_);
 	
 //	auto collision_status = checkCollision();
-	checkPlayerCollision();
+//	checkPlayerCollision();
 //	checkBulletMushroomCollision();
 	gameStatus();
 

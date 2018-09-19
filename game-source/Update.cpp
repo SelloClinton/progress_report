@@ -10,6 +10,7 @@ void Update::updateGame(shared_ptr<Player>player,Pressed key,shared_ptr<Centiped
 	handleBulletSegmentCollision(centipede->getCentipede(), player->getBullets(), field->getMushrooms());
 	checkBulletMushroomCollision(player->getBullets(),field->getMushrooms());
 	handleBulletMushroomsCollision(player->getBullets(),field->getMushrooms());
+	checkSegmentPlayerCollision(centipede->getCentipede(),player);
 }
 
 void Update::updatePlayer(shared_ptr<Player> player,Pressed key){
@@ -78,9 +79,18 @@ void Update::handleBulletMushroomsCollision(list<shared_ptr<Bullet>>& bullets, l
 	collision_reactor->updateBullets(bullets);
 	collision_reactor->updateMushrooms(mushrooms);
 }
-//void Update::checkSegmentPlayerCollision(shared_ptr<Segment> segment){
-//		
-//}
+void Update::checkSegmentPlayerCollision(list<shared_ptr<Segment>> segments, shared_ptr<Player> player){
+	
+	for(auto& segment:segments){
+			auto[seg_x,seg_y] = segment->attribute()->position()->getPosition();
+			auto[player_x,player_y] = player->attribute()->position()->getPosition();
+			auto collision_detector = make_shared<CollisionDetection>(seg_x,seg_y,Object::SEGMENT,
+																		player_x,player_y,Object::PLAYER);
+			auto status = collision_detector->collided();
+			if(status)
+				player->attribute()->destroy();
+	}	
+}
 //void Update::handleSegmentPlayerCollision(shared_ptr<Segment> segment){
 //	
 //}
