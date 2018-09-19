@@ -17,6 +17,8 @@ using std::shared_ptr;
 using std::make_shared;
 #include <list>
 using std::list;
+#include <iostream>
+
 
 class Update{
 	
@@ -31,9 +33,9 @@ class Update{
 			
 		void updatePlayer(shared_ptr<Player> player, Pressed key); //player movement and shooting
 		void updateCentipede(shared_ptr<Centipede> centipede, shared_ptr<Field> field);//centipede movement
+		void checkBulletSegmentCollision(list<shared_ptr<Segment>> segments, list<shared_ptr<Bullet>> bullets);
 		
-		void checkBulletSegmentCollision(shared_ptr<Segment> segment, shared_ptr<Bullet> bullet);
-		void handleBulletSegmentCollision(list<shared_ptr<Segment>> segments,list<shared_ptr<Bullet>> bullets);
+		void handleBulletSegmentCollision(list<shared_ptr<Segment>>& segments,list<shared_ptr<Bullet>>& bullets, list<shared_ptr<Mushroom>>& mushrooms);
 		void checkBulletMushroomCollision(list<shared_ptr<Bullet>> bullets, list<shared_ptr<Mushroom>> mushrooms);
 		void handleBulletMushroomsCollision(list<shared_ptr<Bullet>> bullets, list<shared_ptr<Mushroom>> mushrooms);
 		void checkSegmentPlayerCollision(list<shared_ptr<Segment>> segments, shared_ptr<Player> player);

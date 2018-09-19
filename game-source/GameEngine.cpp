@@ -80,7 +80,8 @@ void GameEngine::update(){
 	
 	auto updator = make_shared<Update>();
 	updator->updateGame(player_,key_,centipede_,field_);
-	auto collision_status = checkCollision();
+	
+//	auto collision_status = checkCollision();
 	checkPlayerCollision();
 	checkBulletMushroomCollision();
 	gameStatus();
