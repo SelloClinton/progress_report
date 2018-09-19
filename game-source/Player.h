@@ -4,8 +4,11 @@
 #include "Mover.h"
 #include "Position.h"
 #include "Bullet.h"
+#include "Constants.h"
+#include "Enums.h"
 
 #include <tuple>
+using std::tuple;
 #include <list>
 #include <iostream>
 using namespace std;
@@ -20,6 +23,8 @@ class Player{
 public:
 		Player(shared_ptr<Mover> attribute);
         shared_ptr<Mover>attribute();
+		void moveUp();
+		void moveDown();
 		void shoot();
 		void updateBullet();
 		Bullets& getBullets(){return bullets_;}

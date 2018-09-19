@@ -21,11 +21,14 @@ Pressed KeyReader::readKey(shared_ptr<sf::RenderWindow> window){
 		
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
 				return Pressed::LEFT;
-		}
+	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
 				return Pressed::RIGHT;
-		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+				return Pressed::UP;
+	}
 
 	return Pressed::NONE;
 

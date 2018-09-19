@@ -23,6 +23,9 @@ void Update::updatePlayer(shared_ptr<Player> player,Pressed key){
 			case Pressed::LEFT:
 				player->attribute()->move(Direction::LEFT);
 				break;
+			case Pressed::UP:
+				player->moveUp();
+				break;
 			case Pressed::SPACE:
 				player->shoot();
 				break;

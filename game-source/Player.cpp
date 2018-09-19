@@ -10,7 +10,10 @@ shared_ptr<Mover> Player::attribute(){
         return attribute_;
 }
 
-
+void Player::moveUp(){
+		if(get<1>(attribute_->position()->getPosition()) > Constants::PLAYER_VERTICAL_LIMIT)
+			attribute_->move(Direction::UP);
+}
 void Player::shoot(){
     auto[x_position,y_position] = attribute_->position()->getPosition();
     auto bullet_position = make_shared<Position>(x_position+(Constants::PLAYER_WIDTH_),y_position-(Constants::PLAYER_HEIGHT_));
@@ -27,7 +30,6 @@ void Player::updateBullet(){
             bullet->attribute()->move(Direction::UP);
         else
             bullet->attribute()->destroy();
-	auto[x,y] = bullet->attribute()->position()->getPosition();
     }
 
 	

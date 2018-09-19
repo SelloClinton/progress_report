@@ -11,6 +11,7 @@ enum class Object{
 enum class Pressed{
 		RIGHT,
 		LEFT,
+		UP,
 		SPACE,
 		P,
 		R,
