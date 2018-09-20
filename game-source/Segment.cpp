@@ -49,11 +49,3 @@ bool Segment::isMovingUp(){
 		return true;
 	return false;
 }
-
-//bool Segment::isLive(){
-//		return live;
-//}
-//
-//void Segment::destroySegment(){
-//		live = false;
-//}

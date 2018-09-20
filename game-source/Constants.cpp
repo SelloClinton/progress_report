@@ -11,6 +11,6 @@ const int Constants::PLAYER_VERTICAL_LIMIT = 450;
 const int Constants::BULLET_SPEED_ = 4;
 const int Constants::SEGMENT_SPEED_ = 4;
 const int Constants::INITIAL_SIZE_OF_CENTIPEDE_ = 25;	//maximum possible is 26
-const int Constants::NUMBER_OF_MUSHROOMS = 15;  //prefereed value = 
+const int Constants::NUMBER_OF_MUSHROOMS = 35;  //prefereed value = 
 
 
