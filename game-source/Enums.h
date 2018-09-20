@@ -26,6 +26,16 @@ enum class Direction{
 		UP,
 		DOWN
 };
+enum class Body_Part{
+		HEAD,
+		MIDSECTION
+};
+enum class Segment_Heading{
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT
+};
 
 class Enums{
 	
