@@ -15,7 +15,6 @@ enum class Pressed{
 		DOWN,
 		SPACE,
 		P,
-		R,
 		S,
 		ESCAPE,
 		NONE

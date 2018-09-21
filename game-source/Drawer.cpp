@@ -54,7 +54,7 @@ void Drawer::drawPauseMessage(){
 	text.setFillColor(sf::Color::Green);
 	text.setFont(font);
 	text.setCharacterSize(25);
-	text.setString("GAME PAUSED --- PRESS   R   TO RESUME");
+	text.setString("GAME PAUSED --- PRESS   P   TO RESUME");
 	text.setPosition(100,250);
 	window_->draw(text);
 

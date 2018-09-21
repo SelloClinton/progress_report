@@ -17,10 +17,8 @@ public:
 	Display();
 	shared_ptr<sf::RenderWindow> getWindow()const;
 	void checkEvent();
-	int getWidth()const;
-	int getHeight()const;
-	
 private:
 	shared_ptr<sf::RenderWindow> window_;
+
 };
-#endif // DISPLAY_H_INCLUDED
+#endif 

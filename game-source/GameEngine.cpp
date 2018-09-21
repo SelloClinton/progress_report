@@ -4,9 +4,7 @@ GameEngine::GameEngine():
 			display_(make_shared<Display>())
 			,drawer_(make_shared<Drawer>(display_->getWindow()))
 			,position_(make_shared<Position>(Constants::DISPLAY_WIDTH_/2,(Constants::DISPLAY_HEIGHT_-50)))
-            ,pos(make_shared<Position>(0,0))
             ,mover(make_shared<Mover>(position_,5))
-            ,mover2(make_shared<Mover>(pos,2))
 			,player_(make_shared<Player>(mover))
             ,centipede_(make_shared<Centipede>(Constants::INITIAL_SIZE_OF_CENTIPEDE_))
 			,field_(make_shared<Field>(Constants::NUMBER_OF_MUSHROOMS))
@@ -63,9 +61,7 @@ void GameEngine::checkInput(){
 	key_ = key_read.readKey(display_->getWindow());
 	
 	if(key_ == Pressed::P)
-		playing_ = false;
-	else if(key_ == Pressed::R)
-		playing_ = true;
+		playing_ = !playing_;
 	else if(key_ == Pressed::ESCAPE)
 		display_->getWindow()->close();
 }
