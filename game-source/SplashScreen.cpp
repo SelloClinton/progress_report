@@ -28,10 +28,10 @@ void SplashScreen::loadInstructions(){
 	
     vector<string>instructions = {"---------INSTRUCTIONS-----------", 
 								  "			START---S",
-								  "MOVEMENT---LEFT/RIGHT/UP/DOWN ARROW",
-								  "			PAUSE---P",
-								  "			RESUME---R",
-								  "			EXIT---ESCAPE"};
+									  "MOVEMENT--- ARROWS",
+								  "	  PAUSE/RESUME---P",
+								  "	SHOOT---SPACE BAR",
+								  "	   	 EXIT---ESCAPE"};
 	
 	    unsigned int  font_size = 25;
     for(const auto& instruction:instructions)
