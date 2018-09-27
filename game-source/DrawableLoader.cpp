@@ -32,6 +32,7 @@ void DrawableLoader::loadSprite(Object object){
 			sprite_->setTexture(*texture_);
 			sprite_->setScale(2.5,2.5);
 			sprite_->setTextureRect(sf::IntRect(4,18,7,8));
+			break;
 		case Object::BULLET:
 			sprite_->setTexture(*texture_);
 			sprite_->setScale(2.5,2.5);
