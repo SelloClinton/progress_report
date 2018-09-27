@@ -1,4 +1,4 @@
-#include "PlayerSprite.h"
+#include "DrawablesLoader.h"
 
 PlayerSprite::PlayerSprite():
 			texture_(make_shared<sf::Texture>())
