@@ -16,14 +16,15 @@ GameEngine::GameEngine():
 
 void GameEngine::playGame(){
 	splashScreen();
-	while(display_->getWindow()->isOpen()){
+	
+	while(display_->isOpen()){
 			
 		if((playing_)&&(!game_over_)){//playing
 			checkInput();
 			update();
 			drawObjects();
-			display_->getWindow()->display();
-			display_->getWindow()->clear();
+			display_->display();
+			display_->clear();
 					
 		}
 		else if ((!playing_)&&(!game_over_)){//paused
@@ -60,7 +61,7 @@ void GameEngine::checkInput(){
 	if(key_ == Pressed::P)
 		playing_ = !playing_;
 	else if(key_ == Pressed::ESCAPE)
-		display_->getWindow()->close();
+		display_->close();
 }
 
 void GameEngine::drawObjects(){
@@ -72,19 +73,19 @@ void GameEngine::drawObjects(){
 }
 void GameEngine::displayPauseMessage(){
 	drawer_->drawPauseMessage();
-	display_->getWindow()->display();
-	display_->getWindow()->clear();
+	display_->display();
+	display_->clear();
 }
 void GameEngine::displayGameOverMessage(){
 	if(auto over = "won";player_->attribute()->isLive()){
 		drawer_->drawGameOverMessage(over);
-		display_->getWindow()->display();
-		display_->getWindow()->clear();
+		display_->display();
+		display_->clear();
 	}
 	else if(auto over = "lost";!player_->attribute()->isLive()){
 		drawer_->drawGameOverMessage(over);
-		display_->getWindow()->display();
-		display_->getWindow()->clear();
+		display_->display();
+		display_->clear();
 	}
 }
 

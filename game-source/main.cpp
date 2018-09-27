@@ -8,7 +8,7 @@ int main(){
 	while(true){
 		GameEngine centipede;
 		centipede.playGame();
-		}
+	}
 		
 		return 0;
 }

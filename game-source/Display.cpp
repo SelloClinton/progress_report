@@ -12,6 +12,20 @@ shared_ptr<sf::RenderWindow> Display::getWindow()const{
 	return window_;
 }
 
+void Display::display()const{
+		window_->display();
+}
+
+void Display::clear()const{
+		window_->clear();
+}
+void Display::close()const{
+		window_->close();
+}
+bool Display::isOpen()const{
+		return window_->isOpen();
+}
+
 void Display::checkEvent(){
 		
 		while(window_->isOpen()){

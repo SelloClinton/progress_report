@@ -16,6 +16,10 @@ class Display{
 public:
 	Display();
 	shared_ptr<sf::RenderWindow> getWindow()const;
+	void display()const;
+	void clear()const;
+	void close()const;
+	bool isOpen()const;
 	void checkEvent();
 private:
 	shared_ptr<sf::RenderWindow> window_;
