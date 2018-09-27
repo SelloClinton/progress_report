@@ -38,12 +38,12 @@ bool Segment::isFacingRight(){
         return true;
     return false;
 }
-bool Segment::isMovingDown(){
+bool Segment::isFacingDown(){
 	if ((down_flag_)&&(!up_flag_))
 		return true;
 	return false;
 }
-bool Segment::isMovingUp(){
+bool Segment::isFacingUp(){
 	if ((up_flag_)&&(!down_flag_))
 		return true;
 	return false;

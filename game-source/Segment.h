@@ -19,8 +19,8 @@ public:
 		void faceUp();
         bool isFacingLeft();
         bool isFacingRight();
-		bool isMovingDown();
-		bool isMovingUp();
+		bool isFacingDown();
+		bool isFacingUp();
 private:
         shared_ptr<Mover> attribute_;
         bool right_flag_;

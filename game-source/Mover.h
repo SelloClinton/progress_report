@@ -19,7 +19,6 @@ public:
         void move(Direction direction);
         shared_ptr<Position> position();
 		bool isLive();
-//		void setLive();
 		void destroy();
 		bool minXBound(int x_coord);
 		bool maxXBound(int x_coord);

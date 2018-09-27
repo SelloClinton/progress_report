@@ -18,7 +18,7 @@ class Bullet{
 public:
 		Bullet(shared_ptr<Mover> attribute);
 		shared_ptr<Mover> attribute();
-        void moveUp();
+        void move();
 private:
 		shared_ptr<Mover> attribute_;
 };

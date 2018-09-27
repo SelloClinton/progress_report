@@ -1,15 +1,12 @@
 #ifndef CENTIPEDE_H
 #define CENTIPEDE_H
 
-#include <iostream>
-
 #include "Segment.h"
 #include "Mover.h"
 #include "Position.h"
 #include "Constants.h"
-#include "Field.h"
 #include "CollisionDetection.h"
-#include "Mushroom.h"
+#include "mushroom.h"
 
 #include <tuple>
 #include <list>
@@ -29,8 +26,9 @@ class Centipede{
     
 public:
         Centipede(int centipedeSize);
-        void moveSegments(shared_ptr<Field> field);
+        void moveSegments();
         Segments& getCentipede(){return centipede_;}
+        void handleMushroom(shared_ptr<Segment> segment, list<shared_ptr<Mushroom>> mushrooms);
 private:
         Segments centipede_;
         int centipede_size_;
@@ -39,9 +37,8 @@ private:
 		void moveUp(shared_ptr<Segment> segment);
 		void turnRight(shared_ptr<Segment>segment);
 		void turnLeft(shared_ptr<Segment>segment);
-		void handleMushroom(shared_ptr<Segment> segment, list<shared_ptr<Mushroom>> mushrooms);
-		void keepUp(shared_ptr<Segment> segment,list<shared_ptr<Mushroom>>mushrooms);
-		void keepDown(shared_ptr<Segment> segment,list<shared_ptr<Mushroom>> mushrooms);
+		void keepUp(shared_ptr<Segment> segment);
+		void keepDown(shared_ptr<Segment> segment);
         
 };
 

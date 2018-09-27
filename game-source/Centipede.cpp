@@ -9,14 +9,13 @@ Centipede::Centipede(int centipedeSize):
         initializePosition();
 }
 
-void Centipede::moveSegments(shared_ptr<Field> field){
+void Centipede::moveSegments(){
 	
 	for(auto& segment:centipede_){
-		auto mushrooms = field->getMushrooms();
-		if(segment->isMovingDown())
-			keepDown(segment,mushrooms);
-		else if(segment->isMovingUp())
-			keepUp(segment,mushrooms);
+		if(segment->isFacingDown())
+			keepDown(segment);
+		else if(segment->isFacingUp())
+			keepUp(segment);
 	}
 
 }
@@ -25,7 +24,7 @@ void Centipede::initializePosition(){
         
     for(auto i = 0; i != centipede_size_; i++){
 		
-        auto segment_x_position = (Constants::DISPLAY_WIDTH_/2)-separator*(Constants::PLAYER_WIDTH_);
+        auto segment_x_position = ((Constants::DISPLAY_WIDTH_/2)-separator*(Constants::PLAYER_WIDTH_));
         auto position = make_shared<Position>(segment_x_position,0);
         auto mover = make_shared<Mover>(position,Constants::SEGMENT_SPEED_);
         auto segment = make_shared<Segment>(mover);
@@ -34,11 +33,13 @@ void Centipede::initializePosition(){
     }
 }
 
+
+
 void Centipede::moveDown(shared_ptr<Segment>segment){
 		segment->attribute()->move(Direction::DOWN);
 		segment->attribute()->move(Direction::DOWN);
 		segment->attribute()->move(Direction::DOWN);
-		segment->attribute()->move(Direction::DOWN);	
+		segment->attribute()->move(Direction::DOWN);
 }
 
 void Centipede::moveUp(shared_ptr<Segment> segment){
@@ -68,32 +69,31 @@ void Centipede::handleMushroom(shared_ptr<Segment> segment, list<shared_ptr<Mush
 																		  mush_x,mush_y,Object::MUSHROOM);
 				auto status = collision_detector->collided();
 				
-				if((status)&&(segment->isFacingLeft())&&(segment->isMovingDown())){
+				if((status)&&(segment->isFacingLeft())&&(segment->isFacingDown())){
 					moveDown(segment);
 					turnRight(segment);
 				}
 				
-				else if((status)&&(segment->isFacingRight())&&(segment->isMovingDown())){
+				else if((status)&&(segment->isFacingRight())&&(segment->isFacingDown())){
 					moveDown(segment);
 					turnLeft(segment);
 				}
-				else if((status)&&(segment->isFacingLeft())&&(segment->isMovingUp())){
+				else if((status)&&(segment->isFacingLeft())&&(segment->isFacingUp())){
 					moveUp(segment);
 					turnRight(segment);
 				}
-				else if((status)&&(segment->isFacingRight())&&(segment->isMovingUp())){
+				else if((status)&&(segment->isFacingRight())&&(segment->isFacingUp())){
 					moveUp(segment);
 					turnLeft(segment);
 				}
 				
 		}
 }
-void Centipede::keepUp(shared_ptr<Segment> segment,list<shared_ptr<Mushroom>>mushrooms){
+void Centipede::keepUp(shared_ptr<Segment> segment){
 	
 	auto[seg_x_position,seg_y_position] = segment->attribute()->position()->getPosition();
 		
 	if(seg_y_position >= Constants::PLAYER_VERTICAL_LIMIT){
-		handleMushroom(segment,mushrooms);
 		
         if(seg_x_position >= 774){
 			moveUp(segment);
@@ -116,13 +116,11 @@ void Centipede::keepUp(shared_ptr<Segment> segment,list<shared_ptr<Mushroom>>mus
 		
 }
 
-void Centipede::keepDown(shared_ptr<Segment> segment,list<shared_ptr<Mushroom>>mushrooms){
+void Centipede::keepDown(shared_ptr<Segment> segment){
 	
 	auto[seg_x_position,seg_y_position] = segment->attribute()->position()->getPosition();
-		std::cout << "y_: " << seg_y_position << std::endl;
 	if(seg_y_position <= 572){
 	
-		handleMushroom(segment,mushrooms);
 		
         if(seg_x_position >= 774){
 			moveDown(segment);

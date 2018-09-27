@@ -34,7 +34,7 @@ class Update{
 		void checkBulletMushroomCollision(list<shared_ptr<Bullet>> bullets, list<shared_ptr<Mushroom>> mushrooms);
 		void handleBulletMushroomsCollision(list<shared_ptr<Bullet>>& bullets, list<shared_ptr<Mushroom>>& mushrooms);
 		void checkSegmentPlayerCollision(list<shared_ptr<Segment>> segments, shared_ptr<Player> player);
-		void checkSegmentMushroomCollision(list<shared_ptr<Segment>> segments, list<shared_ptr<Mushroom>> mushrooms);
+		void checkSegmentMushroomCollision(shared_ptr<Centipede> centipede, list<shared_ptr<Mushroom>> mushrooms);
 
 };
 #endif

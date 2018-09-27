@@ -51,9 +51,6 @@ void GameEngine::update(){
 		gameStatus();
 
 }
-void GameEngine::updateCentipede(shared_ptr<Field> field){
-   centipede_->moveSegments(field_);     
-}
 
 void GameEngine::checkInput(){
 	
