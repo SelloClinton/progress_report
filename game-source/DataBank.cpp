@@ -16,7 +16,7 @@ Font DataBank::getFont()const{
 		return font_;
 }
 bool DataBank::fontLoaded(){
-	if (!font_.loadFromFile("FFF.ttf"))
+	if (!font_.loadFromFile("BetterBook.otf"))
 		return false;
 	return true;
 }

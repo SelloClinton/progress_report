@@ -119,8 +119,8 @@ void Centipede::keepUp(shared_ptr<Segment> segment,list<shared_ptr<Mushroom>>mus
 void Centipede::keepDown(shared_ptr<Segment> segment,list<shared_ptr<Mushroom>>mushrooms){
 	
 	auto[seg_x_position,seg_y_position] = segment->attribute()->position()->getPosition();
-		
-	if(seg_y_position <= 576){
+		std::cout << "y_: " << seg_y_position << std::endl;
+	if(seg_y_position <= 572){
 	
 		handleMushroom(segment,mushrooms);
 		

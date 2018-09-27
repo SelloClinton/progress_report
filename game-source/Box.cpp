@@ -13,7 +13,7 @@ tuple<int,int,int,int> Box::createBox(int x, int y, Object object){
 	
 	switch(object){
 			case Object::BULLET:
-				return{x,(y+Constants::BULLET_HEIGHT_),(x+Constants::BULLET_WIDTH_),y};
+				return{x,(y+2*Constants::BULLET_HEIGHT_),(x+2*Constants::BULLET_WIDTH_),y};
 				break;
 			case Object::PLAYER:
 			case Object::SEGMENT:

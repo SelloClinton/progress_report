@@ -54,7 +54,7 @@ void Drawer::drawPauseMessage(){
 	text.setFillColor(sf::Color::Green);
 	text.setFont(font);
 	text.setCharacterSize(25);
-	text.setString("GAME PAUSED --- PRESS   P   TO RESUME");
+	text.setString("GAME PAUSED .... PRESS   P   TO RESUME");
 	text.setPosition(100,250);
 	window_->draw(text);
 
@@ -64,12 +64,14 @@ void Drawer::drawGameOverMessage(const string& wonOrLost){
 	sf::Text text;
 	auto font = data_->getFont();
 	text.setFont(font);
-	text.setFillColor(sf::Color::Red);
+	text.setFillColor(sf::Color::Green);
 	text.setCharacterSize(25);
 	if (auto str = "won"; wonOrLost == str)
-		text.setString("YOU WON!--PRESS ESCAPE TO GO TO MAIN MENU");
-	else
-		text.setString("YOU LOST!--PRESS ESCAPE TO GO TO MAIN MENU");
+		text.setString("YOU WON!...PRESS ESCAPE TO GO TO MAIN MENU");
+	else{
+	text.setFillColor(sf::Color::Red);
+	text.setString("YOU LOST!...PRESS ESCAPE TO GO TO MAIN MENU");
+	}
 	text.setPosition(50,250);
 	window_->draw(text);
 

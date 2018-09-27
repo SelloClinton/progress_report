@@ -42,9 +42,9 @@ shared_ptr<Position> Mover::position(){
 bool Mover::isLive(){
 		return live_;
 }
-void Mover::setLive(){
-		live_ = true;
-}
+//void Mover::setLive(){
+//		live_ = true;
+//}
 void Mover::destroy(){
 		live_ = false;
 }

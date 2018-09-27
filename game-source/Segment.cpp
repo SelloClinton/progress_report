@@ -7,7 +7,6 @@ Segment::Segment(shared_ptr<Mover> attribute):
 		,down_flag_(true)
 		,up_flag_(false)
 {
-	attribute_->setLive();
 }
 		
 shared_ptr<Mover> Segment::attribute(){

@@ -26,12 +26,12 @@ void SplashScreen::loadInstructions(){
     
 	loadName();
 	
-    vector<string>instructions = {"---------INSTRUCTIONS-----------", 
-								  "			START---S",
-									  "MOVEMENT--- ARROWS",
-								  "	  PAUSE/RESUME---P",
-								  "	SHOOT---SPACE BAR",
-								  "	   	 EXIT---ESCAPE"};
+    vector<string>instructions = {"..............INSTRUCTIONS...............", 
+								  "		START.....S",
+									  "  MOVEMENT.....ARROWS",
+								  " PAUSE OR RESUME.....P",
+								  "	SHOOT.....SPACE BAR",
+								  "	   EXIT.....ESCAPE"};
 	
 	    unsigned int  font_size = 25;
     for(const auto& instruction:instructions)
@@ -52,7 +52,7 @@ void SplashScreen::loadInstructions(){
 }
 
 void SplashScreen::loadName(){
-	string log = "CENTIPEDE";
+	string log = " CENTIPEDE";
     sf::Text log_;
     log_.setFont(font_);
     log_.setString(log);
