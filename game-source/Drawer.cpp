@@ -11,10 +11,15 @@ Drawer::Drawer(shared_ptr<sf::RenderWindow> window):
 
 void Drawer::drawPlayer(shared_ptr<Player> player){
 	
+
+	
 	auto[x_position,y_position] = player->attribute()->position()->getPosition();
-	auto player_sprite = object_sprites_.at(0);
-	player_sprite.setPosition(x_position,y_position);
-	window_->draw(player_sprite);
+	
+	auto player_sprite = make_shared<PlayerSprite>();
+	player_sprite->setPosition(x_position,y_position);
+//	auto player_sprite = object_sprites_.at(0);
+//	player_sprite.setPosition(x_position,y_position);
+	window_->draw(*(player_sprite->getPlayerSprite()));
 
 	
 }

@@ -13,6 +13,8 @@
 #include "Field.h"
 #include "Constants.h"
 
+#include "PlayerSprite.h"
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
