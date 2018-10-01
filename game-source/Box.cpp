@@ -15,9 +15,10 @@ tuple<int,int,int,int> Box::createBox(int x, int y, Object object){
 			case Object::BULLET:
 				return{x,(y+2*Constants::BULLET_HEIGHT_),(x+2*Constants::BULLET_WIDTH_),y};
 				break;
+			case Object::MUSHROOM:
+				return{x,(y+Constants::PLAYER_HEIGHT_),(x+Constants::PLAYER_WIDTH_),y};
 			case Object::PLAYER:
 			case Object::SEGMENT:
-			case Object::MUSHROOM:
 				return{x,(y+Constants::PLAYER_HEIGHT_),(x+Constants::PLAYER_WIDTH_),y};
 				break;
 			default:
