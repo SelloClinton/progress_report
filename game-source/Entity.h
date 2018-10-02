@@ -12,9 +12,9 @@ enum class EntityID{
 		MUSHROOM,
 		SEGMENT
 };
-class Enity{
+class Entity{
 public:
-		Entity(float x, float y, EntityID id);
+		Entity(float x, float y, const EntityID& id);
 		shared_ptr<Position> position();
 		bool isLive()const;
 		void destroy();

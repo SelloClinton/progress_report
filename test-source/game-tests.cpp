@@ -1,6 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 #include "../game-source/Position.h"
+#include "../game-source/Entity.h"
 //#include "../game-source-code/Mover.h"
 //#include "../game-source-code/Player.h"
 //#include "../game-source-code/Constants.h"
@@ -17,7 +18,7 @@ TEST_CASE("Position cannot be less that zero"){
 	CHECK_THROWS_AS(Position(-150,350),NegativePosition);
 	CHECK_THROWS_AS(Position(150,-350),NegativePosition);
 	CHECK_THROWS_AS(Position(-150,-350),NegativePosition);
-}//1
+}//1-3assert
 
 TEST_CASE("Position cannot be greater than screen dimensions"){
 	
@@ -25,21 +26,21 @@ TEST_CASE("Position cannot be greater than screen dimensions"){
 	CHECK_THROWS_AS(Position(Constants::DISPLAY_WIDTH_,Constants::DISPLAY_HEIGHT_+10),OutOfBounds);
 	CHECK_THROWS_AS(Position(Constants::DISPLAY_WIDTH_+1,Constants::DISPLAY_HEIGHT_+1),OutOfBounds);
 
-}//2
+}//2-6assert
 TEST_CASE("x position getter function returns expected value"){
 	auto x = 800.0f;
 	auto y = 600.0f;
 	Position position(x,y);
 	CHECK(doctest::Approx(x) == position.getXPosition());
 	CHECK_FALSE(doctest::Approx(y) == position.getXPosition());
-}//3
+}//3-8assert
 TEST_CASE("y position getter function returns expected value"){
 	auto x = 250.0f;
 	auto y = 350.0f;
 	Position position(x,y);
 	CHECK(doctest::Approx(y) == position.getYPosition());
 	CHECK_FALSE(doctest::Approx(x) == position.getYPosition());
-}//4
+}//4-10assert
 TEST_CASE("XY Getter function returns expected values"){
 	
 	auto x = 800.0f;
@@ -51,7 +52,7 @@ TEST_CASE("XY Getter function returns expected values"){
 	CHECK_FALSE(doctest::Approx(x) == y_position);
 	CHECK_FALSE(doctest::Approx(y) == x_position);
 	
-}//5
+}//5-14assert
 TEST_CASE("x position setter function returns expected value"){
 	auto x = 800.0f;
 	auto y = 600.0f;
@@ -60,7 +61,7 @@ TEST_CASE("x position setter function returns expected value"){
 	position.setXPosition(new_x);
 	CHECK(doctest::Approx(new_x) == position.getXPosition());
 	CHECK_FALSE(doctest::Approx(x) == position.getXPosition());
-}//6
+}//6-16assert
 TEST_CASE("y position setter function returns expected value"){
 	auto x = 450.0f;
 	auto y = 350.0f;
@@ -69,7 +70,7 @@ TEST_CASE("y position setter function returns expected value"){
 	position.setYPosition(new_y);
 	CHECK(doctest::Approx(new_y) == position.getYPosition());
 	CHECK_FALSE(doctest::Approx(y) == position.getYPosition());
-}//7
+}//7-18assert
 //
 TEST_CASE("XY position Setter function effective"){
 	auto x = 550.0f;
@@ -85,7 +86,7 @@ TEST_CASE("XY position Setter function effective"){
 	CHECK(doctest::Approx(new_y) == newYPosition);
 	CHECK_FALSE(doctest::Approx(oldXPosition) == newXPosition);
 	CHECK_FALSE(doctest::Approx(oldYPosition) == newYPosition);
-}//8
+}//8-22assert
 //
 TEST_CASE("Default position is origin"){
 		Position origin;
@@ -95,9 +96,68 @@ TEST_CASE("Default position is origin"){
 		auto y = 0.0f;
 		CHECK(doctest::Approx(x) == x_pos);
 		CHECK(doctest::Approx(y) == y_pos);
-}//9
+}//9-24assert
 
-//*************************end of Position tests(5 tests)**************************
+//*************************end of Position tests(9 tests)**************************
+//*************************Entity Tests********************************************
+TEST_CASE("Valid position is returned"){
+	
+	auto x = 50.0f;
+	auto y = 150.0f;
+	auto id = EntityID::PLAYER;
+	
+	auto entity = make_shared<Entity>(x,y,id);
+	CHECK(doctest::Approx(x) == entity->position()->getXPosition());
+	CHECK(doctest::Approx(y) == entity->position()->getYPosition());
+	
+	auto[entity_x,entity_y] = entity->position()->getXYPosition();
+	CHECK(doctest::Approx(entity_x) == x);
+	CHECK(doctest::Approx(entity_y) == y);
+	
+}//10-28assert
+TEST_CASE("Position is effectively set"){
+	auto x = 50.0f;
+	auto y = 150.0f;
+	auto id = EntityID::PLAYER;
+	auto entity = make_shared<Entity>(x,y,id);
+	auto[old_entity_x,old_entity_y] = entity->position()->getXYPosition();
+	auto new_x = 250.0f;
+	auto new_y = 300.0f;
+	entity->position()->setXYPosition(new_x,new_y);
+	auto[new_entity_x,new_entity_y] = entity->position()->getXYPosition();
+	
+	CHECK(doctest::Approx(new_x) == entity->position()->getXPosition());
+	CHECK(doctest::Approx(new_y) == entity->position()->getYPosition());
+	CHECK_FALSE(doctest::Approx(new_entity_x) == old_entity_x);
+	CHECK_FALSE(doctest::Approx(new_entity_y) == old_entity_y);
+}//11-32assert
+
+TEST_CASE("Entity live state is true upon construction"){
+	auto x = 50.0f;
+	auto y = 150.0f;
+	auto id = EntityID::PLAYER;
+	auto entity = make_shared<Entity>(x,y,id);
+	CHECK(entity->isLive());
+	CHECK_FALSE(!entity->isLive());
+}//12-34assert
+TEST_CASE("Entity can be destroyed"){
+	auto x = 50.0f;
+	auto y = 150.0f;
+	auto id = EntityID::PLAYER;
+	auto entity = make_shared<Entity>(x,y,id);
+	entity->destroy();
+	CHECK_FALSE(entity->isLive());
+}//13-35assert
+
+TEST_CASE("Correct Entity id is returned"){
+	auto x = 50.0f;
+	auto y = 150.0f;
+	auto id = EntityID::PLAYER;
+	auto entity = make_shared<Entity>(x,y,id);
+	
+	CHECK(id == entity->getEntityID());
+	CHECK_FALSE(EntityID::SEGMENT == entity->getEntityID());
+}//14-37assert
 /*
 //**************************Mover tests********************************************
 TEST_CASE("Speed cannot be less than or equal to zero"){
