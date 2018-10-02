@@ -1,6 +1,7 @@
 #ifndef CENTIPEDE_H
 #define CENTIPEDE_H
 
+#include "Entity.h"
 #include "Segment.h"
 #include "Mover.h"
 #include "Position.h"
@@ -26,7 +27,7 @@ class Centipede{
     
 public:
         Centipede(int centipedeSize);
-        void moveSegments();
+        void move();
         Segments& getCentipede(){return centipede_;}
         void handleMushroom(shared_ptr<Segment> segment, list<shared_ptr<Mushroom>> mushrooms);
 private:
