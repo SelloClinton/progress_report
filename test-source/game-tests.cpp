@@ -12,6 +12,7 @@
 //#include "../game-source-code/Centipede.h"
 #include "../game-source/Mushroom.h"
 #include "../game-source/Field.h"
+#include "../game-source/Box.h"
 
 
 //***********************Position tests*******************************
@@ -506,7 +507,95 @@ TEST_CASE("Segment cannot move down when at a set limit"){
 	CHECK(doctest::Approx(new_y) == old_y);
 	CHECK_FALSE(doctest::Approx(new_y) == old_y-4*speed);
 }//42-95assert
+//********************************************************************************
+//************************************Box Tests***********************************
+TEST_CASE("Valid Laser Box can be created"){
+	auto laser_x = 50.0f;
+	auto laser_y = 250.0f;
+	auto laser_id = EntityID::LASER;
+	auto speed = Constants::LASER_SPEED_;
+	Laser laser(laser_x,laser_y,laser_id,speed);
+	auto[x,y] = laser.entityAttribute()->position()->getXYPosition();
+	Box box;
+	auto[min_x,min_y,max_x,max_y] = box.getBox(x,y,laser.entityAttribute()->getEntityID());
+	auto manual_min_x = x;
+	auto manual_min_y = y+Constants::LASER_HEIGHT_;
+	auto manual_max_x = x+Constants::LASER_WIDTH_;
+	auto manual_max_y = y;
+	
+	
+	CHECK(doctest::Approx(manual_min_x) == min_x);
+	CHECK(doctest::Approx(manual_min_y) == min_y);
+	CHECK(doctest::Approx(manual_max_x) == max_x);
+	CHECK(doctest::Approx(manual_max_y) == max_y);
+	
+}//43-99assert
+TEST_CASE("Valid Segment Box is created"){
+	auto segment_x = 50.0f;
+	auto segment_y = 250.0f;
+	auto segment_id = EntityID::SEGMENT;
+	auto speed = Constants::SEGMENT_SPEED_;
+	Segment segment(segment_x,segment_y,segment_id,speed);
+	auto[x,y] = segment.entityAttribute()->position()->getXYPosition();
+	Box box;
+	auto[min_x,min_y,max_x,max_y] = box.getBox(x,y,segment.entityAttribute()->getEntityID());
+	auto manual_min_x = x;
+	auto manual_min_y = y+Constants::SEGMENT_HEIGHT_;
+	auto manual_max_x = x+Constants::SEGMENT_WIDTH_;
+	auto manual_max_y = y;
+	
+	
+	CHECK(doctest::Approx(manual_min_x) == min_x);
+	CHECK(doctest::Approx(manual_min_y) == min_y);
+	CHECK(doctest::Approx(manual_max_x) == max_x);
+	CHECK(doctest::Approx(manual_max_y) == max_y);	
+}//44-103assert
+//
+TEST_CASE("Valid Player Box can be created"){
+	auto player_x = 50.0f;
+	auto player_y = 250.0f;
+	auto player_id = EntityID::PLAYER;
+	auto speed = Constants::PLAYER_SPEED_;
+	Player player(player_x,player_y,player_id,speed);
+	auto[x,y] = player.entityAttribute()->position()->getXYPosition();
+	Box box;
+	auto[min_x,min_y,max_x,max_y] = box.getBox(x,y,player.entityAttribute()->getEntityID());
+	auto manual_min_x = x;
+	auto manual_min_y = y+Constants::PLAYER_HEIGHT_;
+	auto manual_max_x = x+Constants::PLAYER_WIDTH_;
+	auto manual_max_y = y;
+	
+	
+	CHECK(doctest::Approx(manual_min_x) == min_x);
+	CHECK(doctest::Approx(manual_min_y) == min_y);
+	CHECK(doctest::Approx(manual_max_x) == max_x);
+	CHECK(doctest::Approx(manual_max_y) == max_y);
+	
+}//45-107assert
+//
+TEST_CASE("Valid Mushroom Box can be created"){
+	auto mushroom_x = 50.0f;
+	auto mushroom_y = 250.0f;
+	auto mushroom_id = EntityID::MUSHROOM;
+	Mushroom mushroom(mushroom_x,mushroom_y,mushroom_id);
+	auto[x,y] = mushroom.entityAttribute()->position()->getXYPosition();
+	Box box;
+	auto[min_x,min_y,max_x,max_y] = box.getBox(x,y,mushroom.entityAttribute()->getEntityID());
+	auto manual_min_x = x;
+	auto manual_min_y = y+Constants::MUSHROOM_HEIGHT_;
+	auto manual_max_x = x+Constants::MUSHROOM_WIDTH_;
+	auto manual_max_y = y;
+	
+	
+	CHECK(doctest::Approx(manual_min_x) == min_x);
+	CHECK(doctest::Approx(manual_min_y) == min_y);
+	CHECK(doctest::Approx(manual_max_x) == max_x);
+	CHECK(doctest::Approx(manual_max_y) == max_y);
+	
+}//47-111assert
 
+//**************************Laser-Segment Collision Tests**************************
+//TEST_CASE("")
 
 
 //**************************Mover tests********************************************

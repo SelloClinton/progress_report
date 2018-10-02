@@ -2,9 +2,7 @@
 
 GameEngine::GameEngine():
 			display_(make_shared<Display>())
-			,drawer_(make_shared<Drawer>(display_->getWindow()))
-//			,position_(make_shared<Position>(Constants::DISPLAY_WIDTH_/2,(Constants::DISPLAY_HEIGHT_-50)))
-//            ,mover(make_shared<Mover>(position_,5))
+			,drawer_(make_shared<Drawer>(display_))
 			,player_(make_shared<Player>(Constants::DISPLAY_WIDTH_/2,(Constants::DISPLAY_HEIGHT_-50),EntityID::PLAYER,Constants::PLAYER_SPEED_))
             ,centipede_(make_shared<Centipede>(Constants::INITIAL_SIZE_OF_CENTIPEDE_))
 			,field_(make_shared<Field>(Constants::NUMBER_OF_MUSHROOMS))
@@ -42,8 +40,8 @@ void GameEngine::playGame(){
 }
 
 void GameEngine::splashScreen(){
-	SplashScreen welcome_screen(display_->getWindow());
-	welcome_screen.drawSplashScreen();
+//	SplashScreen welcome_screen(display_->getWindow());
+//	welcome_screen.drawSplashScreen();
 }
 
 void GameEngine::update(){

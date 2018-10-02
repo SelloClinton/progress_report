@@ -19,9 +19,9 @@ bool CollisionDetection::collided(){
 		auto d2_x = min_x_A_ - max_x_B_;
 		auto d2_y = min_y_A_ - max_y_B_;
 		
-		if ((d1_x > 0)||(d1_y < 0))
+		if ((d1_x >= 0)||(d1_y <= 0))
 			return false;
-		if ((d2_x > 0)||(d2_y < 0))
+		if ((d2_x >= 0)||(d2_y <= 0))
 			return false;
 		return true;
     

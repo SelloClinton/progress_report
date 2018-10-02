@@ -31,7 +31,7 @@ using std::make_unique;
 class Drawer{
 	
 public:
-		Drawer(shared_ptr<sf::RenderWindow> window);
+		Drawer(shared_ptr<Display> window);
         void drawPlayer(shared_ptr<Player> player);
         void drawCentipede(shared_ptr<Centipede> centipede);
 		void drawBullets(shared_ptr<Player> player);
@@ -42,7 +42,7 @@ public:
 private:
 		unique_ptr<DataBank> data_;
 		sf::Text text_;
-		shared_ptr<sf::RenderWindow> window_;
+		shared_ptr<Display> window_;
 		Sprites object_sprites_;
 		void drawSegment(shared_ptr<Segment> segment); 
         void drawBullet(shared_ptr<Laser>laser);

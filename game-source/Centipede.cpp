@@ -106,7 +106,7 @@ void Centipede::handleMushroom(shared_ptr<Segment> segment, list<shared_ptr<Mush
 void Centipede::keepUp(shared_ptr<Segment> segment){
 	
 	auto[seg_x_position,seg_y_position] = segment->entityAttribute()->position()->getXYPosition();
-
+	cout << seg_y_position << endl;
 	if(!segment->isFacingDown()){
 		
         if(seg_x_position >= 774){
