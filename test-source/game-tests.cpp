@@ -1,0 +1,787 @@
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest.h"
+#include "../game-source/Position.h"
+//#include "../game-source-code/Mover.h"
+//#include "../game-source-code/Player.h"
+//#include "../game-source-code/Constants.h"
+//#include "../game-source-code/Bullet.h"
+//#include "../game-source-code/Segment.h"
+//#include "../game-source-code/Enums.h"
+//#include "../game-source-code/Centipede.h"
+//#include "../game-source-code/Mushroom.h"
+
+
+//***********************Position tests*******************************
+TEST_CASE("Position cannot be less that zero"){
+	
+	CHECK_THROWS_AS(Position(-150,350),NegativePosition);
+	CHECK_THROWS_AS(Position(150,-350),NegativePosition);
+	CHECK_THROWS_AS(Position(-150,-350),NegativePosition);
+}//1
+
+TEST_CASE("Position cannot be greater than screen dimensions"){
+	
+	CHECK_THROWS_AS(Position(Constants::DISPLAY_WIDTH_+5,Constants::DISPLAY_HEIGHT_),OutOfBounds);
+	CHECK_THROWS_AS(Position(Constants::DISPLAY_WIDTH_,Constants::DISPLAY_HEIGHT_+10),OutOfBounds);
+	CHECK_THROWS_AS(Position(Constants::DISPLAY_WIDTH_+1,Constants::DISPLAY_HEIGHT_+1),OutOfBounds);
+
+}//2
+TEST_CASE("x position getter function returns expected value"){
+	auto x = 800.0f;
+	auto y = 600.0f;
+	Position position(x,y);
+	CHECK(doctest::Approx(x) == position.getXPosition());
+	CHECK_FALSE(doctest::Approx(y) == position.getXPosition());
+}//3
+TEST_CASE("y position getter function returns expected value"){
+	auto x = 250.0f;
+	auto y = 350.0f;
+	Position position(x,y);
+	CHECK(doctest::Approx(y) == position.getYPosition());
+	CHECK_FALSE(doctest::Approx(x) == position.getYPosition());
+}//4
+TEST_CASE("XY Getter function returns expected values"){
+	
+	auto x = 800.0f;
+	auto y = 600.0f;
+	Position position(x,y);	
+	auto[x_position,y_position] = position.getXYPosition();
+	CHECK(doctest::Approx(x) == x_position);
+	CHECK(doctest::Approx(y) == y_position);
+	CHECK_FALSE(doctest::Approx(x) == y_position);
+	CHECK_FALSE(doctest::Approx(y) == x_position);
+	
+}//5
+TEST_CASE("x position setter function returns expected value"){
+	auto x = 800.0f;
+	auto y = 600.0f;
+	Position position(x,y);
+	auto new_x = 450.0f;
+	position.setXPosition(new_x);
+	CHECK(doctest::Approx(new_x) == position.getXPosition());
+	CHECK_FALSE(doctest::Approx(x) == position.getXPosition());
+}//6
+TEST_CASE("y position setter function returns expected value"){
+	auto x = 450.0f;
+	auto y = 350.0f;
+	Position position(x,y);
+	auto new_y = 250.0f;
+	position.setYPosition(new_y);
+	CHECK(doctest::Approx(new_y) == position.getYPosition());
+	CHECK_FALSE(doctest::Approx(y) == position.getYPosition());
+}//7
+//
+TEST_CASE("XY position Setter function effective"){
+	auto x = 550.0f;
+	auto y = 550.0f;
+	Position set_position(x,y);
+	auto[oldXPosition,oldYPosition] = set_position.getXYPosition();
+	auto new_x = 800.0f;
+	auto new_y = 600.0f;
+	set_position.setXYPosition(new_x,new_y);
+	auto[newXPosition,newYPosition] = set_position.getXYPosition();
+	
+	CHECK(doctest::Approx(new_x) == newXPosition);
+	CHECK(doctest::Approx(new_y) == newYPosition);
+	CHECK_FALSE(doctest::Approx(oldXPosition) == newXPosition);
+	CHECK_FALSE(doctest::Approx(oldYPosition) == newYPosition);
+}//8
+//
+TEST_CASE("Default position is origin"){
+		Position origin;
+		
+		auto[x_pos,y_pos] = origin.getXYPosition();
+		auto x = 0.0f;
+		auto y = 0.0f;
+		CHECK(doctest::Approx(x) == x_pos);
+		CHECK(doctest::Approx(y) == y_pos);
+}//9
+
+//*************************end of Position tests(5 tests)**************************
+/*
+//**************************Mover tests********************************************
+TEST_CASE("Speed cannot be less than or equal to zero"){
+	
+		auto position = make_shared<Position>(150,350);
+		auto negative_speed = -10;
+		CHECK_THROWS_AS(Mover(position,negative_speed),NegativeZeroSpeed);
+		auto zero_speed = 0;
+		CHECK_THROWS_AS(Mover(position,zero_speed),NegativeZeroSpeed);
+}//6
+
+TEST_CASE("Mover Position attribute returns correct values"){
+
+		auto position = make_shared<Position>(400,300);
+		auto speed = 3;
+		auto position_attribute = make_shared<Mover>(position,speed);
+		auto x = 400;
+		auto y = 300;
+		
+		auto[x_attribute,y_attribute] = position_attribute->position()->getPosition();
+
+		CHECK(x == x_attribute);
+		CHECK(y == y_attribute);
+		CHECK_FALSE(x_attribute == y_attribute);
+}//7
+
+TEST_CASE("Mover setPosition works properly"){
+        auto position = make_shared<Position>(400,300);
+		auto speed = 3;
+		auto position_attribute = make_shared<Mover>(position,speed);
+
+		auto[x_attribute,y_attribute] = position_attribute->position()->getPosition();
+        
+
+        auto new_x = 150;
+        auto new_y = 350;
+        position_attribute->position()->setPosition(new_x,new_y);
+        auto[new_x_position,new_y_position] = position_attribute->position()->getPosition();
+        
+        CHECK(new_x == new_x_position);
+        CHECK(new_y == new_y_position);
+        CHECK_FALSE(x_attribute == new_x_position);
+        CHECK_FALSE(y_attribute == new_y_position);
+        
+}//8
+
+TEST_CASE("Position attribute changes accordingly when moving left"){
+	
+		auto position = make_shared<Position>(400,300);
+		auto speed = 5;
+		
+		auto move_attribute = make_shared<Mover>(position,speed);
+		auto[old_x_pos,old_y_pos] = move_attribute->position()->getPosition();
+		move_attribute->move(Direction::LEFT);
+		auto[new_x_pos,new_y_pos] = move_attribute->position()->getPosition();
+		
+		auto new_x = 395;
+		auto new_y = 300;
+		CHECK(new_x == new_x_pos);
+		CHECK(new_y == new_y_pos);
+        CHECK_FALSE(old_y_pos != new_y_pos);
+		CHECK_FALSE(old_x_pos == new_x_pos);
+}//9
+
+TEST_CASE("Cannot move left when x position is zero"){
+		auto position = make_shared<Position>(0,300);
+		auto speed = 5;
+		
+		auto move_attribute = make_shared<Mover>(position,speed);
+		auto[old_x_pos,old_y_pos] = move_attribute->position()->getPosition();
+		move_attribute->move(Direction::LEFT);
+		auto[new_x_pos,new_y_pos] = move_attribute->position()->getPosition();
+		
+		auto new_x = 0;
+		CHECK(new_x == new_x_pos);
+		CHECK(old_y_pos == new_y_pos);
+		CHECK_FALSE(old_x_pos != new_x_pos);
+}//10
+
+TEST_CASE("Position attribute returns correct values after moving right"){
+	
+		auto position = make_shared<Position>(300,400);
+		auto speed = 5;
+		
+		auto move_attribute = make_shared<Mover>(position,speed);
+		auto[old_x_pos,old_y_pos] = move_attribute->position()->getPosition();
+		move_attribute->move(Direction::RIGHT);
+		auto[new_x_pos,new_y_pos] = move_attribute->position()->getPosition();
+		
+		auto new_x = 305;
+		CHECK(new_x == new_x_pos);
+		CHECK(old_y_pos == new_y_pos);
+		CHECK_FALSE(old_x_pos == new_x_pos);
+}//11
+
+TEST_CASE("Cannot move right when x = Display width"){
+		auto position = make_shared<Position>(Constants::DISPLAY_WIDTH_-(Constants::PLAYER_WIDTH_/2),500);
+		auto speed = 5;
+		
+		auto move_attribute = make_shared<Mover>(position,speed);
+		auto[old_x_pos,old_y_pos] = move_attribute->position()->getPosition();
+		move_attribute->move(Direction::RIGHT);
+		auto[new_x_pos,new_y_pos] = move_attribute->position()->getPosition();
+		
+		auto new_x = Constants::DISPLAY_WIDTH_-(Constants::PLAYER_WIDTH_/2);
+		CHECK(new_x == new_x_pos);
+		CHECK(old_y_pos == new_y_pos);
+		CHECK_FALSE(old_x_pos != new_x_pos);		
+}//12
+
+TEST_CASE("Position attribute changes accordingly when moving up"){
+		auto position = make_shared<Position>(300,400);
+		auto speed = 5;
+		
+		auto move_attribute = make_shared<Mover>(position,speed);
+		auto[old_x_pos,old_y_pos] = move_attribute->position()->getPosition();
+		move_attribute->move(Direction::UP);
+		auto[new_x_pos,new_y_pos] = move_attribute->position()->getPosition();
+		
+		auto new_y = 395;
+		CHECK(old_x_pos == new_x_pos);
+		CHECK(new_y == new_y_pos);
+		CHECK_FALSE(old_y_pos == new_y_pos);
+}//13
+
+TEST_CASE("Cannot move up at y = 0"){
+		auto position = make_shared<Position>(300,Constants::PLAYER_HEIGHT_/2);
+		auto speed = 5;
+		
+		auto move_attribute = make_shared<Mover>(position,speed);
+		auto[old_x_pos,old_y_pos] = move_attribute->position()->getPosition();
+		move_attribute->move(Direction::UP);
+		auto[new_x_pos,new_y_pos] = move_attribute->position()->getPosition();
+		
+		auto new_x = 300;
+		auto new_y = Constants::PLAYER_HEIGHT_/2;
+		CHECK(new_x == new_x_pos);
+		CHECK(new_y == new_y_pos);
+		CHECK_FALSE(old_y_pos != new_y_pos);
+}//14
+
+TEST_CASE("Position attributes changes accordingly when moving down"){
+		auto position = make_shared<Position>(200,300);
+		auto speed = 5;
+		
+		auto move_attribute = make_shared<Mover>(position,speed);
+		auto[old_x_pos,old_y_pos] = move_attribute->position()->getPosition();
+		move_attribute->move(Direction::DOWN);
+		auto[new_x_pos,new_y_pos] = move_attribute->position()->getPosition();
+		
+		auto new_x = 200;
+		auto new_y = 305;
+		CHECK(new_x == new_x_pos);
+		CHECK(new_y == new_y_pos);
+		CHECK_FALSE(old_y_pos == new_y_pos);		
+}//15
+
+TEST_CASE("Cannot move down when y = screen height"){
+		auto position = make_shared<Position>(300,Constants::DISPLAY_HEIGHT_-(Constants::PLAYER_HEIGHT_/2));
+		auto speed = 5;
+		
+		auto move_attribute = make_shared<Mover>(position,speed);
+		auto[old_x_pos,old_y_pos] = move_attribute->position()->getPosition();
+		move_attribute->move(Direction::DOWN);
+		auto[new_x_pos,new_y_pos] = move_attribute->position()->getPosition();
+		
+		auto new_x = 300;
+		auto new_y = Constants::DISPLAY_HEIGHT_-(Constants::PLAYER_HEIGHT_/2);
+		CHECK(new_x == new_x_pos);
+		CHECK(new_y == new_y_pos);
+		CHECK_FALSE(old_y_pos != new_y_pos);	
+}//16
+
+TEST_CASE("Mover's isLive() behaves as expected'"){
+    
+    auto position = make_shared<Position>(150,250);
+    auto mover = make_shared<Mover>(position,Constants::BULLET_SPEED_);
+    bool live = true;
+    bool dead = false;
+    auto mover_life = mover->isLive();
+    CHECK(live == mover_life);
+    CHECK_FALSE(dead == mover_life);
+}//17
+
+TEST_CASE("Mover's destroy() behaves as expected"){
+    auto position = make_shared<Position>(150,250);
+    auto mover = make_shared<Mover>(position,Constants::BULLET_SPEED_);
+    bool live = true;
+    bool dead = false;
+    auto mover_life = mover->isLive();
+    CHECK(live == mover_life);
+    CHECK_FALSE(dead == mover_life);
+    
+    mover->destroy();
+    mover_life = mover->isLive();
+    
+    CHECK(mover_life == dead);
+    CHECK_FALSE(mover_life == live);
+        
+}//18
+
+
+//*****************************Player tests**********************************
+TEST_CASE("Position getter of Player returns correct values"){
+		auto position = make_shared<Position>(Constants::DISPLAY_WIDTH_/2,Constants::DISPLAY_HEIGHT_-10);
+		int speed = 5;
+		auto mover = make_shared<Mover>(position,speed);
+		auto player = make_shared<Player>(mover);
+		
+		auto[x_position,y_position] = player->attribute()->position()->getPosition();
+		auto x = Constants::DISPLAY_WIDTH_/2;
+		auto y = Constants::DISPLAY_HEIGHT_-10;
+		
+		CHECK(x_position == x);
+		CHECK(y == y_position);
+}//19
+
+TEST_CASE("Position setter of Player behaves as expected"){
+	
+		auto position = make_shared<Position>(Constants::DISPLAY_WIDTH_/2,Constants::DISPLAY_HEIGHT_-10);
+		int speed = 5;
+		auto mover = make_shared<Mover>(position,speed);
+		auto player = make_shared<Player>(mover);
+		
+		auto[x_position,y_position] = player->attribute()->position()->getPosition();
+	
+		auto new_x = 10;
+		auto new_y = 100;
+		
+		player->attribute()->position()->setPosition(new_x,new_y);
+		
+		auto[new_x_position,new_y_position] = player->attribute()->position()->getPosition();
+		
+		
+		CHECK(new_x == new_x_position);
+		CHECK(new_y == new_y_position);
+		CHECK_FALSE(x_position == new_x_position);
+		CHECK_FALSE(y_position == new_y_position);
+
+}//20
+
+TEST_CASE("Player's basic move right works properly"){
+    
+		auto position = make_shared<Position>(Constants::DISPLAY_WIDTH_/2,Constants::DISPLAY_HEIGHT_-10);
+		auto player_speed = 5;
+		auto mover = make_shared<Mover>(position,player_speed);
+		auto player = make_shared<Player>(mover);
+		auto[old_x,old_y] = player->attribute()->position()->getPosition();
+		player->attribute()->move(Direction::RIGHT);
+		auto[new_x,new_y] = player->attribute()->position()->getPosition();
+		auto x = Constants::DISPLAY_WIDTH_/2+player_speed;
+		
+		CHECK(x == new_x);
+		CHECK(old_y == new_y);
+		CHECK_FALSE(old_x == new_x);
+		
+}//21
+TEST_CASE("Cannot move player to the right beyond screen border"){
+    //the limit occurs at x = 784
+		auto position = make_shared<Position>(784,450);
+		auto player_speed = 5;
+		auto mover = make_shared<Mover>(position,player_speed);
+		auto player = make_shared<Player>(mover);
+		auto[old_x,old_y] = player->attribute()->position()->getPosition();
+		player->attribute()->move(Direction::RIGHT);
+		auto[new_x,new_y] = player->attribute()->position()->getPosition();
+		
+		CHECK(old_x == new_x);    
+}//22
+TEST_CASE("Player's basic move left works properly"){
+		auto position = make_shared<Position>(Constants::DISPLAY_WIDTH_/2,Constants::DISPLAY_HEIGHT_-10);
+		auto player_speed = 5;
+		auto mover = make_shared<Mover>(position,player_speed);
+		auto player = make_shared<Player>(mover);
+		auto[old_x,old_y] = player->attribute()->position()->getPosition();
+		player->attribute()->move(Direction::LEFT);
+		auto[new_x,new_y] = player->attribute()->position()->getPosition();
+		auto x = Constants::DISPLAY_WIDTH_/2-player_speed;
+		
+		CHECK(x == new_x);
+		CHECK(old_y == new_y);
+		CHECK_FALSE(old_x == new_x);
+		
+		
+}//23
+TEST_CASE("Cannot move player to the left beyond screen border"){
+        //the limit occurs at x = 0
+		auto position = make_shared<Position>(0,450);
+		auto player_speed = 5;
+		auto mover = make_shared<Mover>(position,player_speed);
+		auto player = make_shared<Player>(mover);
+		auto[old_x,old_y] = player->attribute()->position()->getPosition();
+		player->attribute()->move(Direction::LEFT);
+		auto[new_x,new_y] = player->attribute()->position()->getPosition();
+		
+		CHECK(old_x == new_x);  
+}//24
+
+TEST_CASE("Player's basic move up works properly"){
+    
+		auto position = make_shared<Position>(400,590);
+		auto player_speed = 5;
+		auto mover = make_shared<Mover>(position,player_speed);
+		auto player = make_shared<Player>(mover);
+		auto[old_x,old_y] = player->attribute()->position()->getPosition();
+		player->moveUp();
+		auto[new_x,new_y] = player->attribute()->position()->getPosition();
+		auto y = 585;
+		
+		CHECK(y == new_y);
+		CHECK(old_x == new_x);
+		CHECK_FALSE(old_y == new_y);
+		
+		
+}//25
+TEST_CASE("Cannot move player up after reaching a set limit"){
+    //the limit occurs at y = 450
+		auto position = make_shared<Position>(400,450);
+		auto player_speed = 5;
+		auto mover = make_shared<Mover>(position,player_speed);
+		auto player = make_shared<Player>(mover);
+		auto[old_x,old_y] = player->attribute()->position()->getPosition();
+		player->moveUp();
+		auto[new_x,new_y] = player->attribute()->position()->getPosition();
+		auto y = 450;
+		
+		CHECK(y == new_y);
+}//26
+
+TEST_CASE("Player's basic move down works properly"){
+    
+		auto position = make_shared<Position>(400,500);
+		auto player_speed = 5;
+		auto mover = make_shared<Mover>(position,player_speed);
+		auto player = make_shared<Player>(mover);
+		auto[old_x,old_y] = player->attribute()->position()->getPosition();
+		player->attribute()->move(Direction::DOWN);
+		auto[new_x,new_y] = player->attribute()->position()->getPosition();
+		auto y = 505;
+		
+		CHECK(y == new_y);
+		CHECK(old_x == new_x);
+		CHECK_FALSE(old_y == new_y);
+		
+		
+}//27
+
+TEST_CASE("Cannot move player down beyond bottom of the screen"){
+    
+		auto position = make_shared<Position>(400,584);
+		auto player_speed = 5;
+		auto mover = make_shared<Mover>(position,player_speed);
+		auto player = make_shared<Player>(mover);
+		auto[old_x,old_y] = player->attribute()->position()->getPosition();
+		player->attribute()->move(Direction::DOWN);
+		auto[new_x,new_y] = player->attribute()->position()->getPosition();
+        
+        CHECK(old_y == new_y);
+        
+}//28
+
+//**********************Bullet Tests******************************************
+TEST_CASE("Bullet's basic move function behaves as expected"){
+	
+	auto bullet_position = make_shared<Position>(250,350);
+	auto bullet_mover = make_shared<Mover>(bullet_position,Constants::BULLET_SPEED_);
+	auto bullet = make_shared<Bullet>(bullet_mover);
+	auto[x,y] = bullet->attribute()->position()->getPosition();
+	auto x_pos = 250;
+	auto y_pos = 350;
+	CHECK(x == x_pos);
+	CHECK(y == y_pos);
+	CHECK_FALSE(x == y_pos);
+	CHECK_FALSE(y == x_pos);
+	
+}//29
+//
+TEST_CASE("Cannot move bullet beyond screen borders"){
+	
+	auto bullet_position = make_shared<Position>(250,0);
+	auto bullet_mover = make_shared<Mover>(bullet_position,Constants::BULLET_SPEED_);
+	auto bullet = make_shared<Bullet>(bullet_mover);
+	auto[x_i,y_i] = bullet->attribute()->position()->getPosition();
+	bullet->move();
+	auto[x_f,y_f] = bullet->attribute()->position()->getPosition();
+	CHECK(y_i == y_f);
+}//30
+//
+TEST_CASE("Bullet gets destroyed as it goes out of screen"){
+	
+	auto bullet_position = make_shared<Position>(250,0);
+	auto bullet_mover = make_shared<Mover>(bullet_position,Constants::BULLET_SPEED_);
+	auto bullet = make_shared<Bullet>(bullet_mover);
+	auto bullet_life = bullet->attribute()->isLive();
+	CHECK(bullet_life);
+	bullet->move();
+	bullet_life = bullet->attribute()->isLive();
+	CHECK_FALSE(bullet_life);
+	
+}//31
+
+//***********************************************************************
+
+//******************************Segment Tests**********************************
+TEST_CASE("faceLeft and isFacingLeft functions behave as expected"){
+	auto segment_position = make_shared<Position>(40,150);
+	auto segment_mover = make_shared<Mover>(segment_position,Constants::SEGMENT_SPEED_);
+	auto segment = make_shared<Segment>(segment_mover);
+	segment->faceLeft();
+	CHECK(segment->isFacingLeft());
+	CHECK_FALSE(!segment->isFacingLeft());
+}//32
+//
+TEST_CASE("faceRight and isFacingRight functions behave as expected"){
+	auto segment_position = make_shared<Position>(40,150);
+	auto segment_mover = make_shared<Mover>(segment_position,Constants::SEGMENT_SPEED_);
+	auto segment = make_shared<Segment>(segment_mover);
+	segment->faceRight();
+	CHECK(segment->isFacingRight());
+	CHECK_FALSE(!segment->isFacingRight());
+}//33
+//
+TEST_CASE("faceUp and isFacingUp functions behave as expected"){
+	auto segment_position = make_shared<Position>(40,150);
+	auto segment_mover = make_shared<Mover>(segment_position,Constants::SEGMENT_SPEED_);
+	auto segment = make_shared<Segment>(segment_mover);
+	segment->faceUp();
+	CHECK(segment->isFacingUp());
+	CHECK_FALSE(!segment->isFacingUp());
+}//34
+//
+//
+TEST_CASE("faceDown and isFacingDown functions behave as expected"){
+	auto segment_position = make_shared<Position>(40,150);
+	auto segment_mover = make_shared<Mover>(segment_position,Constants::SEGMENT_SPEED_);
+	auto segment = make_shared<Segment>(segment_mover);
+	segment->faceDown();
+	CHECK(segment->isFacingDown());
+	CHECK_FALSE(!segment->isFacingDown());
+}//35
+//
+TEST_CASE("Segment cannot face left and right at the same time upon"){
+	auto segment_position = make_shared<Position>(40,150);
+	auto segment_mover = make_shared<Mover>(segment_position,Constants::SEGMENT_SPEED_);
+	auto segment = make_shared<Segment>(segment_mover);
+	auto left = segment->isFacingLeft();
+	auto right = segment->isFacingRight();
+	
+	CHECK_FALSE(right == left);
+}//36
+//
+TEST_CASE("Segment cannot face up and down at the same time"){
+	auto segment_position = make_shared<Position>(40,150);
+	auto segment_mover = make_shared<Mover>(segment_position,Constants::SEGMENT_SPEED_);
+	auto segment = make_shared<Segment>(segment_mover);
+	auto up = segment->isFacingUp();
+	auto down = segment->isFacingDown();
+	
+	CHECK_FALSE(up == down);		
+}//37
+//
+TEST_CASE("Segment's basic move right works properly"){
+		auto position = make_shared<Position>(250,250);
+		auto mover = make_shared<Mover>(position,Constants::SEGMENT_SPEED_);
+		auto segment = make_shared<Segment>(mover);
+		auto[old_x,old_y] = segment->attribute()->position()->getPosition();
+		segment->attribute()->move(Direction::RIGHT);
+		auto[new_x,new_y] = segment->attribute()->position()->getPosition();
+		auto x = 254;
+		
+		CHECK(x == new_x);
+		CHECK(old_y == new_y);
+		CHECK_FALSE(old_x == new_x);
+		
+}//38
+//
+TEST_CASE("Cannot move segment to the right beyond screen borders"){
+    
+		auto position = make_shared<Position>(784,250);
+		auto mover = make_shared<Mover>(position,Constants::SEGMENT_SPEED_);
+		auto segment = make_shared<Segment>(mover);
+		auto[old_x,old_y] = segment->attribute()->position()->getPosition();
+		segment->attribute()->move(Direction::RIGHT);
+        auto[new_x,new_y] = segment->attribute()->position()->getPosition();
+        CHECK(old_y == new_y);
+}//39
+TEST_CASE("Segment's basic move left works properly"){
+	
+		auto position = make_shared<Position>(250,250);
+		auto mover = make_shared<Mover>(position,Constants::SEGMENT_SPEED_);
+		auto segment = make_shared<Segment>(mover);
+		auto[old_x,old_y] = segment->attribute()->position()->getPosition();
+		segment->attribute()->move(Direction::LEFT);
+		auto[new_x,new_y] = segment->attribute()->position()->getPosition();
+		auto x = 246;
+		
+		CHECK(x == new_x);
+		CHECK(old_y == new_y);
+		CHECK_FALSE(old_x == new_x);
+		
+}//40
+//
+TEST_CASE("Cannot move segment to the left beyond screen borders"){
+        auto position = make_shared<Position>(0,250);
+		auto mover = make_shared<Mover>(position,Constants::SEGMENT_SPEED_);
+		auto segment = make_shared<Segment>(mover);
+		auto[old_x,old_y] = segment->attribute()->position()->getPosition();
+		segment->attribute()->move(Direction::LEFT);
+		auto[new_x,new_y] = segment->attribute()->position()->getPosition();
+        
+        CHECK(old_x == new_x);
+        
+}//41
+TEST_CASE("Segment's basic move down works properly"){
+	
+		auto position = make_shared<Position>(250,250);
+		auto mover = make_shared<Mover>(position,Constants::SEGMENT_SPEED_);
+		auto segment = make_shared<Segment>(mover);
+		auto[old_x,old_y] = segment->attribute()->position()->getPosition();
+		segment->attribute()->move(Direction::DOWN);
+		auto[new_x,new_y] = segment->attribute()->position()->getPosition();
+		auto y = 254;
+		
+		CHECK(y == new_y);
+		CHECK(old_x == new_x);
+		CHECK_FALSE(old_y == new_y);
+		
+}//42
+//
+TEST_CASE("Cannot move segment down beyond screen borders"){
+        auto position = make_shared<Position>(250,584);
+		auto mover = make_shared<Mover>(position,Constants::SEGMENT_SPEED_);
+		auto segment = make_shared<Segment>(mover);
+		auto[old_x,old_y] = segment->attribute()->position()->getPosition();
+		segment->attribute()->move(Direction::DOWN);
+		auto[new_x,new_y] = segment->attribute()->position()->getPosition();
+        
+        CHECK(old_y == new_y);
+        
+}//43
+TEST_CASE("Segment's basic move up works properly"){
+	
+		auto position = make_shared<Position>(250,250);
+		auto mover = make_shared<Mover>(position,Constants::SEGMENT_SPEED_);
+		auto segment = make_shared<Segment>(mover);
+		auto[old_x,old_y] = segment->attribute()->position()->getPosition();
+		segment->attribute()->move(Direction::UP);
+		auto[new_x,new_y] = segment->attribute()->position()->getPosition();
+		auto y = 246;
+		
+		CHECK(y == new_y);
+		CHECK(old_x == new_x);
+		CHECK_FALSE(old_y == new_y);
+		
+}//44
+//
+TEST_CASE("Cannot move segment up beyond screen borders"){
+        auto position = make_shared<Position>(250,0);
+		auto mover = make_shared<Mover>(position,Constants::SEGMENT_SPEED_);
+		auto segment = make_shared<Segment>(mover);
+		auto[old_x,old_y] = segment->attribute()->position()->getPosition();
+		segment->attribute()->move(Direction::UP);
+		auto[new_x,new_y] = segment->attribute()->position()->getPosition();
+        
+        CHECK(old_y == new_y);
+        
+}//45
+////*******************************************************************
+//*************************Mushroom Tests*****************************
+TEST_CASE("Mushroom's position getter returns correct results"){
+    auto mush_position = make_shared<Position>(50,250);
+    auto mushroom = make_shared<Mushroom>(mush_position);
+    auto[mush_x,mush_y] = mushroom->position()->getPosition();
+    auto x = 50;
+    auto y = 250;
+    
+    CHECK(x == mush_x);
+    CHECK(y == mush_y);
+    CHECK_FALSE(mush_x == mush_y);
+}//46
+////***********************Centipede Tests****************************
+TEST_CASE("Cannot initialize Centipede with size <= 0"){
+	
+	CHECK_THROWS_AS(Centipede(-25),InsufficientCentipedeSize);
+	CHECK_THROWS_AS(Centipede(0),InsufficientCentipedeSize);
+	
+}//47
+//
+TEST_CASE("Centipede's size has a limit"){
+	//such that segments cannot be initialized out of bounds
+	//NegativePosition exception from Position
+	// will be thrown for Centipede size > 26
+	CHECK_THROWS(Centipede(27));
+}//48
+TEST_CASE("Centipede initializes a correct number of Segment objects"){
+    auto number_of_segments = 5;
+    auto centipede_ = make_shared<Centipede>(number_of_segments);
+    auto centipede_size = centipede_->getCentipede().size();
+    CHECK(number_of_segments == centipede_size);
+}//49
+TEST_CASE("Centipede can move a segment"){
+    
+    auto centiSize = 1;
+    auto centipede = make_shared<Centipede>(centiSize);
+    auto segment_iterator = begin(centipede->getCentipede());
+    auto[seg_x,seg_y] = (*segment_iterator)->attribute()->position()->getPosition();
+    auto x = 400;
+    auto y = 0;
+    
+    CHECK(x == seg_x);
+    CHECK(y == seg_y);
+    
+    centipede->moveSegments();
+    auto[new_seg_x,new_seg_y] = (*segment_iterator)->attribute()->position()->getPosition();
+    auto new_x = 404;
+    CHECK(new_x == new_seg_x);
+    CHECK_FALSE(new_seg_y != y);
+    
+}//50
+
+TEST_CASE("Centipede can move more than one segment"){
+
+    auto centiSize = 2;
+    auto centipede = make_shared<Centipede>(centiSize);
+    auto segment_iterator = begin(centipede->getCentipede());
+    auto[seg_x_1,seg_y_1] = (*segment_iterator)->attribute()->position()->getPosition();
+
+    segment_iterator++;
+    auto[seg_x_2,seg_y_2] = (*segment_iterator)->attribute()->position()->getPosition();
+    centipede->moveSegments();
+    segment_iterator--;
+    auto[new_seg_x_1,new_seg_y_1] = (*segment_iterator)->attribute()->position()->getPosition();
+    segment_iterator++;
+    auto[new_seg_x_2,new_seg_y_2] = (*segment_iterator)->attribute()->position()->getPosition();
+    auto new_x_1 = seg_x_1+4;   //segment speed is 4
+    auto new_x_2 = seg_x_2+4;
+    CHECK(new_x_1 == new_seg_x_1);
+    CHECK(new_x_2 == new_seg_x_2);
+    
+}//51
+
+TEST_CASE("Centipede moves a segment down when it reaches right border"){
+    
+    auto centiSize = 1;
+    auto centipede = make_shared<Centipede>(centiSize);
+    auto segment_iterator = begin(centipede->getCentipede());
+    auto[seg_x_1,seg_y_1] = (*segment_iterator)->attribute()->position()->getPosition();
+    auto x_border = 774;
+    
+    while(seg_x_1 <= x_border){
+        centipede->moveSegments();
+        seg_x_1 = get<0>((*segment_iterator)->attribute()->position()->getPosition());
+    }
+    
+    centipede->moveSegments();
+    seg_y_1 = get<1>((*segment_iterator)->attribute()->position()->getPosition());
+    auto new_y = 16;
+    
+    CHECK(seg_y_1 == new_y);
+    
+}//52
+
+TEST_CASE("Centipede can move a segment down when it reaches left border"){
+
+    auto centiSize = 1;
+    auto centipede = make_shared<Centipede>(centiSize);
+    auto segment_iterator = begin(centipede->getCentipede());
+    (*segment_iterator)->faceLeft();
+    auto[seg_x_1,seg_y_1] = (*segment_iterator)->attribute()->position()->getPosition();
+    
+    auto x_border = 5;
+    while(seg_x_1 >= x_border){
+        centipede->moveSegments();
+        seg_x_1 = get<0>((*segment_iterator)->attribute()->position()->getPosition());
+    }
+    
+    centipede->moveSegments();
+    seg_y_1 = get<1>((*segment_iterator)->attribute()->position()->getPosition());
+    
+    auto new_y_ =  16;
+    CHECK(seg_y_1 == new_y_);
+    
+    
+    
+}//53
+*/
+
