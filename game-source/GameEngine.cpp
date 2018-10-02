@@ -40,8 +40,8 @@ void GameEngine::playGame(){
 }
 
 void GameEngine::splashScreen(){
-//	SplashScreen welcome_screen(display_->getWindow());
-//	welcome_screen.drawSplashScreen();
+	SplashScreen welcome_screen(display_->getWindow());
+	welcome_screen.drawSplashScreen();
 }
 
 void GameEngine::update(){

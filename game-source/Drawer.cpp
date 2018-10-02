@@ -13,9 +13,10 @@ void Drawer::drawPlayer(shared_ptr<Player> player){
 	
 	auto[x_position,y_position] = player->entityAttribute()->position()->getXYPosition();
 	
-	auto player_sprite = make_unique<DrawableLoader>(EntityID::PLAYER);
-	player_sprite->setPosition(x_position,y_position);
-	window_->getWindow()->draw(player_sprite->getDrawable());
+//	auto player_sprite = make_unique<DrawableLoader>(EntityID::PLAYER);
+	auto player_sprite = object_sprites_.at(0);
+	player_sprite.setPosition(x_position,y_position);
+	window_->getWindow()->draw(player_sprite);
 }
 
 void Drawer::drawCentipede(shared_ptr<Centipede> centipede){
@@ -78,23 +79,26 @@ void Drawer::drawGameOverMessage(const string& wonOrLost){
 void Drawer::drawSegment(shared_ptr<Segment> segment){
 	
 	auto[x_position,y_position] = segment->entityAttribute()->position()->getXYPosition();
-	auto segment_sprite = make_unique<DrawableLoader>(EntityID::SEGMENT);//object_sprites_.at(1);
-	segment_sprite->setPosition(x_position,y_position);
-	window_->getWindow()->draw(segment_sprite->getDrawable());
+//	auto segment_sprite = make_unique<DrawableLoader>(EntityID::SEGMENT);//object_sprites_.at(1);
+	auto segment_sprite = object_sprites_.at(1);
+	segment_sprite.setPosition(x_position,y_position);
+	window_->getWindow()->draw(segment_sprite);
 
 }
 
 void Drawer::drawBullet(shared_ptr<Laser>laser){
 	auto[x_position,y_position] = laser->entityAttribute()->position()->getXYPosition();
-	auto laser_sprite = make_shared<DrawableLoader>(EntityID::LASER);
-	laser_sprite->setPosition(x_position,y_position);
-	window_->getWindow()->draw(laser_sprite->getDrawable());
+//	auto laser_sprite = make_shared<DrawableLoader>(EntityID::LASER);
+	auto laser_sprite = object_sprites_.at(2);
+	laser_sprite.setPosition(x_position,y_position);
+	window_->getWindow()->draw(laser_sprite);
 
 }
 
 void Drawer::drawMushroom(shared_ptr<Mushroom> mushroom){
 	auto[x_position,y_position] = mushroom->entityAttribute()->position()->getXYPosition();
-	auto mushroom_sprite = make_unique<DrawableLoader>(EntityID::MUSHROOM);
-	mushroom_sprite->setPosition(x_position,y_position); //setPosition(x_position,y_position);
-	window_->getWindow()->draw(mushroom_sprite->getDrawable());
+//	auto mushroom_sprite = make_unique<DrawableLoader>(EntityID::MUSHROOM);
+	auto mush_sprite = object_sprites_.at(3);
+	mush_sprite.setPosition(x_position,y_position); //setPosition(x_position,y_position);
+	window_->getWindow()->draw(mush_sprite);
 }

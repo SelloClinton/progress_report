@@ -595,7 +595,9 @@ TEST_CASE("Valid Mushroom Box can be created"){
 }//46-111assert
 
 //**************************Laser-Segment Collision Tests**************************
-//TEST_CASE("")
+TEST_CASE("Top left laser corner collides with bottom left Segment corner"){
+	
+}
 
 
 //**************************Mover tests********************************************
