@@ -10,7 +10,7 @@
 //#include "../game-source-code/Segment.h"
 //#include "../game-source-code/Enums.h"
 //#include "../game-source-code/Centipede.h"
-//#include "../game-source-code/Mushroom.h"
+#include "../game-source/Mushroom.h"
 
 
 //***********************Position tests*******************************
@@ -336,6 +336,36 @@ TEST_CASE("Player cannot move down when at bottom of the screen"){
 	CHECK(doctest::Approx(new_y) == old_y);
 	CHECK_FALSE(doctest::Approx(new_y) == old_y+speed);		
 }//30-70assert
+//*****************************************************************************
+//**************************Mushroom Tests**********************************
+TEST_CASE("Mushroom dies after being weakened four times"){
+	auto mushroom_x_position = 320.0f;
+	auto mushroom_y_position = 250.0f;
+	auto mushroom_entity = EntityID::MUSHROOM;
+	auto mushroom = make_shared<Mushroom>(mushroom_x_position,mushroom_y_position,mushroom_entity);
+	
+	auto hits = 4;
+	for(auto i = 0; i != hits; i++)
+		mushroom->weaken();
+	CHECK_FALSE(mushroom->entityAttribute()->isLive());
+	
+}//31-71assert
+//
+TEST_CASE("Mushroom does not die if hit less than four times"){
+	auto mushroom_x_position = 320.0f;
+	auto mushroom_y_position = 250.0f;
+	auto mushroom_entity = EntityID::MUSHROOM;
+	auto mushroom = make_shared<Mushroom>(mushroom_x_position,mushroom_y_position,mushroom_entity);
+
+	mushroom->weaken();
+	mushroom->weaken();
+	mushroom->weaken();
+	
+	auto dead = false;
+	auto mushroom_state = mushroom->entityAttribute()->isLive();
+	CHECK_FALSE(mushroom_state == dead);
+}//32-72assert
+//
 //**************************Mover tests********************************************
 //TEST_CASE("Speed cannot be less than or equal to zero"){
 //	auto x = 150.0f;

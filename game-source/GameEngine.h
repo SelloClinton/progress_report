@@ -6,15 +6,17 @@
 #include "KeyReader.h"
 #include "Mover.h"
 #include "Player.h"
+#include "Entity.h"
+#include "Laser.h"
 #include "Position.h"
 #include "SplashScreen.h"
-#include "Centipede.h"
+//#include "Centipede.h"
 #include "Constants.h"
-#include "Box.h"
-#include "CollisionDetection.h"
-#include "CollisionReaction.h"
-#include "Field.h"
-#include "Mushroom.h"
+//#include "Box.h"
+//#include "CollisionDetection.h"
+//#include "CollisionReaction.h"
+//#include "Field.h"
+//#include "Mushroom.h"
 #include "Update.h"
 
 #include <memory>
@@ -33,13 +35,13 @@ public:
 private:
 	shared_ptr<Display> display_;
 	shared_ptr<Drawer> drawer_;
-	shared_ptr<Position> position_;
-    shared_ptr<Position> pos;
-    shared_ptr<Mover> mover;
-    shared_ptr<Mover> mover2;
+//	shared_ptr<Position> position_;
+//    shared_ptr<Position> pos;
+//    shared_ptr<Mover> mover;
+//   shared_ptr<Mover> mover2;
 	shared_ptr<Player> player_;
-	shared_ptr<Centipede> centipede_;
-	shared_ptr<Field> field_;
+//	shared_ptr<Centipede> centipede_;
+//	shared_ptr<Field> field_;
 	Pressed key_;
 	bool game_over_;
 	bool playing_;

@@ -3,11 +3,11 @@
 GameEngine::GameEngine():
 			display_(make_shared<Display>())
 			,drawer_(make_shared<Drawer>(display_->getWindow()))
-			,position_(make_shared<Position>(Constants::DISPLAY_WIDTH_/2,(Constants::DISPLAY_HEIGHT_-50)))
-            ,mover(make_shared<Mover>(position_,5))
-			,player_(make_shared<Player>(mover))
-            ,centipede_(make_shared<Centipede>(Constants::INITIAL_SIZE_OF_CENTIPEDE_))
-			,field_(make_shared<Field>(Constants::NUMBER_OF_MUSHROOMS))
+//			,position_(make_shared<Position>(Constants::DISPLAY_WIDTH_/2,(Constants::DISPLAY_HEIGHT_-50)))
+//            ,mover(make_shared<Mover>(position_,5))
+			,player_(make_shared<Player>(Constants::DISPLAY_WIDTH_/2,(Constants::DISPLAY_HEIGHT_-50),EntityID::PLAYER,Constants::PLAYER_SPEED_))
+//            ,centipede_(make_shared<Centipede>(Constants::INITIAL_SIZE_OF_CENTIPEDE_))
+//			,field_(make_shared<Field>(Constants::NUMBER_OF_MUSHROOMS))
 			,playing_(true)
 			,game_over_(false)
 {
@@ -65,9 +65,9 @@ void GameEngine::checkInput(){
 }
 
 void GameEngine::drawObjects(){
-	drawer_->drawField(field_);
+//	drawer_->drawField(field_);
     drawer_->drawPlayer(player_);
-    drawer_->drawCentipede(centipede_);
+//    drawer_->drawCentipede(centipede_);
 	drawer_->drawBullets(player_);
 
 }
@@ -77,12 +77,12 @@ void GameEngine::displayPauseMessage(){
 	display_->clear();
 }
 void GameEngine::displayGameOverMessage(){
-	if(auto over = "won";player_->attribute()->isLive()){
+	if(auto over = "won";player_->entity_attribute()->isLive()){
 		drawer_->drawGameOverMessage(over);
 		display_->display();
 		display_->clear();
 	}
-	else if(auto over = "lost";!player_->attribute()->isLive()){
+	else if(auto over = "lost";!player_->entity_attribute()->isLive()){
 		drawer_->drawGameOverMessage(over);
 		display_->display();
 		display_->clear();
@@ -93,7 +93,7 @@ void GameEngine::displayGameOverMessage(){
 
 
 void GameEngine::gameStatus(){
-		if ((!player_->attribute()->isLive())||(centipede_->getCentipede().empty())){
+		if ((!player_->entity_attribute()->isLive()))//||(centipede_->getCentipede().empty())){
 						game_over_ = true;
 						playing_ = false;
 			

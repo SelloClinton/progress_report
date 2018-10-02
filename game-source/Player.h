@@ -27,7 +27,7 @@ class IncorrectPlayerEntityID{};
 class Player{
 	
 public:
-	Player(float x_position, float y_position, const EntityID id, float speed);
+	Player(float x_position, float y_position, const EntityID& id, float speed);
 	shared_ptr<Entity> entityAttribute();
 	void move(Direction direction);
 	void shoot();

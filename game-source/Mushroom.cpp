@@ -1,25 +1,17 @@
 #include "Mushroom.h"
 
-Mushroom::Mushroom(shared_ptr<Position>position):
-		  position_(position)
+Mushroom::Mushroom(float x_position, float y_position, const EntityID& id):
+		  entity_attribute_(make_shared<Entity>(x_position,y_position,id))
 		  ,number_of_lives(4)
-		  ,live_(true)
 		  {}
 		  
-shared_ptr<Position> Mushroom::position(){
-		return position_;
-}
-bool Mushroom::isLive()const{
-		return live_;
-}
-
-void Mushroom::destroy(){
-		live_ = false;
+shared_ptr<Entity> Mushroom::entityAttribute(){
+	return entity_attribute_;
 }
 
 void Mushroom::weaken(){
 	if(number_of_lives > 1)
 		--number_of_lives;
 	else
-		destroy();
+		entity_attribute_->destroy();
 }

@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(float x_position, float y_position, const EntityID id, float speed):
+Player::Player(float x_position, float y_position, const EntityID& id, float speed):
 		entity_attribute_(make_shared<Entity>(x_position,y_position,id))
 //		,moving_attribute_(make_shared<Mover>(x_position,y_position,speed))
 {
