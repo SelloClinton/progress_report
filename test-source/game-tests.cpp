@@ -7,10 +7,11 @@
 #include "../game-source/Player.h"
 //#include "../game-source-code/Constants.h"
 //#include "../game-source-code/Bullet.h"
-//#include "../game-source-code/Segment.h"
+#include "../game-source/Segment.h"
 //#include "../game-source-code/Enums.h"
 //#include "../game-source-code/Centipede.h"
 #include "../game-source/Mushroom.h"
+#include "../game-source/Field.h"
 
 
 //***********************Position tests*******************************
@@ -365,7 +366,149 @@ TEST_CASE("Mushroom does not die if hit less than four times"){
 	auto mushroom_state = mushroom->entityAttribute()->isLive();
 	CHECK_FALSE(mushroom_state == dead);
 }//32-72assert
+//**********************************************************************************
+//***************************Segment Tests*****************************************
+TEST_CASE("Cannot construct Segment with an invalid EntityID"){
+	
+	CHECK_THROWS_AS(Segment(50,50,EntityID::PLAYER,Constants::SEGMENT_SPEED_),InvalidSegmentEntityID);
+	CHECK_THROWS_AS(Segment(50,50,EntityID::LASER,Constants::SEGMENT_SPEED_),InvalidSegmentEntityID);
+	CHECK_THROWS_AS(Segment(50,50,EntityID::MUSHROOM,Constants::SEGMENT_SPEED_),InvalidSegmentEntityID);
+}//33-75assert
+TEST_CASE("Cannot construct Segment with an invalid speed"){
+	CHECK_THROWS_AS(Segment(50,50,EntityID::SEGMENT,Constants::PLAYER_SPEED_),InvalidSegmentSpeed);
+	CHECK_THROWS_AS(Segment(50,50,EntityID::SEGMENT,5.0),InvalidSegmentSpeed);
+	CHECK_THROWS_AS(Segment(50,50,EntityID::SEGMENT,6.5),InvalidSegmentSpeed);
+	CHECK_THROWS_AS(Segment(50,50,EntityID::SEGMENT,3.9),InvalidSegmentSpeed);
+}//34-79ASSERT
 //
+TEST_CASE("Segment can move right"){
+	
+	auto x = 250.0f;
+	auto y = 350.0f;
+	auto id = EntityID::SEGMENT;
+	auto speed = Constants::SEGMENT_SPEED_;
+	
+	Segment segment(x,y,id,speed);
+	auto old_x = segment.entityAttribute()->position()->getXPosition();
+	segment.move(Direction::RIGHT);
+	auto new_x = segment.entityAttribute()->position()->getXPosition();
+	CHECK(doctest::Approx(new_x) == old_x+speed);
+	CHECK_FALSE(doctest::Approx(old_x) == new_x);
+	
+}//35-81assert
+//
+TEST_CASE("Segment cannot move right when at rightmost screen border"){
+	
+	auto x = 784.0f;
+	auto y = 350.0f;
+	auto id = EntityID::SEGMENT;
+	auto speed = Constants::SEGMENT_SPEED_;
+	
+	Segment segment(x,y,id,speed);
+	auto old_x = segment.entityAttribute()->position()->getXPosition();
+	segment.move(Direction::RIGHT);
+	auto new_x = segment.entityAttribute()->position()->getXPosition();
+	CHECK(doctest::Approx(new_x) == old_x);
+	CHECK_FALSE(doctest::Approx(new_x) == old_x+speed);
+	
+}//36-83assert
+//
+TEST_CASE("Segment can move left"){
+	
+	auto x = 784.0f;
+	auto y = 350.0f;
+	auto id = EntityID::SEGMENT;
+	auto speed = Constants::SEGMENT_SPEED_;
+	
+	Segment segment(x,y,id,speed);
+	auto old_x = segment.entityAttribute()->position()->getXPosition();
+	segment.move(Direction::LEFT);
+	auto new_x = segment.entityAttribute()->position()->getXPosition();
+	CHECK(doctest::Approx(new_x) == old_x-speed);
+	CHECK_FALSE(doctest::Approx(new_x) == old_x);
+	
+}//37-85assert
+//
+TEST_CASE("Segment cannot move left when at leftmost screen border"){
+	
+	auto x = 4.0f;
+	auto y = 350.0f;
+	auto id = EntityID::SEGMENT;
+	auto speed = Constants::SEGMENT_SPEED_;
+	
+	Segment segment(x,y,id,speed);
+	auto old_x = segment.entityAttribute()->position()->getXPosition();
+	segment.move(Direction::LEFT);
+	auto new_x = segment.entityAttribute()->position()->getXPosition();
+	CHECK(doctest::Approx(new_x) == old_x);
+	CHECK_FALSE(doctest::Approx(new_x) == old_x-speed);
+	
+}//38-87assert
+//
+TEST_CASE("Segment can move up"){
+	
+	auto x = 550.0f;
+	auto y = 550.0f;
+	auto id = EntityID::SEGMENT;
+	auto speed = Constants::SEGMENT_SPEED_;
+	
+	Segment segment(x,y,id,speed);
+	auto old_y = segment.entityAttribute()->position()->getYPosition();
+	segment.move(Direction::UP);
+	auto new_y = segment.entityAttribute()->position()->getYPosition();
+	CHECK(doctest::Approx(new_y) == old_y-4*speed);
+	CHECK_FALSE(doctest::Approx(new_y) == old_y);
+	
+}//39-89assert
+//
+TEST_CASE("Segment cannot move up when at a set limit"){
+	
+	auto x = 4.0f;
+	auto y = Constants::PLAYER_VERTICAL_LIMIT;
+	auto id = EntityID::SEGMENT;
+	auto speed = Constants::SEGMENT_SPEED_;
+	
+	Segment segment(x,y,id,speed);
+	auto old_x = segment.entityAttribute()->position()->getXPosition();
+	segment.move(Direction::LEFT);
+	auto new_x = segment.entityAttribute()->position()->getXPosition();
+	CHECK(doctest::Approx(new_x) == old_x);
+	CHECK_FALSE(doctest::Approx(new_x) == old_x-4*speed);
+}//40-91assert
+//
+TEST_CASE("Segment can move down"){
+	
+	auto x = 550.0f;
+	auto y = 550.0f;
+	auto id = EntityID::SEGMENT;
+	auto speed = Constants::SEGMENT_SPEED_;
+	
+	Segment segment(x,y,id,speed);
+	auto old_y = segment.entityAttribute()->position()->getYPosition();
+	segment.move(Direction::DOWN);
+	auto new_y = segment.entityAttribute()->position()->getYPosition();
+	CHECK(doctest::Approx(new_y) == old_y+4*speed);
+	CHECK_FALSE(doctest::Approx(new_y) == old_y);
+	
+}//41-93-assert
+//
+TEST_CASE("Segment cannot move down when at a set limit"){
+	
+	auto x = 4.0f;
+	auto y = 584.0f;
+	auto id = EntityID::SEGMENT;
+	auto speed = Constants::SEGMENT_SPEED_;
+	
+	Segment segment(x,y,id,speed);
+	auto old_y = segment.entityAttribute()->position()->getYPosition();
+	segment.move(Direction::DOWN);
+	auto new_y = segment.entityAttribute()->position()->getYPosition();
+	CHECK(doctest::Approx(new_y) == old_y);
+	CHECK_FALSE(doctest::Approx(new_y) == old_y-4*speed);
+}//42-95assert
+
+
+
 //**************************Mover tests********************************************
 //TEST_CASE("Speed cannot be less than or equal to zero"){
 //	auto x = 150.0f;
