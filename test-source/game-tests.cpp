@@ -4,7 +4,7 @@
 #include "../game-source/Entity.h"
 #include "../game-source/Mover.h"
 #include "../game-source/Laser.h"
-//#include "../game-source-code/Player.h"
+#include "../game-source/Player.h"
 //#include "../game-source-code/Constants.h"
 //#include "../game-source-code/Bullet.h"
 //#include "../game-source-code/Segment.h"
@@ -217,7 +217,125 @@ TEST_CASE("x position of Laser does not get Updated when updating y position"){
 	CHECK(doctest::Approx(old_x) == new_x);
 	CHECK_FALSE(doctest::Approx(new_x) == old_x - speed);
 }//20-49assert
+//*********************************************************************************
+//**************************Player Tests*******************************************
+TEST_CASE("Player is constructed with a correct EntityID"){
+	
+	CHECK_THROWS_AS(Player(250,450,EntityID::SEGMENT,Constants::PLAYER_SPEED_),IncorrectPlayerEntityID);
+	CHECK_THROWS_AS(Player(250,450,EntityID::LASER,Constants::PLAYER_SPEED_),IncorrectPlayerEntityID);
+	CHECK_THROWS_AS(Player(250,450,EntityID::MUSHROOM,Constants::PLAYER_SPEED_),IncorrectPlayerEntityID);
+	
+}//21-52assert
 
+TEST_CASE("Player is constructed with a correct speed"){
+	
+	CHECK_THROWS_AS(Player(250,450,EntityID::MUSHROOM,Constants::LASER_SPEED_),IncorrectPlayerSpeed);
+	CHECK_THROWS_AS(Player(250,450,EntityID::MUSHROOM,6.0),IncorrectPlayerSpeed);
+	CHECK_THROWS_AS(Player(250,450,EntityID::MUSHROOM,4.5),IncorrectPlayerSpeed);
+	
+}//22-55assert
+TEST_CASE("Player can move right"){
+	auto x = 450.0f;
+	auto y = 550.0f;
+	auto id = EntityID::PLAYER;
+	auto speed = Constants::PLAYER_SPEED_;
+	Player player(x,y,id,speed);
+	auto old_x = player.entityAttribute()->position()->getXPosition();
+	player.move(Direction::RIGHT);
+	auto new_x = player.entityAttribute()->position()->getXPosition();
+	CHECK(doctest::Approx(new_x) == old_x+speed);
+}//23-56aseert
+TEST_CASE("Player cannot move right when at rightmost border of the screen"){
+	auto x = 784.0f;
+	auto y = 550.0f;
+	auto id = EntityID::PLAYER;
+	auto speed = Constants::PLAYER_SPEED_;
+	Player player(x,y,id,speed);
+	auto old_x = player.entityAttribute()->position()->getXPosition();
+	player.move(Direction::RIGHT);
+	auto new_x = player.entityAttribute()->position()->getXPosition();
+	CHECK(doctest::Approx(new_x) == old_x);
+	CHECK_FALSE(doctest::Approx(new_x) == old_x+speed);
+		
+}//24-58assert
+TEST_CASE("Player can move left"){
+	auto x = 784.0f;
+	auto y = 550.0f;
+	auto id = EntityID::PLAYER;
+	auto speed = Constants::PLAYER_SPEED_;
+	Player player(x,y,id,speed);
+	auto old_x = player.entityAttribute()->position()->getXPosition();
+	player.move(Direction::LEFT);
+	auto new_x = player.entityAttribute()->position()->getXPosition();
+	CHECK(doctest::Approx(new_x) == old_x-speed);
+	CHECK_FALSE(doctest::Approx(new_x) == old_x);	
+}//25-60assert
+//
+TEST_CASE("Player cannot move left when at leftmost screen border"){
+	auto x = 4.0f;
+	auto y = 550.0f;
+	auto id = EntityID::PLAYER;
+	auto speed = Constants::PLAYER_SPEED_;
+	Player player(x,y,id,speed);
+	auto old_x = player.entityAttribute()->position()->getXPosition();
+	player.move(Direction::LEFT);
+	auto new_x = player.entityAttribute()->position()->getXPosition();
+	CHECK(doctest::Approx(new_x) == old_x);
+	CHECK_FALSE(doctest::Approx(new_x) == old_x-speed);	
+}//26-62assert
+//
+TEST_CASE("Player can move up"){
+	auto x = 250.0f;
+	auto y = 550.0f;
+	auto id = EntityID::PLAYER;
+	auto speed = Constants::PLAYER_SPEED_;
+	Player player(x,y,id,speed);
+	auto old_y = player.entityAttribute()->position()->getYPosition();
+	player.move(Direction::UP);
+	auto new_y = player.entityAttribute()->position()->getYPosition();
+	CHECK(doctest::Approx(new_y) == old_y-speed);
+	CHECK_FALSE(doctest::Approx(new_y) == old_y);		
+}//27-64assert
+//
+TEST_CASE("Player cannot move up beyond a set border"){
+	auto x = 250.0f;
+	auto y = 450.0f;
+	auto id = EntityID::PLAYER;
+	auto speed = Constants::PLAYER_SPEED_;
+	Player player(x,y,id,speed);
+	auto old_y = player.entityAttribute()->position()->getYPosition();
+	player.move(Direction::UP);
+	auto new_y = player.entityAttribute()->position()->getYPosition();
+	CHECK(doctest::Approx(new_y) == old_y);
+	CHECK_FALSE(doctest::Approx(new_y) == old_y-speed);	
+	
+}//28-66assert
+//
+TEST_CASE("Player can move down"){
+	auto x = 250.0f;
+	auto y = 450.0f;
+	auto id = EntityID::PLAYER;
+	auto speed = Constants::PLAYER_SPEED_;
+	Player player(x,y,id,speed);
+	auto old_y = player.entityAttribute()->position()->getYPosition();
+	player.move(Direction::DOWN);
+	auto new_y = player.entityAttribute()->position()->getYPosition();
+	CHECK(doctest::Approx(new_y) == old_y+speed);
+	CHECK_FALSE(doctest::Approx(new_y) == old_y);		
+}//29-68assert
+//
+TEST_CASE("Player cannot move down when at bottom of the screen"){
+	auto x = 250.0f;
+	auto y = 584.0f;
+	auto id = EntityID::PLAYER;
+	auto speed = Constants::PLAYER_SPEED_;
+	Player player(x,y,id,speed);
+	auto old_y = player.entityAttribute()->position()->getYPosition();
+	player.move(Direction::DOWN);
+	auto new_y = player.entityAttribute()->position()->getYPosition();
+	CHECK(doctest::Approx(new_y) == old_y);
+	CHECK_FALSE(doctest::Approx(new_y) == old_y+speed);		
+}//30-70assert
 //**************************Mover tests********************************************
 //TEST_CASE("Speed cannot be less than or equal to zero"){
 //	auto x = 150.0f;

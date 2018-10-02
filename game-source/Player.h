@@ -5,10 +5,13 @@
 #include "Position.h"
 #include "Laser.h"
 #include "Constants.h"
-#include "Enums.h"
+//#include "Enums.h"
+#include "Entity.h"
 
+#include <cassert>
 #include <tuple>
 using std::tuple;
+using std::get;
 #include <list>
 #include <iostream>
 using namespace std;
@@ -16,19 +19,23 @@ using namespace std;
 using std::shared_ptr;
 using std::make_shared;
 
-using Bullets = list<shared_ptr<Bullet>>;
+using Lasers = list<shared_ptr<Laser>>;
+
+class IncorrectPlayerSpeed{};
+class IncorrectPlayerEntityID{};
 
 class Player{
 	
 public:
-		Player(shared_ptr<Mover> attribute);
-        shared_ptr<Mover>attribute();
-		void moveUp();
-		void shoot();
-		void updateBullet();
-		Bullets& getBullets(){return bullets_;}
+	Player(float x_position, float y_position, const EntityID id, float speed);
+	shared_ptr<Entity> entityAttribute();
+	void move(Direction direction);
+	void shoot();
+	Lasers& getLasers();
+	void updateLasers();
 private:
-        shared_ptr<Mover> attribute_;
-		Bullets bullets_;
+	shared_ptr<Entity> entity_attribute_;
+//	shared_ptr<Mover> moving_attribute_;
+	Lasers lasers_;
 };
 #endif // PLAYER_H

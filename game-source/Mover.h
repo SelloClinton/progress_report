@@ -42,7 +42,7 @@ public:
 //		bool maxXBound(int x_coord);
 //		bool maxYBound(int y_coord);
 private:
-        unique_ptr<Position> position_;
+        shared_ptr<Position> position_;
         float speed_;
         float getSpeed()const;
 //		bool minXBound(int x_coord);

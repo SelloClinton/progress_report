@@ -1,7 +1,7 @@
 #include "Mover.h"
 
 Mover::Mover(float x_position, float y_position, float speed):
-        position_{make_unique<Position>(x_position,y_position)}
+        position_{make_shared<Position>(x_position,y_position)}
         ,speed_{speed}
 {
 	if (speed <=0)
