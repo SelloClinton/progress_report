@@ -2,7 +2,7 @@
 #include "doctest.h"
 #include "../game-source/Position.h"
 #include "../game-source/Mover.h"
-#include "../game-source/Bullet.h"
+#include "../game-source/Laser.h"
 #include "../game-source/Segment.h"
 #include "../game-source/Centipede.h"
 

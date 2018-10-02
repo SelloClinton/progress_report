@@ -1,7 +1,7 @@
 #ifndef COLLISIONREACTION_H
 #define COLLISIONREACTION_H
 
-#include "Bullet.h"
+#include "Laser.h"
 #include "Segment.h"
 #include "Mushroom.h"
 #include "Position.h"

@@ -1,0 +1,74 @@
+[33m206cfb5[m[33m ([m[1;36mHEAD -> [m[1;32medit2[m[33m)[m Mover tested
+[33mf69321a[m Entity tested
+[33m0ee5f1b[m added Entity, updated position and its tests
+[33mfd8e341[m[33m ([m[1;31morigin/edit2[m[33m)[m report skeleton, capture before code reboot
+[33m912aab6[m report skeleton
+[33m540a5b6[m removed sfml from Engine
+[33m87dcb21[m drawablesloader draws segment
+[33mb44ebf4[m DrawablesLoader can't load segments, and game is slow
+[33mea69b0c[m introduced PlayerSprites. It solves DataBank's pointer issue
+[33md583a8c[m submission 2 update
+[33ma46217e[m updated with second submissiom
+[33m6028c11[m Merge branch 'edit2' of github.com:SelloClinton/progress_report into edit2
+[33m97ae203[m Create README.md
+[33mf4e77e0[m adjusted splashcreen
+[33m43dda54[m P can pause and resume
+[33m5b3daeb[m extended enums
+[33m887c736[m centipede can now move up to a certein level once it reaches bottom of the the screen
+[33mf107993[m before attempting centipede upmotion
+[33me63699d[m added handleMushrooms in Centipede
+[33mc8a5ccf[m updated splashscreen
+[33m6875c1d[m player and move up and down
+[33m6b18c2d[m player can move up to a certain limit
+[33m1ed8000[m submit semi-ready
+[33mc747359[m moved collision_reactor to constructor of Update
+[33m6f61b5a[m Update can now handle player-segment collisions
+[33m7345bc3[m Update can handle bullet-mushroom collisions
+[33mdcedaa2[m Update can handle bullet-segment collisions. had to pass by reference
+[33m4f8583d[m Update can update player and centipede movement
+[33m809c190[m segments become mushrooms when shot, but segment superimposing occurs
+[33m05f1c36[m mushrooms can be shot, but collision is a bit inaccurate
+[33m707f24d[m faulty loop 2.0 -- displays pause and game over messages
+[33m9264cf8[m added shared_ptr<Drawer> drawer_ in GameEngine
+[33m3b8ccce[m can pause and resume, but can't restart
+[33m304e19d[m faulty game loop
+[33mc53b42a[m added enums class
+[33mf0ae6ad[m Added Update skeleton
+[33m31913bf[m collision with mushroom currently handled in centipede
+[33mdc8a5d2[m mushroom visible, but collision not handled yet
+[33mac42e95[m made mushrooms to be multiples of 16
+[33mb873495[m added checkPlayerCollision
+[33m62f01d9[m invisible mushrooms
+[33mc8201ef[m total number of mushrooms displayed. had to take srand() out of loops
+[33m65b37fc[m faulty mushrooms. only a tenth of total mushrooms is displayed
+[33m34c3e5e[m Field 1.0
+[33m94a63d2[m added mushroom skeleton
+[33mbcce5f3[m turnLeft and turnRight in Centipede.cpp
+[33m4c3ef49[m moved live and destroy to Mover
+[33mc13b183[m segments deleted from list. had to return by reference
+[33m9748d8f[m bullets are deleted from the list
+[33m7596a7b[m track CollisionReaction
+[33m5a55515[m centipede movement 2.0
+[33m7c0179c[m collision at 0n^2
+[33m255e03f[m bullet fix 1.1
+[33mca0057d[m starting working on collisions
+[33m67d1415[m bullet fix 1.0
+[33m3202ee7[m selective turning of segments
+[33med19916[m faulty centipede movement
+[33m9921778[m centipede initialization(position)
+[33m495093b[m segment movement nad position test
+[33m77177c1[m bullet position and movement tested
+[33m94bfaba[m saved
+[33m7a2916f[m mover tests
+[33mbd0c577[m position tests
+[33m30d40f4[m added Constants.h
+[33m5439a32[m added executables
+[33m13eeb43[m untested box
+[33m78b654c[m smart texture
+[33m018ddaa[m before memory management
+[33m3a5064f[m stupid bullet
+[33m4f487fa[m two-segment centipede
+[33m5770d15[m one-segment centipede
+[33ma8c75bb[m vector<shared_ptr<Segment>> initiated
+[33m0b5e923[m prog-1
+[33m475f964[m prog1

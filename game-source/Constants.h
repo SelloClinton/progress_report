@@ -5,8 +5,8 @@ class Constants{
 	public:
 		static const float DISPLAY_WIDTH_;
 		static const float DISPLAY_HEIGHT_;
-//		static const int BULLET_WIDTH_;
-//		static const int BULLET_HEIGHT_;
+		static const float LASER_WIDTH_;
+		static const float LASER_HEIGHT_;
 		static const float PLAYER_WIDTH_;
 		static const float PLAYER_HEIGHT_;
 //        static const int PLAYER_SPEED_;

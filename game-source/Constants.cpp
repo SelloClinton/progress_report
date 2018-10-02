@@ -2,8 +2,8 @@
 
 const float Constants::DISPLAY_WIDTH_= 800.0f;
 const float Constants::DISPLAY_HEIGHT_ = 600.0f;
-//const int Constants::BULLET_WIDTH_ = 1;
-//const int Constants::BULLET_HEIGHT_ = 7;
+const float Constants::LASER_WIDTH_ = 1.0f;
+const float Constants::LASER_HEIGHT_ = 7.0f;
 const float Constants::PLAYER_WIDTH_ = 8.0f;
 const float Constants::PLAYER_HEIGHT_ = 8.0f;
 //const int Constants::PLAYER_SPEED_ = 5;

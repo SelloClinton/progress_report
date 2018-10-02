@@ -17,6 +17,13 @@ using std::tuple;
  
 
 class NegativeZeroSpeed{};
+
+enum class Direction{
+		RIGHT,
+		LEFT,
+		UP,
+		DOWN
+};
     
 class Mover{
     

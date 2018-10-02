@@ -3,6 +3,7 @@
 #include "../game-source/Position.h"
 #include "../game-source/Entity.h"
 #include "../game-source/Mover.h"
+#include "../game-source/Laser.h"
 //#include "../game-source-code/Player.h"
 //#include "../game-source-code/Constants.h"
 //#include "../game-source-code/Bullet.h"
@@ -158,49 +159,107 @@ TEST_CASE("Correct Entity id is returned"){
 	CHECK(id == entity->getEntityID());
 	CHECK_FALSE(EntityID::SEGMENT == entity->getEntityID());
 }//14-37assert
+//*********************************************************************************
+//***************************Laser Tests*******************************************
+TEST_CASE("Laser cannot have <= 0 speed"){
+	
+	CHECK_THROWS_AS(Laser(50,50,EntityID::LASER,-10),NegativeZeroLaserSpeed);
+	CHECK_THROWS_AS(Laser(100,250,EntityID::LASER,0),NegativeZeroLaserSpeed);
+	
+}//15-39assert
+TEST_CASE("Cannot construct A Laser with a wrong Entity ID"){
+		CHECK_THROWS_AS(Laser(250,550,EntityID::PLAYER,4.0),IncorrectLaserEntityID);
+		CHECK_THROWS_AS(Laser(400,250,EntityID::MUSHROOM,4.0),IncorrectLaserEntityID);
+		CHECK_THROWS_AS(Laser(400,250,EntityID::SEGMENT,4.0),IncorrectLaserEntityID);
+}//16-42ASSERT
+TEST_CASE("Laser movement can be updated"){
+	auto x = 250.0f;
+	auto y = 330.0f;
+	auto id = EntityID::LASER;
+	auto speed = 4.0f;
+	Laser laser(x,y,id,speed);
+	auto old_y = laser.entityAttribute()->position()->getYPosition();
+	laser.updatePosition();
+	auto new_y = laser.entityAttribute()->position()->getYPosition(); 
+	CHECK(doctest::Approx(new_y) == old_y-speed);
+}//17-43assert
+TEST_CASE("Cannot update Laser movement if it is out of bound"){
+	auto x = 250.0f;
+	auto y = 0.0f;
+	auto id = EntityID::LASER;
+	auto speed = 4.0f;
+	Laser laser(x,y,id,speed);
+	auto old_y = laser.entityAttribute()->position()->getYPosition();
+	laser.updatePosition();
+	auto new_y = laser.entityAttribute()->position()->getYPosition(); 
+	CHECK(doctest::Approx(new_y) == old_y);
+	CHECK_FALSE(doctest::Approx(new_y) == old_y-speed);
+}//18-45aseert
+TEST_CASE("Laser gets destroyed when it goes out of screen bound"){
+	auto x = 250.0f;
+	auto y = 10.0f;
+	auto id = EntityID::LASER;
+	auto speed = 4.0f;
+	Laser laser(x,y,id,speed);
+	CHECK(laser.entityAttribute()->isLive());
+	laser.updatePosition();
+	CHECK_FALSE(laser.entityAttribute()->isLive());
+}//19-47assert
+TEST_CASE("x position of Laser does not get Updated when updating y position"){
+	auto x = 250.0f;
+	auto y = 350.0f;
+	auto id = EntityID::LASER;
+	auto speed = 4.0f;
+	Laser laser(x,y,id,speed);
+	auto[old_x,old_y] = laser.entityAttribute()->position()->getXYPosition();
+	laser.updatePosition();
+	auto[new_x,new_y] = laser.entityAttribute()->position()->getXYPosition();
+	CHECK(doctest::Approx(old_x) == new_x);
+	CHECK_FALSE(doctest::Approx(new_x) == old_x - speed);
+}//20-49assert
 
 //**************************Mover tests********************************************
-TEST_CASE("Speed cannot be less than or equal to zero"){
-	auto x = 150.0f;
-	auto y = 250.0f;
-	auto negative_speed = -10;
-	CHECK_THROWS_AS(Mover(x,y,negative_speed),NegativeZeroSpeed);
-	auto zero_speed = 0;
-	CHECK_THROWS_AS(Mover(x,y,zero_speed),NegativeZeroSpeed);
-}//14-39assert
+//TEST_CASE("Speed cannot be less than or equal to zero"){
+//	auto x = 150.0f;
+//	auto y = 250.0f;
+//	auto negative_speed = -10;
+//	CHECK_THROWS_AS(Mover(x,y,negative_speed),NegativeZeroSpeed);
+//	auto zero_speed = 0;
+//	CHECK_THROWS_AS(Mover(x,y,zero_speed),NegativeZeroSpeed);
+//}//14-39assert
 //
-TEST_CASE("Mover Position attribute returns correct values"){
-
-	auto x = 400.0f;
-	auto y = 300.0f;
-	auto speed = 5.0f;
-	
-	auto mover = make_unique<Mover>(x,y,speed);
-		
-	auto[x_,y_] = mover->position();
-
-	CHECK(doctest::Approx(x) == x_);
-	CHECK(doctest::Approx(y) == y_);
-}//15-41assert
+//TEST_CASE("Mover Position attribute returns correct values"){
 //
-TEST_CASE("Mover can move up"){
-	
-	auto x = 784.0f;
-	auto y = 584.0f;
-	auto speed = 5.0f;
-	
-	auto mover = make_unique<Mover>(x,y,speed);	
-	auto[x_,y_] = mover->position();
-	mover->moveRight();
-	auto[new_x,new_y] = mover->position();
-	
-        
-	CHECK(doctest::Approx(new_x) == x_+speed);
-//	CHECK(new_y == new_y_position);
-//	CHECK_FALSE(x_attribute == new_x_position);
-//	CHECK_FALSE(y_attribute == new_y_position);
-        
-}//16-
+//	auto x = 400.0f;
+//	auto y = 300.0f;
+//	auto speed = 5.0f;
+//	
+//	auto mover = make_unique<Mover>(x,y,speed);
+//		
+//	auto[x_,y_] = mover->position();
+//
+//	CHECK(doctest::Approx(x) == x_);
+//	CHECK(doctest::Approx(y) == y_);
+//}//15-41assert
+//
+//TEST_CASE("Mover can move up"){
+//	
+//	auto x = 784.0f;
+//	auto y = 584.0f;
+//	auto speed = 5.0f;
+//	
+//	auto mover = make_unique<Mover>(x,y,speed);	
+//	auto[x_,y_] = mover->position();
+//	mover->moveRight();
+//	auto[new_x,new_y] = mover->position();
+//	
+//        
+//	CHECK(doctest::Approx(new_x) == x_+speed);
+////	CHECK(new_y == new_y_position);
+////	CHECK_FALSE(x_attribute == new_x_position);
+////	CHECK_FALSE(y_attribute == new_y_position);
+//        
+//}//16-
 //
 //TEST_CASE("Position attribute changes accordingly when moving left"){
 //	

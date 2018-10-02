@@ -6,7 +6,7 @@
 #include "segment.h"
 #include "CollisionDetection.h"
 #include "CollisionReaction.h"
-#include "Bullet.h"
+#include "Laser.h"
 #include "GameEngine.h"
 #include "Field.h"
 #include "Enums.h"

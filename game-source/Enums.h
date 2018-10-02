@@ -19,12 +19,12 @@ enum class Pressed{
 		ESCAPE,
 		NONE
 };
-enum class Direction{
-		LEFT,
-		RIGHT,
-		UP,
-		DOWN
-};
+//enum class Direction{
+//		LEFT,
+//		RIGHT,
+//		UP,
+//		DOWN
+//};
 enum class Body_Part{
 		HEAD,
 		MIDSECTION
