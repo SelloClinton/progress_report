@@ -6,6 +6,7 @@
 #include "Mushroom.h"
 #include "Constants.h"
 #include "Mover.h"
+#include "Entity.h"
 
 #include <iostream>
 #include <list>
@@ -27,8 +28,8 @@ public:
 private:
 	Mushrooms mushrooms_;
 	Positions positions_;
-	list<int>xPositions_;
-	list<int>yPositions_;
+	list<float>xPositions_;
+	list<float>yPositions_;
 	void createMushrooms(int numberOfMushrooms);
 	void generateXPositions(int numberOfMushrooms);
 	void generateYPositions(int numberOfMushrooms);
