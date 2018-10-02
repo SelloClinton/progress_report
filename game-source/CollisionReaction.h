@@ -17,7 +17,7 @@ class CollisionReaction{
 
 public:
 			CollisionReaction();
-			void updateBullets(list<shared_ptr<Bullet>>& bullets);
+			void updateLasers(list<shared_ptr<Laser>>& lasers);
 			void updateSegments(list<shared_ptr<Segment>>& segments, list<shared_ptr<Mushroom>>& mushrooms);
 			void updateMushrooms(list<shared_ptr<Mushroom>>& mushrooms);
 };

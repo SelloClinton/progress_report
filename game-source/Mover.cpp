@@ -33,7 +33,7 @@ void Mover::moveRight(){
 		position_->setXPosition(new_x_position);
 }
 bool Mover::isAtMinXBound(float x)const{
-	if(x <= Constants::PLAYER_HEIGHT_/2.0)
+	if(x < Constants::PLAYER_HEIGHT_/2.0)
 		return true;
 	return false;
 }
@@ -43,7 +43,7 @@ bool Mover::isAtMaxXBound(float x)const{
 	return false;	
 }
 bool Mover::isAtMinYBound(float y)const{
-	if(y >=(Constants::DISPLAY_HEIGHT_-2*(Constants::PLAYER_HEIGHT_)))
+	if(y >= (Constants::DISPLAY_HEIGHT_-2*(Constants::PLAYER_HEIGHT_)))
 		return true;
 	return false;	
 }

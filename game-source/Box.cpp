@@ -4,21 +4,21 @@ Box::Box()
 {
 }
 	
-tuple<int,int,int,int> Box::getBox(int x, int y, Object object){
+tuple<float,float,float,float> Box::getBox(float x, float y, const EntityID& object){
 	auto[min_x,min_y,max_x,max_y] =  createBox(x, y, object);
 	return {min_x,min_y,max_x,max_y};
 }
 
-tuple<int,int,int,int> Box::createBox(int x, int y, Object object){
+tuple<float,float,float,float> Box::createBox(float x, float y, const EntityID& object){
 	
 	switch(object){
-			case Object::BULLET:
-				return{x,(y+2*Constants::BULLET_HEIGHT_),(x+2*Constants::BULLET_WIDTH_),y};
+			case EntityID::LASER:
+				return{x,(y+2*Constants::LASER_HEIGHT_),(x+2*Constants::LASER_WIDTH_),y};
 				break;
-			case Object::MUSHROOM:
+			case EntityID::MUSHROOM:
 				return{x,(y+Constants::PLAYER_HEIGHT_),(x+Constants::PLAYER_WIDTH_),y};
-			case Object::PLAYER:
-			case Object::SEGMENT:
+			case EntityID::PLAYER:
+			case EntityID::SEGMENT:
 				return{x,(y+Constants::PLAYER_HEIGHT_),(x+Constants::PLAYER_WIDTH_),y};
 				break;
 			default:

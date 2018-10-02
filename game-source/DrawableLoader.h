@@ -2,6 +2,7 @@
 #define DRAWABLELOADER_H
 
 #include "Enums.h"
+#include "Entity.h"
 #include <SFML/Graphics.hpp>
 #include <memory>
 using std::shared_ptr;
@@ -13,15 +14,15 @@ class PlayerImageLoadFailed{};
 class DrawableLoader{
 
 public:
-		DrawableLoader(Object object);
-		shared_ptr<sf::Sprite> getDrawable();
+		DrawableLoader(const EntityID& object);
+		const sf::Sprite& getDrawable();
 		void setPosition(float x, float y);
 		
 private:
 	shared_ptr<sf::Texture> texture_;
-	shared_ptr<sf::Sprite> sprite_;
+	sf::Sprite sprite_;
 	void loadTexture();
-	void loadSprite(Object object);
+	void loadSprite(const EntityID& object);
 	
 	
 };

@@ -11,11 +11,11 @@ Drawer::Drawer(shared_ptr<sf::RenderWindow> window):
 
 void Drawer::drawPlayer(shared_ptr<Player> player){
 	
-	auto[x_position,y_position] = player->attribute()->position()->getPosition();
+	auto[x_position,y_position] = player->entityAttribute()->position()->getXYPosition();
 	
-	auto player_sprite = make_shared<DrawableLoader>(Object::PLAYER);
+	auto player_sprite = make_shared<DrawableLoader>(EntityID::PLAYER);
 	player_sprite->setPosition(x_position,y_position);
-	window_->draw(*(player_sprite->getDrawable()));
+	window_->draw(player_sprite->getDrawable());
 }
 
 void Drawer::drawCentipede(shared_ptr<Centipede> centipede){
@@ -30,10 +30,10 @@ void Drawer::drawCentipede(shared_ptr<Centipede> centipede){
 
 void Drawer::drawBullets(shared_ptr<Player>player){
     
-    auto bullets = player->getBullets();
+    auto lasers = player->getLasers();
     
-    for(const auto& bullet:bullets){
-            drawBullet(bullet);
+    for(const auto& laser:lasers){
+            drawBullet(laser);
     }	
 		
 }
@@ -77,24 +77,24 @@ void Drawer::drawGameOverMessage(const string& wonOrLost){
 }
 void Drawer::drawSegment(shared_ptr<Segment> segment){
 	
-	auto[x_position,y_position] = segment->attribute()->position()->getPosition();
-	auto segment_sprite = make_shared<DrawableLoader>(Object::SEGMENT);//object_sprites_.at(1);
+	auto[x_position,y_position] = segment->entityAttribute()->position()->getXYPosition();
+	auto segment_sprite = make_shared<DrawableLoader>(EntityID::SEGMENT);//object_sprites_.at(1);
 	segment_sprite->setPosition(x_position,y_position);
-	window_->draw(*(segment_sprite->getDrawable()));
+	window_->draw(segment_sprite->getDrawable());
 
 }
 
-void Drawer::drawBullet(shared_ptr<Bullet>bullet){
-	auto[x_position,y_position] = bullet->attribute()->position()->getPosition();
-	auto bullet_sprite = make_shared<DrawableLoader>(Object::BULLET);
-	bullet_sprite->setPosition(x_position,y_position);
-	window_->draw(*(bullet_sprite->getDrawable()));
+void Drawer::drawBullet(shared_ptr<Laser>laser){
+	auto[x_position,y_position] = laser->entityAttribute()->position()->getXYPosition();
+	auto laser_sprite = make_shared<DrawableLoader>(EntityID::LASER);
+	laser_sprite->setPosition(x_position,y_position);
+	window_->draw(laser_sprite->getDrawable());
 
 }
 
 void Drawer::drawMushroom(shared_ptr<Mushroom> mushroom){
-	auto[x_position,y_position] = mushroom->position()->getPosition();
-	auto mushroom_sprite = make_shared<DrawableLoader>(Object::MUSHROOM);
+	auto[x_position,y_position] = mushroom->entityAttribute()->position()->getXYPosition();
+	auto mushroom_sprite = make_shared<DrawableLoader>(EntityID::MUSHROOM);
 	mushroom_sprite->setPosition(x_position,y_position); //setPosition(x_position,y_position);
-	window_->draw(*(mushroom_sprite->getDrawable()));
+	window_->draw(mushroom_sprite->getDrawable());
 }

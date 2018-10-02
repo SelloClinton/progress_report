@@ -9,6 +9,7 @@
 #include "CollisionDetection.h"
 #include "mushroom.h"
 
+#include <iostream>
 #include <tuple>
 #include <list>
 using namespace std;

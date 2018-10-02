@@ -1,6 +1,6 @@
 #include "CollisionDetection.h"
 
-CollisionDetection::CollisionDetection(int xPositionA,int yPositionA,Object objectA, int xPositionB, int yPositionB, Object objectB):
+CollisionDetection::CollisionDetection(float xPositionA,float yPositionA,const EntityID& objectA, float xPositionB, float yPositionB, const EntityID& objectB):
 			x_position_A_(xPositionA)
 			,y_position_A_(yPositionA)
 			,object_A_(objectA)

@@ -45,7 +45,7 @@ private:
 		shared_ptr<sf::RenderWindow> window_;
 		Sprites object_sprites_;
 		void drawSegment(shared_ptr<Segment> segment); 
-        void drawBullet(shared_ptr<Bullet>bullet);
+        void drawBullet(shared_ptr<Laser>laser);
 		void drawMushroom(shared_ptr<Mushroom> mushroom);
 		
 };

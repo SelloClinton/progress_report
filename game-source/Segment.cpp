@@ -31,15 +31,21 @@ void Segment::move(Direction direction){
 			break;
 		case Direction::UP:
 			mover->moveUp();
+			entity_attribute_->position()->setYPosition(get<1>(mover->position()));
 			mover->moveUp();
+			entity_attribute_->position()->setYPosition(get<1>(mover->position()));
 			mover->moveUp();
+			entity_attribute_->position()->setYPosition(get<1>(mover->position()));
 			mover->moveUp();
 			entity_attribute_->position()->setYPosition(get<1>(mover->position()));
 			break;
 		case Direction::DOWN:
 			mover->moveDown();
+			entity_attribute_->position()->setYPosition(get<1>(mover->position()));
 			mover->moveDown();
+			entity_attribute_->position()->setYPosition(get<1>(mover->position()));
 			mover->moveDown();
+			entity_attribute_->position()->setYPosition(get<1>(mover->position()));
 			mover->moveDown();
 			entity_attribute_->position()->setYPosition(get<1>(mover->position()));
 			break;
