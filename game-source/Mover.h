@@ -2,33 +2,42 @@
 #define MOVER_H
 
 #include "Position.h"
-#include "Enums.h"
+#include "Constants.h"
+//#include "Enums.h"
+
+#include <iostream>
 
 #include <memory>
 using std::shared_ptr;
 using std::make_shared;
-
-#include <cassert> 
+using std::unique_ptr;
+using std::make_unique;
+#include <tuple>
+using std::tuple;
+ 
 
 class NegativeZeroSpeed{};
     
 class Mover{
     
 public:
-        Mover(shared_ptr<Position> _position, int speed);
-        void move(Direction direction);
-        shared_ptr<Position> position();
-		bool isLive();
-		void destroy();
-		bool minXBound(int x_coord);
-		bool maxXBound(int x_coord);
-		bool maxYBound(int y_coord);
+        Mover(float x_position, float y_position,float speed);
+		tuple<float,float>position();
+		void moveUp();
+		void moveDown();
+		void moveLeft();
+		void moveRight();
+		bool isAtMinXBound(float x)const;
+		bool isAtMaxXBound(float x)const;
+		bool isAtMinYBound(float y)const;
+		bool isAtMaxYBound(float y)const;
+//		bool minXBound(int x_coord);
+//		bool maxXBound(int x_coord);
+//		bool maxYBound(int y_coord);
 private:
-        shared_ptr<Position> position_;
-        int speed_;
-		bool live_;
-        void setPosition(int x, int y);
-        int getSpeed();
+        unique_ptr<Position> position_;
+        float speed_;
+        float getSpeed()const;
 //		bool minXBound(int x_coord);
 //		bool maxXBound(int x_coord);
 //		bool maxYBound(int y_coord);
