@@ -17,8 +17,6 @@ using std::shared_ptr;
 using std::make_shared;
 
 using Mushrooms = list<shared_ptr<Mushroom>>;
-using Positions = list<shared_ptr<Position>>;
-
 
 class Field{
 	
@@ -27,7 +25,6 @@ public:
 	Mushrooms& getMushrooms();
 private:
 	Mushrooms mushrooms_;
-	Positions positions_;
 	list<float>xPositions_;
 	list<float>yPositions_;
 	void createMushrooms(int numberOfMushrooms);

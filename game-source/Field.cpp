@@ -68,18 +68,3 @@ void Field::generateYPositions(int numberOfMushrooms){
 	}
 }
 
-void Field::createPositions(){
-		
-	
-		auto x_iter =  begin(xPositions_);
-		auto y_iter = begin(yPositions_);
-		
-		while((x_iter != end(xPositions_)&&(y_iter != end(yPositions_)))){
-			auto x_position = *x_iter;
-			auto y_position = *y_iter;
-			auto position = make_shared<Position>(x_position,y_position);
-			positions_.push_back(position);
-			x_iter++;
-			y_iter++;
-		}
-}

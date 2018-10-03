@@ -35,22 +35,18 @@ public:
 private:
 	shared_ptr<Display> display_;
 	shared_ptr<Drawer> drawer_;
-//	shared_ptr<Position> position_;
-//    shared_ptr<Position> pos;
-//    shared_ptr<Mover> mover;
-//   shared_ptr<Mover> mover2;
 	shared_ptr<Player> player_;
 	shared_ptr<Centipede> centipede_;
 	shared_ptr<Field> field_;
 	Pressed key_;
-	bool game_over_;
 	bool playing_;
+	bool game_over_;
+
 	
 	void splashScreen();
 	void update();
     void updateCentipede(shared_ptr<Field> field);
 	void checkInput();
-//	void keyReaction(Pressed key);
 	void handleInput();
 	void drawObjects();
 	void displayPauseMessage();

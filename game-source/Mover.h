@@ -34,20 +34,15 @@ public:
 		void moveDown();
 		void moveLeft();
 		void moveRight();
-		bool isAtMinXBound(float x)const;
-		bool isAtMaxXBound(float x)const;
-		bool isAtMinYBound(float y)const;
-		bool isAtMaxYBound(float y)const;
-//		bool minXBound(int x_coord);
-//		bool maxXBound(int x_coord);
-//		bool maxYBound(int y_coord);
+
 private:
         shared_ptr<Position> position_;
         float speed_;
         float getSpeed()const;
-//		bool minXBound(int x_coord);
-//		bool maxXBound(int x_coord);
-//		bool maxYBound(int y_coord);
+		bool isAtMinXBound(float x)const;
+		bool isAtMaxXBound(float x)const;
+		bool isAtMinYBound(float y)const;
+		bool isAtMaxYBound(float y)const;
 };
 
 #endif 
