@@ -41,10 +41,12 @@ void Centipede::moveDown(shared_ptr<Segment>segment){
 	if((y_i == y_f)&&(segment->isFacingLeft())){
 		segment->faceUp();
 		segment->faceRight();
+		moveUp(segment);
 	}
 	else if ((y_i == y_f)&&(segment->isFacingRight())){
-		segment->faceDown();
+		segment->faceUp();
 		segment->faceRight();
+		moveUp(segment);
 	}
 }
 
@@ -55,14 +57,15 @@ void Centipede::moveUp(shared_ptr<Segment> segment){
 	if((y_i == y_f)&&(segment->isFacingLeft())){
 		segment->faceDown();
 		segment->faceRight();
+		moveDown(segment);
 	}
 	else if((y_i == y_f)&&(segment->isFacingRight())){
 		segment->faceDown();
 		segment->faceLeft();
+		moveDown(segment);
 	}
 		
 }
-
 
 void Centipede::turnRight(shared_ptr<Segment>segment){
 		segment->move(Direction::RIGHT);
@@ -105,15 +108,15 @@ void Centipede::handleMushroom(shared_ptr<Segment> segment, list<shared_ptr<Mush
 }
 void Centipede::keepUp(shared_ptr<Segment> segment){
 	
-	auto[seg_x_position,seg_y_position] = segment->entityAttribute()->position()->getXYPosition();
-	cout << seg_y_position << endl;
+	auto seg_x_position = segment->entityAttribute()->position()->getXPosition();
+	
 	if(!segment->isFacingDown()){
 		
-        if(seg_x_position >= 774){
+        if(auto x_right_limit = Constants::DISPLAY_WIDTH_-3.0*Constants::SEGMENT_WIDTH_;seg_x_position >= x_right_limit){
 			moveUp(segment);
 			turnLeft(segment);
         }
-        else if (seg_x_position <= 4){
+        else if (auto x_left_limit = 4.0f; seg_x_position <= x_left_limit){
 			moveUp(segment);
 			turnRight(segment);
         }
@@ -132,15 +135,15 @@ void Centipede::keepUp(shared_ptr<Segment> segment){
 
 void Centipede::keepDown(shared_ptr<Segment> segment){
 	
-	auto[seg_x_position,seg_y_position] = segment->entityAttribute()->position()->getXYPosition();
+	auto seg_x_position = segment->entityAttribute()->position()->getXPosition();
 	
 	if(!segment->isFacingUp()){
 		
-        if(seg_x_position >= 774){
+        if(auto x_right_limit = Constants::DISPLAY_WIDTH_-3.0*Constants::SEGMENT_WIDTH_;seg_x_position >= x_right_limit){
 			moveDown(segment);
 			turnLeft(segment);
         }
-        else if (seg_x_position <= 4){
+        else if (auto x_left_limit = 4.0f; seg_x_position <= x_left_limit){
 			moveDown(segment);
 			turnRight(segment);
         }

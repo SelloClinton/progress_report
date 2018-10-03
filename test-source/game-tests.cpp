@@ -9,7 +9,7 @@
 //#include "../game-source-code/Bullet.h"
 #include "../game-source/Segment.h"
 //#include "../game-source-code/Enums.h"
-//#include "../game-source-code/Centipede.h"
+#include "../game-source/Centipede.h"
 #include "../game-source/Mushroom.h"
 #include "../game-source/Field.h"
 #include "../game-source/Box.h"
@@ -803,8 +803,197 @@ TEST_CASE("Laser and mushroom in different locations do not collide"){
 										  get_mush_x,get_mush_y,EntityID::MUSHROOM);
 										  
 	CHECK_FALSE(collision_detector.collided());
-}
+}//56-121assert
+//********************************************************************************
+//**************************Centipede Tests****************************************
+TEST_CASE("Cannot initialize Centipede with size <= 0"){
+	
+	CHECK_THROWS_AS(Centipede(-25),InsufficientCentipedeSize);
+	CHECK_THROWS_AS(Centipede(0),InsufficientCentipedeSize);
+	
+}//57-123assert
+//
+TEST_CASE("Centipede's size has a limit"){
+//	such that segments cannot be initialized out of bounds
+//	NegativePosition exception from Position
+//	 will be thrown for Centipede size > 26
+	CHECK_THROWS(Centipede(27));
+}//58-124assert
 
+TEST_CASE("Centipede initializes a correct number of Segment objects"){
+    auto number_of_segments = 5;
+	auto incorrect_number_of_segments = 15;
+    auto centipede_ = make_shared<Centipede>(number_of_segments);
+    auto centipede_size = centipede_->getCentipede().size();
+    CHECK(number_of_segments == centipede_size);
+	CHECK_FALSE(centipede_size == incorrect_number_of_segments);
+}//59-126assert
+//
+TEST_CASE("Centipede can move a segment"){
+    
+    auto centiSize = 1;
+    auto centipede = make_shared<Centipede>(centiSize);
+    auto segment_iterator = begin(centipede->getCentipede());
+    auto seg_x  = (*segment_iterator)->entityAttribute()->position()->getXPosition();
+    auto x = 400.0f;
+    
+    CHECK(doctest::Approx(x) == seg_x);
+
+    
+    centipede->move();
+    auto new_seg_x = (*segment_iterator)->entityAttribute()->position()->getXPosition();
+    auto new_x = 404.0f;
+    CHECK(doctest::Approx(new_x) == new_seg_x);
+    CHECK_FALSE(doctest::Approx(seg_x) == new_seg_x);
+    
+}//60-129assert
+//
+TEST_CASE("Centipede can move more than one segment"){
+
+    auto centiSize = 2;
+    auto centipede = make_shared<Centipede>(centiSize);
+    auto segment_iterator = begin(centipede->getCentipede());
+    auto seg_x_1 = (*segment_iterator)->entityAttribute()->position()->getXPosition();
+
+    segment_iterator++;
+    auto seg_x_2  = (*segment_iterator)->entityAttribute()->position()->getXPosition();
+    centipede->move();
+    segment_iterator--;
+    auto new_seg_x_1 = (*segment_iterator)->entityAttribute()->position()->getXPosition();
+    segment_iterator++;
+    auto new_seg_x_2  = (*segment_iterator)->entityAttribute()->position()->getXPosition();
+    auto new_x_1 = seg_x_1 + Constants::SEGMENT_SPEED_;   //segment speed is 4
+    auto new_x_2 = seg_x_2 + Constants::SEGMENT_SPEED_;
+    CHECK(doctest::Approx(new_x_1) == new_seg_x_1);
+    CHECK(doctest::Approx(new_x_2) == new_seg_x_2);
+    
+}//61-131assert
+//
+TEST_CASE("Centipede moves a segment to the right if it is facing in the right direction"){
+    auto centiSize = 1;
+	Centipede centipede(centiSize);
+	auto seg_iterator = begin(centipede.getCentipede());
+	auto old_x_right = (*seg_iterator)->entityAttribute()->position()->getXPosition();
+	//segment is facing right by default
+	 centipede.move();
+	 auto new_x_right = (*seg_iterator)->entityAttribute()->position()->getXPosition();
+	 auto new_x = old_x_right + Constants::SEGMENT_SPEED_;
+	 auto wrong_new_x = old_x_right - Constants::SEGMENT_SPEED_;
+	 CHECK(doctest::Approx(new_x) == new_x_right);
+	 CHECK_FALSE(doctest::Approx(wrong_new_x) == new_x_right);
+	
+}
+TEST_CASE("Centipede moves a segment to the left if it is facing in the left direction"){
+    auto centiSize = 1;
+	Centipede centipede(centiSize);
+	auto seg_iterator = begin(centipede.getCentipede());
+	auto old_x_left = (*seg_iterator)->entityAttribute()->position()->getXPosition();
+	(*seg_iterator)->faceLeft();
+	centipede.move();
+	auto new_x_left = (*seg_iterator)->entityAttribute()->position()->getXPosition();
+	auto new_x = old_x_left - Constants::SEGMENT_SPEED_;
+	auto wrong_new_x = old_x_left + Constants::SEGMENT_HEIGHT_;
+	
+	CHECK(doctest::Approx(new_x) == new_x_left);
+	CHECK_FALSE(doctest::Approx(wrong_new_x) == new_x_left);
+}
+TEST_CASE(" while going down, Centipede moves a segment down and left when it reaches right border"){
+    
+    auto centiSize = 1;
+	Centipede centipede(centiSize);
+	auto seg_iterator = begin(centipede.getCentipede());
+	auto[old_seg_x,old_seg_y] = (*seg_iterator)->entityAttribute()->position()->getXYPosition();
+	auto x_right_border = 776.0f; //set internally
+	(*seg_iterator)->entityAttribute()->position()->setXPosition(x_right_border);
+	centipede.move();
+	auto[new_seg_x,new_seg_y] = (*seg_iterator)->entityAttribute()->position()->getXYPosition();
+	auto new_y = 16.0f;
+	auto new_x = x_right_border - Constants::SEGMENT_SPEED_;
+	CHECK(doctest::Approx(new_y) == new_seg_y);
+	CHECK(doctest::Approx(new_x) == new_seg_x);
+
+}//62-133assert
+
+TEST_CASE("While going down, Centipede moves a segment down and right when it reaches left border"){
+    auto centiSize = 1;
+	Centipede centipede(centiSize);
+	auto seg_iterator = begin(centipede.getCentipede());
+	auto[old_seg_x,old_seg_y] = (*seg_iterator)->entityAttribute()->position()->getXYPosition();
+	auto x_left_border = 4.0f; //set internally
+	(*seg_iterator)->entityAttribute()->position()->setXPosition(x_left_border);
+	
+	(*seg_iterator)->faceLeft();	//enforcing direction 
+	centipede.move();
+	auto[new_seg_x,new_seg_y] = (*seg_iterator)->entityAttribute()->position()->getXYPosition();
+	auto new_x = x_left_border + Constants::SEGMENT_SPEED_;
+	auto new_y = old_seg_y + 4*(Constants::SEGMENT_SPEED_);
+	
+	CHECK(doctest::Approx(new_seg_x) == new_x);
+	CHECK(doctest::Approx(new_y) == new_seg_y);
+	
+}//63-135assert
+
+TEST_CASE("While going up, Centipede moves a segment up and left when it is at right border"){
+    auto centiSize = 1;
+	Centipede centipede(centiSize);
+	auto seg_iterator = begin(centipede.getCentipede());
+	auto x_right_border = 776.0f;
+	auto y_position = 550.0f;
+	(*seg_iterator)->entityAttribute()->position()->setXYPosition(x_right_border,y_position);
+	(*seg_iterator)->faceUp();
+	centipede.move();
+	auto[new_seg_x,new_seg_y] = (*seg_iterator)->entityAttribute()->position()->getXYPosition();
+	auto new_x = x_right_border - Constants::SEGMENT_SPEED_;
+	auto new_y = y_position - 4.0*Constants::SEGMENT_SPEED_;
+	
+	CHECK(doctest::Approx(new_y) == new_seg_y);
+	CHECK(doctest::Approx(new_x) == new_seg_x);
+}//64-137assert
+
+TEST_CASE("While going up, Centipede moves a segment up and right when it is at left border"){
+    auto centiSize = 1;
+	Centipede centipede(centiSize);
+	auto seg_iterator = begin(centipede.getCentipede());
+	auto x_left_border = 4.0f;
+	auto y_position = 550.0f;
+	(*seg_iterator)->entityAttribute()->position()->setXYPosition(x_left_border,y_position);
+	(*seg_iterator)->faceUp();
+	(*seg_iterator)->faceLeft();
+	centipede.move();
+	auto[new_seg_x,new_seg_y] = (*seg_iterator)->entityAttribute()->position()->getXYPosition();
+	auto new_x = x_left_border + Constants::SEGMENT_SPEED_;
+	auto new_y = y_position - 4.0*Constants::SEGMENT_SPEED_;
+	
+	CHECK(doctest::Approx(new_y) == new_seg_y);
+	CHECK(doctest::Approx(new_x) == new_seg_x);
+	
+}//65-139assert
+
+
+//
+//TEST_CASE("Centipede can move a segment down when it reaches left border"){
+//
+//    auto centiSize = 1;
+//    auto centipede = make_shared<Centipede>(centiSize);
+//    auto segment_iterator = begin(centipede->getCentipede());
+//    (*segment_iterator)->faceLeft();
+//    auto[seg_x_1,seg_y_1] = (*segment_iterator)->attribute()->position()->getPosition();
+//    
+//    auto x_border = 5;
+//    while(seg_x_1 >= x_border){
+//        centipede->moveSegments();
+//        seg_x_1 = get<0>((*segment_iterator)->attribute()->position()->getPosition());
+//    }
+//    
+//    centipede->moveSegments();
+//    seg_y_1 = get<1>((*segment_iterator)->attribute()->position()->getPosition());
+//    
+//    auto new_y_ =  16;
+//    CHECK(seg_y_1 == new_y_);
+//    
+//    
+//    
+//}53
 
 
 //**************************Mover tests********************************************
