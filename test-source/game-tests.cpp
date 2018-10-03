@@ -703,16 +703,90 @@ TEST_CASE("Bottom right of laser collides with top left of segment"){
 	
 	
 }//51-116assert
+TEST_CASE("Laser and segment in different positions do not collide"){
+	auto laser_x = 350.0f;
+	auto laser_y = 300.0f;
+	Laser laser(laser_x,laser_y,EntityID::LASER,Constants::LASER_SPEED_);
+	
+	auto seg_x = 125.0f;
+	auto seg_y = 225.0f;
+	Segment segment(seg_x,seg_y,EntityID::SEGMENT,Constants::SEGMENT_SPEED_);
+	
+	auto[seg_get_x,seg_get_y] = segment.entityAttribute()->position()->getXYPosition();
+	auto[laser_get_x,laser_get_y] = laser.entityAttribute()->position()->getXYPosition();
 
-TEST_CASE("right side of laser touching left side of segment collides"){
+	CollisionDetection collision_detector(seg_get_x,seg_get_y,EntityID::SEGMENT,
+										laser_get_x,laser_get_y,EntityID::LASER);
+
+	CHECK_FALSE(collision_detector.collided());
+	
+}//52-117assert
+//******************************************************************************
+//**************************Laser-Mushroom Collision Tests***********************
+TEST_CASE("Top right of laser collides with bottom left of Mushroom"){
 	auto laser_x = 350.0f;
 	auto laser_y = 300.0f;
 	Laser laser(laser_x,laser_y,EntityID::LASER,Constants::LASER_SPEED_);
 	Box laser_box;
 	auto[laser_min_x,laser_min_y,laser_max_x,laser_max_y] = laser_box.getBox(laser_x,laser_y,EntityID::LASER);
+	
+	auto mush_x = laser_max_x;
+	auto mush_y = laser_max_y - Constants::MUSHROOM_HEIGHT_;
+	
+	Mushroom mushroom(mush_x,mush_y,EntityID::MUSHROOM);
+	
+	auto[get_laser_x,get_laser_y] = laser.entityAttribute()->position()->getXYPosition();
+	auto[get_mush_x,get_mush_y] = mushroom.entityAttribute()->position()->getXYPosition();
+	
+	CollisionDetection collision_detector(get_laser_x,get_laser_y,EntityID::LASER,
+										  get_mush_x,get_mush_y,EntityID::MUSHROOM);
+										  
+	CHECK(collision_detector.collided());
+	
+}//53-118assert
+TEST_CASE("Top left of laser collides with bottom right of mushroom"){
+	
+	auto mush_x = 250.0f;
+	auto mush_y = 150.0f;
+	
+	Mushroom mushroom(mush_x,mush_y,EntityID::MUSHROOM);
+	Box mush_box;
+	auto[mush_min_x,mush_min_y,mush_max_x,mush_max_y] = mush_box.getBox(mush_x,mush_y,EntityID::MUSHROOM);
+	
+	auto laser_x = mush_max_x;
+	auto laser_y = mush_max_y + Constants::MUSHROOM_HEIGHT_;
+	Laser laser(laser_x,laser_y,EntityID::LASER,Constants::LASER_SPEED_);
+	
+	auto[get_laser_x,get_laser_y] = laser.entityAttribute()->position()->getXYPosition();
+	auto[get_mush_x,get_mush_y] = mushroom.entityAttribute()->position()->getXYPosition();
+	
+	CollisionDetection collision_detector(get_laser_x,get_laser_y,EntityID::LASER,
+										  get_mush_x,get_mush_y,EntityID::MUSHROOM);
+										  
+	CHECK(collision_detector.collided());
+	
+}//54-119assert
 
-	auto seg_x = 
-}
+TEST_CASE("Laser situated directly below a mushroom collides with it"){
+	auto laser_x = 125.0f;
+	auto laser_y = 250.0f;
+	Laser laser(laser_x,laser_y,EntityID::LASER,Constants::LASER_SPEED_);
+	Box laser_box;
+	auto[laser_min_x,laser_min_y,laser_max_x,laser_max_y] = laser_box.getBox(laser_x,laser_y,EntityID::LASER);
+
+	auto mush_x = laser_max_x - Constants::MUSHROOM_WIDTH_/2.0;
+	auto mush_y = laser_max_y - Constants::MUSHROOM_HEIGHT_;
+	Mushroom mushroom(mush_x,mush_y,EntityID::MUSHROOM);
+	
+	auto[get_laser_x,get_laser_y] = laser.entityAttribute()->position()->getXYPosition();
+	auto[get_mush_x,get_mush_y] = mushroom.entityAttribute()->position()->getXYPosition();
+	
+	CollisionDetection collision_detector(get_laser_x,get_laser_y,EntityID::LASER,
+										  get_mush_x,get_mush_y,EntityID::MUSHROOM);
+										  
+	CHECK(collision_detector.collided());
+}//55-120assert
+
 
 
 //**************************Mover tests********************************************
