@@ -787,6 +787,24 @@ TEST_CASE("Laser situated directly below a mushroom collides with it"){
 	CHECK(collision_detector.collided());
 }//55-120assert
 
+TEST_CASE("Laser and mushroom in different locations do not collide"){
+	auto laser_x = 125.0f;
+	auto laser_y = 250.0f;
+	Laser laser(laser_x,laser_y,EntityID::LASER,Constants::LASER_SPEED_);
+		
+	auto mush_x = 50.0f;
+	auto mush_y = 150.0f;
+	Mushroom mushroom(mush_x,mush_y,EntityID::MUSHROOM);
+
+	auto[get_laser_x,get_laser_y] = laser.entityAttribute()->position()->getXYPosition();
+	auto[get_mush_x,get_mush_y] = mushroom.entityAttribute()->position()->getXYPosition();
+	
+	CollisionDetection collision_detector(get_laser_x,get_laser_y,EntityID::LASER,
+										  get_mush_x,get_mush_y,EntityID::MUSHROOM);
+										  
+	CHECK_FALSE(collision_detector.collided());
+}
+
 
 
 //**************************Mover tests********************************************
