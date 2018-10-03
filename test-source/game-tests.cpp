@@ -13,6 +13,7 @@
 #include "../game-source/Mushroom.h"
 #include "../game-source/Field.h"
 #include "../game-source/Box.h"
+#include "../game-source/CollisionDetection.h"
 
 
 //***********************Position tests*******************************
@@ -598,11 +599,119 @@ TEST_CASE("Valid Mushroom Box can be created"){
 TEST_CASE("Top left laser corner collides with bottom left Segment corner"){
 	auto laser_x = 250.0f;
 	auto laser_y = 350.0f;
-	laser_id = EntityID::LASER;
+	auto laser_id = EntityID::LASER;
 	auto laser_speed = Constants::LASER_SPEED_;
 	Laser laser(laser_x,laser_y,laser_id,laser_speed);
-	Box box;
-	auto[min_x,min_y,max_x,max_y] = box.getBox(laser_x,laser_y,EntityID::LASER)
+	Box laser_box;
+	auto[min_x,min_y,max_x,max_y] = laser_box.getBox(laser_x,laser_y,EntityID::LASER);
+	auto seg_x = max_x;
+	auto seg_y = max_y-Constants::SEGMENT_HEIGHT_;
+	auto speed = Constants::SEGMENT_SPEED_;
+	Segment segment(seg_x,seg_y,EntityID::SEGMENT,Constants::SEGMENT_SPEED_);
+	
+	auto[seg_get_x,seg_get_y] = segment.entityAttribute()->position()->getXYPosition();
+	auto[laser_get_x,laser_get_y] = laser.entityAttribute()->position()->getXYPosition();
+
+//	auto[minX,minY,maxX,maxY] = seg_box.getBox(seg_x,seg_y,EntityID::SEGMENT);
+	
+	CollisionDetection collision_detector(seg_get_x,seg_get_y,EntityID::SEGMENT,
+										laser_get_x,laser_get_y,EntityID::LASER);
+										
+	CHECK(collision_detector.collided());
+}//47-112assert
+
+TEST_CASE("Bottom right of Segment collides with top left of Laser"){
+	auto seg_x = 150.0f;
+	auto seg_y = 200.0f;
+	Segment segment(seg_x,seg_y,EntityID::SEGMENT,Constants::SEGMENT_SPEED_);
+	Box seg_box;
+	auto[seg_min_x,seg_min_y,seg_max_x,seg_max_y] = seg_box.getBox(seg_x,seg_y,EntityID::SEGMENT);
+	
+	auto laser_x = seg_max_x;
+	auto laser_y = seg_max_y+Constants::SEGMENT_HEIGHT_;
+	Laser laser(laser_x,laser_y,EntityID::LASER,Constants::LASER_SPEED_);
+	
+	auto[seg_get_x,seg_get_y] = segment.entityAttribute()->position()->getXYPosition();
+	auto[laser_get_x,laser_get_y] = laser.entityAttribute()->position()->getXYPosition();
+	
+	CollisionDetection collision_detector(seg_get_x,seg_get_y,EntityID::SEGMENT,
+										laser_get_x,laser_get_y,EntityID::LASER);
+										
+	CHECK(collision_detector.collided());
+	
+}//48-113assert
+
+TEST_CASE("Laser on bottom boundary of a Segment collides with it"){
+	auto seg_x = 250.0f;
+	auto seg_y = 350.0f;
+	Segment segment(seg_x,seg_y,EntityID::SEGMENT,Constants::SEGMENT_SPEED_);
+	Box seg_box;
+	auto[seg_min_x,seg_min_y,seg_max_x,seg_max_y] = seg_box.getBox(seg_x,seg_y,EntityID::SEGMENT);
+	
+	auto laser_x = seg_min_x + Constants::SEGMENT_WIDTH_/2.0;
+	auto laser_y = seg_min_y;
+	Laser laser(laser_x,laser_y,EntityID::LASER,Constants::LASER_SPEED_);
+	
+	auto[seg_get_x,seg_get_y] = segment.entityAttribute()->position()->getXYPosition();
+	auto[laser_get_x,laser_get_y] = laser.entityAttribute()->position()->getXYPosition();
+
+	CollisionDetection collision_detector(seg_get_x,seg_get_y,EntityID::SEGMENT,
+										laser_get_x,laser_get_y,EntityID::LASER);
+
+	CHECK(collision_detector.collided());	
+	
+}//49-114assert
+
+TEST_CASE("Top right of segment collides with bottom left of laser"){
+	auto seg_x = 450.0f;
+	auto seg_y = 150.0f;
+	Segment segment(seg_x,seg_y,EntityID::SEGMENT,Constants::SEGMENT_SPEED_);
+	Box seg_box;
+	auto[seg_min_x,seg_min_y,seg_max_x,seg_max_y] = seg_box.getBox(seg_x,seg_y,EntityID::SEGMENT);	
+
+	auto laser_x = seg_max_x - Constants::LASER_HEIGHT_;
+	auto laser_y = seg_max_y - Constants::LASER_HEIGHT_;
+	Laser laser(laser_x,laser_y,EntityID::LASER,Constants::LASER_SPEED_);
+	
+	auto[seg_get_x,seg_get_y] = segment.entityAttribute()->position()->getXYPosition();
+	auto[laser_get_x,laser_get_y] = laser.entityAttribute()->position()->getXYPosition();
+
+	CollisionDetection collision_detector(seg_get_x,seg_get_y,EntityID::SEGMENT,
+										laser_get_x,laser_get_y,EntityID::LASER);
+
+	CHECK(collision_detector.collided());
+}//50-115assert
+
+TEST_CASE("Bottom right of laser collides with top left of segment"){
+	auto laser_x = 350.0f;
+	auto laser_y = 300.0f;
+	Laser laser(laser_x,laser_y,EntityID::LASER,Constants::LASER_SPEED_);
+	Box laser_box;
+	auto[laser_min_x,laser_min_y,laser_max_x,laser_max_y] = laser_box.getBox(laser_x,laser_y,EntityID::LASER);
+	
+	auto seg_x = laser_max_x;
+	auto seg_y = laser_max_y + Constants::LASER_HEIGHT_;
+	Segment segment(seg_x,seg_y,EntityID::SEGMENT,Constants::SEGMENT_SPEED_);
+	
+	auto[seg_get_x,seg_get_y] = segment.entityAttribute()->position()->getXYPosition();
+	auto[laser_get_x,laser_get_y] = laser.entityAttribute()->position()->getXYPosition();
+
+	CollisionDetection collision_detector(seg_get_x,seg_get_y,EntityID::SEGMENT,
+										laser_get_x,laser_get_y,EntityID::LASER);
+
+	CHECK(collision_detector.collided());
+	
+	
+}//51-116assert
+
+TEST_CASE("right side of laser touching left side of segment collides"){
+	auto laser_x = 350.0f;
+	auto laser_y = 300.0f;
+	Laser laser(laser_x,laser_y,EntityID::LASER,Constants::LASER_SPEED_);
+	Box laser_box;
+	auto[laser_min_x,laser_min_y,laser_max_x,laser_max_y] = laser_box.getBox(laser_x,laser_y,EntityID::LASER);
+
+	auto seg_x = 
 }
 
 
