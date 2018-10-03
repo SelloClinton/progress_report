@@ -596,7 +596,13 @@ TEST_CASE("Valid Mushroom Box can be created"){
 
 //**************************Laser-Segment Collision Tests**************************
 TEST_CASE("Top left laser corner collides with bottom left Segment corner"){
-	
+	auto laser_x = 250.0f;
+	auto laser_y = 350.0f;
+	laser_id = EntityID::LASER;
+	auto laser_speed = Constants::LASER_SPEED_;
+	Laser laser(laser_x,laser_y,laser_id,laser_speed);
+	Box box;
+	auto[min_x,min_y,max_x,max_y] = box.getBox(laser_x,laser_y,EntityID::LASER)
 }
 
 
