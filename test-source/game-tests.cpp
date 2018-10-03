@@ -508,6 +508,41 @@ TEST_CASE("Segment cannot move down when at a set limit"){
 	CHECK(doctest::Approx(new_y) == old_y);
 	CHECK_FALSE(doctest::Approx(new_y) == old_y-4*speed);
 }//42-95assert
+TEST_CASE("Segment faces left when instructed to face left"){
+	auto x = 250.0f;
+	auto y = 350.0f;
+	Segment segment(x,y,EntityID::SEGMENT,Constants::SEGMENT_SPEED_);
+	segment.faceLeft();
+	CHECK(segment.isFacingLeft());
+	CHECK_FALSE(segment.isFacingRight());
+}
+//
+TEST_CASE("Segment faces right when instructed to face right"){
+	auto x = 250.0f;
+	auto y = 350.0f;
+	Segment segment(x,y,EntityID::SEGMENT,Constants::SEGMENT_SPEED_);
+	segment.faceRight();
+	CHECK(segment.isFacingRight());
+	CHECK_FALSE(segment.isFacingLeft());	
+}
+//
+TEST_CASE("Segment faces down when instructed to face down"){
+	auto x = 250.0f;
+	auto y = 350.0f;
+	Segment segment(x,y,EntityID::SEGMENT,Constants::SEGMENT_SPEED_);
+	segment.faceDown();
+	CHECK(segment.isFacingDown());
+	CHECK_FALSE(segment.isFacingUp());
+}
+//
+TEST_CASE("Segment faces up when instructed to face up"){
+	auto x = 250.0f;
+	auto y = 350.0f;
+	Segment segment(x,y,EntityID::SEGMENT,Constants::SEGMENT_SPEED_);
+	segment.faceUp();
+	CHECK(segment.isFacingUp());
+	CHECK_FALSE(segment.isFacingDown());	
+}
 //********************************************************************************
 //************************************Box Tests***********************************
 TEST_CASE("Valid Laser Box can be created"){
@@ -882,7 +917,8 @@ TEST_CASE("Centipede moves a segment to the right if it is facing in the right d
 	 CHECK(doctest::Approx(new_x) == new_x_right);
 	 CHECK_FALSE(doctest::Approx(wrong_new_x) == new_x_right);
 	
-}
+}//62-133assert
+//
 TEST_CASE("Centipede moves a segment to the left if it is facing in the left direction"){
     auto centiSize = 1;
 	Centipede centipede(centiSize);
@@ -896,7 +932,8 @@ TEST_CASE("Centipede moves a segment to the left if it is facing in the left dir
 	
 	CHECK(doctest::Approx(new_x) == new_x_left);
 	CHECK_FALSE(doctest::Approx(wrong_new_x) == new_x_left);
-}
+}//63-135assert
+//
 TEST_CASE(" while going down, Centipede moves a segment down and left when it reaches right border"){
     
     auto centiSize = 1;
@@ -912,7 +949,7 @@ TEST_CASE(" while going down, Centipede moves a segment down and left when it re
 	CHECK(doctest::Approx(new_y) == new_seg_y);
 	CHECK(doctest::Approx(new_x) == new_seg_x);
 
-}//62-133assert
+}//64-137assert
 
 TEST_CASE("While going down, Centipede moves a segment down and right when it reaches left border"){
     auto centiSize = 1;
@@ -931,7 +968,7 @@ TEST_CASE("While going down, Centipede moves a segment down and right when it re
 	CHECK(doctest::Approx(new_seg_x) == new_x);
 	CHECK(doctest::Approx(new_y) == new_seg_y);
 	
-}//63-135assert
+}//65-139assert
 
 TEST_CASE("While going up, Centipede moves a segment up and left when it is at right border"){
     auto centiSize = 1;
@@ -948,7 +985,7 @@ TEST_CASE("While going up, Centipede moves a segment up and left when it is at r
 	
 	CHECK(doctest::Approx(new_y) == new_seg_y);
 	CHECK(doctest::Approx(new_x) == new_seg_x);
-}//64-137assert
+}//66-141assert
 
 TEST_CASE("While going up, Centipede moves a segment up and right when it is at left border"){
     auto centiSize = 1;
@@ -967,8 +1004,93 @@ TEST_CASE("While going up, Centipede moves a segment up and right when it is at 
 	CHECK(doctest::Approx(new_y) == new_seg_y);
 	CHECK(doctest::Approx(new_x) == new_seg_x);
 	
-}//65-139assert
+}//67-143assert
+//************************************************************************************
+//************************Segment-Player Collision Tests****************************************
+TEST_CASE("Top right corner of player collides with bottom left corner of segment"){
+	auto player_x = 250.0f;
+	auto player_y = 475.0f;
+	Player player(player_x,player_y,EntityID::PLAYER,Constants::PLAYER_SPEED_);
 
+	Box player_box;
+	auto[p_min_x,p_min_y,p_max_x,p_max_y] = player_box.getBox(player_x,player_y,EntityID::PLAYER);
+	
+	auto seg_x = p_max_x;
+	auto seg_y = p_max_y - Constants::SEGMENT_HEIGHT_;
+	Segment segment(seg_x,seg_y,EntityID::SEGMENT,Constants::SEGMENT_SPEED_);
+	
+	auto[get_player_x,get_player_y] = player.entityAttribute()->position()->getXYPosition();
+	auto[get_seg_x,get_seg_y] = segment.entityAttribute()->position()->getXYPosition();
+	
+	CollisionDetection collision_detector(get_player_x,get_player_y,EntityID::PLAYER,
+										  get_seg_x,get_seg_y,EntityID::SEGMENT);
+										  
+	CHECK(collision_detector.collided());
+	CHECK_FALSE(!collision_detector.collided());
+}//72-152assert
+//
+TEST_CASE("Top left corner of player collides with bottom right corner of segment"){
+	auto seg_x = 325.0f;
+	auto seg_y = 550.0f;
+	Segment segment(seg_x,seg_y,EntityID::SEGMENT,Constants::SEGMENT_SPEED_);
+	Box seg_box;
+	auto[seg_min_x,seg_min_y,seg_max_x,seg_max_y] = seg_box.getBox(seg_x,seg_y,EntityID::SEGMENT);
+	
+	auto player_x = seg_max_x;
+	auto player_y = seg_max_y + Constants::SEGMENT_HEIGHT_;
+	Player player(player_x,player_y,EntityID::PLAYER,Constants::PLAYER_SPEED_);
+	
+	auto[get_player_x,get_player_y] = player.entityAttribute()->position()->getXYPosition();
+	auto[get_seg_x,get_seg_y] = segment.entityAttribute()->position()->getXYPosition();
+	
+	CollisionDetection collision_detector(get_player_x,get_player_y,EntityID::PLAYER,
+										  get_seg_x,get_seg_y,EntityID::SEGMENT);
+										  
+	CHECK(collision_detector.collided());
+	CHECK_FALSE(!collision_detector.collided());
+
+}//73-155assert
+//
+TEST_CASE("Bottom left corner of player collides with top right corner of segment"){
+	auto seg_x = 325.0f;
+	auto seg_y = 125.0f;
+	Segment segment(seg_x,seg_y,EntityID::SEGMENT,Constants::SEGMENT_SPEED_);
+	Box seg_box;
+	auto[seg_min_x,seg_min_y,seg_max_x,seg_max_y] = seg_box.getBox(seg_x,seg_y,EntityID::SEGMENT);	
+	auto player_x = seg_max_x;
+	auto player_y = seg_max_y - Constants::PLAYER_HEIGHT_;
+	Player player(player_x,player_y,EntityID::PLAYER,Constants::PLAYER_SPEED_);
+	
+	auto[get_player_x,get_player_y] = player.entityAttribute()->position()->getXYPosition();
+	auto[get_seg_x,get_seg_y] = segment.entityAttribute()->position()->getXYPosition();
+	
+	CollisionDetection collision_detector(get_player_x,get_player_y,EntityID::PLAYER,
+										  get_seg_x,get_seg_y,EntityID::SEGMENT);
+										  
+	CHECK(collision_detector.collided());
+	CHECK_FALSE(!collision_detector.collided());
+	
+}//74-157assert
+//
+TEST_CASE("Bottom right of player corner collides with top left corner of segment"){
+	auto player_x = 350.0f;
+	auto player_y = 475.0f;
+	Player player(player_x,player_y,EntityID::PLAYER,Constants::PLAYER_SPEED_);	
+	Box player_box;
+	auto[p_min_x,p_min_y,p_max_x,p_max_y] = player_box.getBox(player_x,player_y,EntityID::PLAYER);
+	auto seg_x = p_max_x;
+	auto seg_y = p_max_y + Constants::PLAYER_HEIGHT_;
+	Segment segment(seg_x,seg_y,EntityID::SEGMENT,Constants::SEGMENT_SPEED_);
+
+	auto[get_player_x,get_player_y] = player.entityAttribute()->position()->getXYPosition();
+	auto[get_seg_x,get_seg_y] = segment.entityAttribute()->position()->getXYPosition();
+	
+	CollisionDetection collision_detector(get_player_x,get_player_y,EntityID::PLAYER,
+										  get_seg_x,get_seg_y,EntityID::SEGMENT);
+										  
+	CHECK(collision_detector.collided());
+	CHECK_FALSE(!collision_detector.collided());
+}//75-159assert
 
 //
 //TEST_CASE("Centipede can move a segment down when it reaches left border"){
