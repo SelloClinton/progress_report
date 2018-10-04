@@ -1091,6 +1091,91 @@ TEST_CASE("Bottom right of player corner collides with top left corner of segmen
 	CHECK(collision_detector.collided());
 	CHECK_FALSE(!collision_detector.collided());
 }//75-159assert
+//***************************************************************************************
+//***************************Segment-Mushroom collision Tests*****************************
+TEST_CASE("Top right corner of segment collides with bottom left corner mushroom"){
+	
+	auto seg_x = 150.0f;
+	auto seg_y = 350.0f;
+	Segment segment(seg_x,seg_y,EntityID::SEGMENT,Constants::SEGMENT_SPEED_);
+	Box seg_box;
+	
+	auto[seg_min_x,seg_min_y,seg_max_x,seg_max_y] = seg_box.getBox(seg_x,seg_y,EntityID::SEGMENT);
+	auto mush_x = seg_max_x;
+	auto mush_y = seg_max_y - Constants::MUSHROOM_HEIGHT_;
+	Mushroom mushroom(mush_x,mush_y,EntityID::SEGMENT);
+	
+	auto[get_mush_x,get_mush_y] = mushroom.entityAttribute()->position()->getXYPosition();
+	auto[get_seg_x,get_seg_y] = segment.entityAttribute()->position()->getXYPosition();
+	
+	CollisionDetection collision_detecttor(get_mush_x,get_mush_y,EntityID::MUSHROOM,
+										   get_seg_x,get_seg_y,EntityID::SEGMENT);
+										   
+	
+	CHECK(collision_detecttor.collided());
+	CHECK_FALSE(!collision_detecttor.collided());
+	
+}//76-161Assert
+//
+TEST_CASE("Top left corner of segment collides with bottom right corner of mushroom"){
+	auto mush_x = 625.0f;
+	auto mush_y = 135.0f;
+	Mushroom mushroom(mush_x,mush_y,EntityID::MUSHROOM);
+	Box mush_box;
+	auto[mush_min_x,mush_min_y,mush_max_x,mush_max_y] = mush_box.getBox(mush_x,mush_y,EntityID::MUSHROOM);
+	auto seg_x = mush_max_x;
+	auto seg_y = mush_max_y - Constants::SEGMENT_HEIGHT_;
+	Segment segment(seg_x,seg_y,EntityID::SEGMENT,Constants::SEGMENT_SPEED_);
+	
+	auto[get_mush_x,get_mush_y] = mushroom.entityAttribute()->position()->getXYPosition();
+	auto[get_seg_x,get_seg_y] = segment.entityAttribute()->position()->getXYPosition();
+	
+	CollisionDetection collision_detector(get_mush_x,get_mush_y,EntityID::MUSHROOM,
+										 get_seg_x,get_seg_y,EntityID::SEGMENT);
+	
+	CHECK(collision_detector.collided());
+	CHECK_FALSE(!collision_detector.collided());
+}//77-163assert
+TEST_CASE("Bottom left corner of segment collides with top right corner of mushroom"){
+	auto mush_x = 325.0f;
+	auto mush_y = 350.0f;
+	Mushroom mushroom(mush_x,mush_y,EntityID::MUSHROOM);
+	Box mushroom_box;
+	auto[mush_min_x,mush_min_y,mush_max_x,mush_max_y] = mushroom_box.getBox(mush_x,mush_y,EntityID::MUSHROOM);
+	auto seg_x = mush_max_x;
+	auto seg_y = mush_max_y - Constants::SEGMENT_HEIGHT_;
+	Segment segment(seg_x,seg_y,EntityID::SEGMENT,Constants::SEGMENT_SPEED_);
+	
+	auto[get_mush_x,get_mush_y] = mushroom.entityAttribute()->position()->getXYPosition();
+	auto[get_seg_x,get_seg_y] = segment.entityAttribute()->position()->getXYPosition();
+	
+	CollisionDetection collision_detector(get_mush_x,get_mush_y,EntityID::MUSHROOM,
+										 get_seg_x,get_seg_y,EntityID::SEGMENT);
+	
+	CHECK(collision_detector.collided());
+	CHECK_FALSE(!collision_detector.collided());
+	
+}//78-165assert
+//
+TEST_CASE("Bottom right corner of segment collides with top left corner mushroom"){
+	auto mush_x = 350.0f;
+	auto mush_y = 12.0f;
+	Mushroom mushroom(mush_x,mush_y,EntityID::MUSHROOM);
+	Box mushBox;
+	auto[m_min_x,m_min_y,m_max_x,m_max_y] = mushBox.getBox(mush_x,mush_y,EntityID::MUSHROOM);
+	auto seg_x = m_min_x;
+	auto seg_y = m_min_y - Constants::SEGMENT_HEIGHT_;
+	Segment segment(seg_x,seg_y,EntityID::SEGMENT,Constants::SEGMENT_SPEED_);
+	
+	auto[get_mush_x,get_mush_y] = mushroom.entityAttribute()->position()->getXYPosition();
+	auto[get_seg_x,get_seg_y] = segment.entityAttribute()->position()->getXYPosition();
+	
+	CollisionDetection collision_detector(get_mush_x,get_mush_y,EntityID::MUSHROOM,
+										 get_seg_x,get_seg_y,EntityID::SEGMENT);
+	
+	CHECK(collision_detector.collided());
+	CHECK_FALSE(!collision_detector.collided());
+}
 
 //
 //TEST_CASE("Centipede can move a segment down when it reaches left border"){
