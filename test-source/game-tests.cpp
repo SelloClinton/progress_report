@@ -103,8 +103,14 @@ TEST_CASE("Default position is origin"){
 }//9-24assert
 
 //*************************end of Position tests(9 tests)**************************
+
 //*************************Entity Tests********************************************
-TEST_CASE("Valid position is returned"){
+TEST_CASE("Entity is not constructed with an invalid position"){
+	//exceptions thrown in Position's constructor
+	CHECK_THROWS(Entity(-1.0,-1.0,EntityID::PLAYER));
+	CHECK_THROWS(Entity(Constants::DISPLAY_WIDTH_+1.0,Constants::DISPLAY_WIDTH_+1.0,EntityID::PLAYER));
+}//10-26-assert
+TEST_CASE("Entity returns valid position"){
 	
 	auto x = 50.0f;
 	auto y = 150.0f;
@@ -112,14 +118,19 @@ TEST_CASE("Valid position is returned"){
 	
 	auto entity = make_shared<Entity>(x,y,id);
 	CHECK(doctest::Approx(x) == entity->position()->getXPosition());
+	CHECK_FALSE(doctest::Approx(y) == entity->position()->getXPosition());
 	CHECK(doctest::Approx(y) == entity->position()->getYPosition());
+	CHECK_FALSE(doctest::Approx(x) == entity->position()->getYPosition());
 	
 	auto[entity_x,entity_y] = entity->position()->getXYPosition();
 	CHECK(doctest::Approx(entity_x) == x);
+	CHECK_FALSE(doctest::Approx(entity_x) == y);
 	CHECK(doctest::Approx(entity_y) == y);
+	CHECK_FALSE(doctest::Approx(entity_y) == x);
 	
-}//10-28assert
-TEST_CASE("Position is effectively set"){
+}//11-28assert
+//
+TEST_CASE("Entity can effectively set position"){
 	auto x = 50.0f;
 	auto y = 150.0f;
 	auto id = EntityID::PLAYER;
@@ -135,7 +146,7 @@ TEST_CASE("Position is effectively set"){
 	CHECK_FALSE(doctest::Approx(new_entity_x) == old_entity_x);
 	CHECK_FALSE(doctest::Approx(new_entity_y) == old_entity_y);
 }//11-32assert
-
+//
 TEST_CASE("Entity live state is true upon construction"){
 	auto x = 50.0f;
 	auto y = 150.0f;
@@ -144,15 +155,17 @@ TEST_CASE("Entity live state is true upon construction"){
 	CHECK(entity->isLive());
 	CHECK_FALSE(!entity->isLive());
 }//12-34assert
+//
 TEST_CASE("Entity can be destroyed"){
 	auto x = 50.0f;
 	auto y = 150.0f;
 	auto id = EntityID::PLAYER;
 	auto entity = make_shared<Entity>(x,y,id);
 	entity->destroy();
+	CHECK(!entity->isLive());
 	CHECK_FALSE(entity->isLive());
 }//13-35assert
-
+//
 TEST_CASE("Correct Entity id is returned"){
 	auto x = 50.0f;
 	auto y = 150.0f;
@@ -166,8 +179,8 @@ TEST_CASE("Correct Entity id is returned"){
 //***************************Laser Tests*******************************************
 TEST_CASE("Laser cannot have <= 0 speed"){
 	
-	CHECK_THROWS_AS(Laser(50,50,EntityID::LASER,-10),NegativeZeroLaserSpeed);
-	CHECK_THROWS_AS(Laser(100,250,EntityID::LASER,0),NegativeZeroLaserSpeed);
+	CHECK_THROWS_AS(Laser(50,50,EntityID::LASER,Constants::PLAYER_SPEED_),IncorrectLaserSpeed);
+	CHECK_THROWS_AS(Laser(100,250,EntityID::LASER,10.0),IncorrectLaserSpeed);
 	
 }//15-39assert
 TEST_CASE("Cannot construct A Laser with a wrong Entity ID"){
@@ -175,6 +188,7 @@ TEST_CASE("Cannot construct A Laser with a wrong Entity ID"){
 		CHECK_THROWS_AS(Laser(400,250,EntityID::MUSHROOM,4.0),IncorrectLaserEntityID);
 		CHECK_THROWS_AS(Laser(400,250,EntityID::SEGMENT,4.0),IncorrectLaserEntityID);
 }//16-42ASSERT
+//
 TEST_CASE("Laser movement can be updated"){
 	auto x = 250.0f;
 	auto y = 330.0f;
@@ -185,7 +199,9 @@ TEST_CASE("Laser movement can be updated"){
 	laser.updatePosition();
 	auto new_y = laser.entityAttribute()->position()->getYPosition(); 
 	CHECK(doctest::Approx(new_y) == old_y-speed);
+	CHECK_FALSE(doctest::Approx(new_y) == old_y);
 }//17-43assert
+//
 TEST_CASE("Cannot update Laser movement if it is out of bound"){
 	auto x = 250.0f;
 	auto y = 0.0f;
@@ -208,7 +224,7 @@ TEST_CASE("Laser gets destroyed when it goes out of screen bound"){
 	laser.updatePosition();
 	CHECK_FALSE(laser.entityAttribute()->isLive());
 }//19-47assert
-TEST_CASE("x position of Laser does not get Updated when updating y position"){
+TEST_CASE("Laser only moves vertically upwards"){
 	auto x = 250.0f;
 	auto y = 350.0f;
 	auto id = EntityID::LASER;
@@ -219,6 +235,8 @@ TEST_CASE("x position of Laser does not get Updated when updating y position"){
 	auto[new_x,new_y] = laser.entityAttribute()->position()->getXYPosition();
 	CHECK(doctest::Approx(old_x) == new_x);
 	CHECK_FALSE(doctest::Approx(new_x) == old_x - speed);
+	CHECK_FALSE(doctest::Approx(new_x) == old_x + speed);
+	CHECK_FALSE(doctest::Approx(new_y) == old_y + speed);
 }//20-49assert
 //*********************************************************************************
 //**************************Player Tests*******************************************
@@ -237,6 +255,11 @@ TEST_CASE("Player is constructed with a correct speed"){
 	CHECK_THROWS_AS(Player(250,450,EntityID::MUSHROOM,4.5),IncorrectPlayerSpeed);
 	
 }//22-55assert
+//
+TEST_CASE("Player cannot be constructed above its movement region"){
+	CHECK_THROWS_AS(Player(50,Constants::PLAYER_VERTICAL_LIMIT-1.0,EntityID::PLAYER,Constants::PLAYER_SPEED_),IncorrectPlayerPosition);
+}
+//
 TEST_CASE("Player can move right"){
 	auto x = 450.0f;
 	auto y = 550.0f;
@@ -247,6 +270,8 @@ TEST_CASE("Player can move right"){
 	player.move(Direction::RIGHT);
 	auto new_x = player.entityAttribute()->position()->getXPosition();
 	CHECK(doctest::Approx(new_x) == old_x+speed);
+	CHECK_FALSE(doctest::Approx(new_x) == old_x);
+	
 }//23-56aseert
 TEST_CASE("Player cannot move right when at rightmost border of the screen"){
 	auto x = 784.0f;
@@ -316,7 +341,7 @@ TEST_CASE("Player cannot move up beyond a set border"){
 //
 TEST_CASE("Player can move down"){
 	auto x = 250.0f;
-	auto y = 450.0f;
+	auto y = 450.0f;	//set limit
 	auto id = EntityID::PLAYER;
 	auto speed = Constants::PLAYER_SPEED_;
 	Player player(x,y,id,speed);
@@ -329,7 +354,7 @@ TEST_CASE("Player can move down"){
 //
 TEST_CASE("Player cannot move down when at bottom of the screen"){
 	auto x = 250.0f;
-	auto y = 584.0f;
+	auto y = 584.0f;	//set limit
 	auto id = EntityID::PLAYER;
 	auto speed = Constants::PLAYER_SPEED_;
 	Player player(x,y,id,speed);
@@ -339,6 +364,79 @@ TEST_CASE("Player cannot move down when at bottom of the screen"){
 	CHECK(doctest::Approx(new_y) == old_y);
 	CHECK_FALSE(doctest::Approx(new_y) == old_y+speed);		
 }//30-70assert
+//
+TEST_CASE("There are no lasers if player does not shoot"){
+	auto x = 50.0f;
+	auto y = 550.0f;
+	
+	Player player(x,y,EntityID::PLAYER,Constants::PLAYER_SPEED_);
+	auto start_lasers_iterator = begin(player.getLasers());
+	auto end_lasers_iterator = end(player.getLasers());
+	
+	CHECK(start_lasers_iterator == end_lasers_iterator);
+}
+//
+TEST_CASE("A laser gets created when a player shoots"){
+	auto x = 50.0f;
+	auto y = 550.0f;
+	
+	Player player(x,y,EntityID::PLAYER,Constants::PLAYER_SPEED_);
+	player.shoot();
+	auto _lasers_iterator = begin(player.getLasers());
+
+	
+	auto number_of_lasers = 1;
+	auto count = 0;
+	while(_lasers_iterator != end(player.getLasers())){
+		++_lasers_iterator;
+		++count;
+	}
+	
+	CHECK(number_of_lasers == count);
+	CHECK_FALSE(number_of_lasers == 0);
+	
+}
+//
+TEST_CASE("The number of lasers created corresponds to the number of times a player shoots"){
+	auto x = 50.0f;
+	auto y = 550.0f;
+	
+	Player player(x,y,EntityID::PLAYER,Constants::PLAYER_SPEED_);
+
+	player.shoot();
+	player.shoot();
+	player.shoot();
+	
+	auto lasers_counter = begin(player.getLasers());
+	auto number_of_lasers = 3;
+	auto laserCounter = 0;
+	
+	while(lasers_counter != end(player.getLasers())){
+		++lasers_counter;
+		++laserCounter;
+	}
+	
+	CHECK(number_of_lasers == laserCounter);
+	auto single_shot = 1;
+	CHECK_FALSE(number_of_lasers == single_shot);
+	
+}
+//
+TEST_CASE("A Shot laser's position can be updated"){
+	
+	auto x = 50.0f;
+	auto y = 550.0f;
+	
+	Player player(x,y,EntityID::PLAYER,Constants::PLAYER_SPEED_);
+	player.shoot();
+	auto laser_iterator = begin(player.getLasers());
+	auto laser_x_i = (*laser_iterator)->entityAttribute()->position()->getYPosition();
+	player.updateLasers();
+	auto laser_x_f = (*laser_iterator)->entityAttribute()->position()->getYPosition();
+	
+	CHECK(doctest::Approx(laser_x_f) == laser_x_i - Constants::LASER_SPEED_);
+	CHECK_FALSE(doctest::Approx(laser_x_f) == laser_x_i);
+}
 //*****************************************************************************
 //**************************Mushroom Tests**********************************
 TEST_CASE("Mushroom dies after being weakened four times"){
@@ -589,7 +687,7 @@ TEST_CASE("Valid Segment Box is created"){
 //
 TEST_CASE("Valid Player Box can be created"){
 	auto player_x = 50.0f;
-	auto player_y = 250.0f;
+	auto player_y = 550.0f;
 	auto player_id = EntityID::PLAYER;
 	auto speed = Constants::PLAYER_SPEED_;
 	Player player(player_x,player_y,player_id,speed);
@@ -1053,7 +1151,7 @@ TEST_CASE("Top left corner of player collides with bottom right corner of segmen
 //
 TEST_CASE("Bottom left corner of player collides with top right corner of segment"){
 	auto seg_x = 325.0f;
-	auto seg_y = 125.0f;
+	auto seg_y = 560.0f;
 	Segment segment(seg_x,seg_y,EntityID::SEGMENT,Constants::SEGMENT_SPEED_);
 	Box seg_box;
 	auto[seg_min_x,seg_min_y,seg_max_x,seg_max_y] = seg_box.getBox(seg_x,seg_y,EntityID::SEGMENT);	

@@ -8,6 +8,8 @@ Player::Player(float x_position, float y_position, const EntityID& id, float spe
 		throw IncorrectPlayerSpeed();
 	if (id != EntityID::PLAYER)
 		throw IncorrectPlayerEntityID();
+	if (y_position < Constants::PLAYER_VERTICAL_LIMIT)
+		throw IncorrectPlayerPosition();
 }
 
 shared_ptr<Entity> Player::entityAttribute(){

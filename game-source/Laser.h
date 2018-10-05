@@ -9,7 +9,7 @@
 using std::shared_ptr;
 using std::make_shared;
 
-class NegativeZeroLaserSpeed{};
+class IncorrectLaserSpeed{};
 class IncorrectLaserEntityID{};
 
 class Laser{
@@ -21,7 +21,6 @@ public:
 private:
 	shared_ptr<Entity> entity_attribute_;
 	float speed_;
-//	void move();
 	float getSpeed()const;
 };
 

@@ -112,11 +112,11 @@ void Centipede::keepUp(shared_ptr<Segment> segment){
 	
 	if(!segment->isFacingDown()){
 		
-        if(auto x_right_limit = Constants::DISPLAY_WIDTH_-3.0*Constants::SEGMENT_WIDTH_;seg_x_position >= x_right_limit){
+        if(auto x_right_limit = Constants::X_RIGHT_LIMIT_;seg_x_position >= x_right_limit){
 			moveUp(segment);
 			turnLeft(segment);
         }
-        else if (auto x_left_limit = 4.0f; seg_x_position <= x_left_limit){
+        else if (auto x_left_limit = Constants::X_LEFT_LIMIT_; seg_x_position <= x_left_limit){
 			moveUp(segment);
 			turnRight(segment);
         }
@@ -139,11 +139,11 @@ void Centipede::keepDown(shared_ptr<Segment> segment){
 	
 	if(!segment->isFacingUp()){
 		
-        if(auto x_right_limit = Constants::DISPLAY_WIDTH_-3.0*Constants::SEGMENT_WIDTH_;seg_x_position >= x_right_limit){
+        if(auto x_right_limit = Constants::X_RIGHT_LIMIT_;seg_x_position >= x_right_limit){
 			moveDown(segment);
 			turnLeft(segment);
         }
-        else if (auto x_left_limit = 4.0f; seg_x_position <= x_left_limit){
+        else if (auto x_left_limit = Constants::X_LEFT_LIMIT_; seg_x_position <= x_left_limit){
 			moveDown(segment);
 			turnRight(segment);
         }

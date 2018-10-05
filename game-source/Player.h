@@ -23,6 +23,7 @@ using Lasers = list<shared_ptr<Laser>>;
 
 class IncorrectPlayerSpeed{};
 class IncorrectPlayerEntityID{};
+class IncorrectPlayerPosition{};
 
 class Player{
 	
@@ -35,7 +36,6 @@ public:
 	void updateLasers();
 private:
 	shared_ptr<Entity> entity_attribute_;
-//	shared_ptr<Mover> moving_attribute_;
 	Lasers lasers_;
 };
 #endif // PLAYER_H

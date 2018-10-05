@@ -38,12 +38,12 @@ bool Mover::isAtMinXBound(float x)const{
 	return false;
 }
 bool Mover::isAtMaxXBound(float x)const{
-	if(x >= Constants::DISPLAY_WIDTH_-2*(Constants::PLAYER_WIDTH_))
+	if(x >= Constants::DISPLAY_WIDTH_-2.0*(Constants::PLAYER_WIDTH_))
 		return true;
 	return false;	
 }
 bool Mover::isAtMinYBound(float y)const{
-	if(y >= (Constants::DISPLAY_HEIGHT_-2*(Constants::PLAYER_HEIGHT_)))
+	if(y >= (Constants::DISPLAY_HEIGHT_-2.0*(Constants::PLAYER_HEIGHT_)))
 		return true;
 	return false;	
 }
