@@ -2,7 +2,8 @@
 
 Field::Field(int numberOfMushrooms)
 {
-	
+	if (numberOfMushrooms <= 0)
+		throw InvalidFieldSize();
 	createMushrooms(numberOfMushrooms);
 	
 }
@@ -12,24 +13,21 @@ Mushrooms& Field::getMushrooms(){
 }
 
 void Field::createMushrooms(int numberOfMushrooms){
+	
 	generateXPositions(numberOfMushrooms);
 	generateYPositions(numberOfMushrooms);
-//	createPositions();
 	
 	auto x_iter = begin(xPositions_);
 	auto y_iter = begin(yPositions_);
+	
 	while((x_iter != end(xPositions_)&&(y_iter != end(yPositions_)))){
+		
 		auto mushroom = make_shared<Mushroom>(*x_iter,*y_iter,EntityID::MUSHROOM);
 		mushrooms_.push_back(mushroom);
 		x_iter++;
 		y_iter++;
 		
 	}
-//	for(auto position_iter = begin(positions_); position_iter != end(positions_); position_iter++){
-//			
-//			auto mushroom = make_shared<Mushroom>(*position_iter);
-//			mushrooms_.push_back(mushroom);
-//	}
 	
 }
 

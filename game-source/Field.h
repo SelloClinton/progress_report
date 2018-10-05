@@ -18,6 +18,8 @@ using std::make_shared;
 
 using Mushrooms = list<shared_ptr<Mushroom>>;
 
+class InvalidFieldSize{};
+
 class Field{
 	
 public:
@@ -30,8 +32,5 @@ private:
 	void createMushrooms(int numberOfMushrooms);
 	void generateXPositions(int numberOfMushrooms);
 	void generateYPositions(int numberOfMushrooms);
-	void createPositions();
-	
-		
 };
 #endif
