@@ -7,11 +7,9 @@
 #include "CollisionDetection.h"
 #include "CollisionReaction.h"
 #include "Laser.h"
-#include "GameEngine.h"
 #include "Field.h"
 #include "Enums.h"
 #include "Mushroom.h"
-
 #include <memory>
 using std::shared_ptr;
 using std::make_shared;
