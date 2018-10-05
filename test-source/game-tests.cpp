@@ -45,7 +45,7 @@ TEST_CASE("y position getter function returns expected value"){
 	CHECK(doctest::Approx(y) == position.getYPosition());
 	CHECK_FALSE(doctest::Approx(x) == position.getYPosition());
 }//4-10assert
-TEST_CASE("XY Getter function returns expected values"){
+TEST_CASE("XY position getter function returns expected values"){
 	
 	auto x = 800.0f;
 	auto y = 600.0f;
@@ -57,7 +57,7 @@ TEST_CASE("XY Getter function returns expected values"){
 	CHECK_FALSE(doctest::Approx(y) == x_position);
 	
 }//5-14assert
-TEST_CASE("x position setter function returns expected value"){
+TEST_CASE("x position setter function behaves expectedly"){
 	auto x = 800.0f;
 	auto y = 600.0f;
 	Position position(x,y);
@@ -66,7 +66,7 @@ TEST_CASE("x position setter function returns expected value"){
 	CHECK(doctest::Approx(new_x) == position.getXPosition());
 	CHECK_FALSE(doctest::Approx(x) == position.getXPosition());
 }//6-16assert
-TEST_CASE("y position setter function returns expected value"){
+TEST_CASE("y position setter function behaves expectedly"){
 	auto x = 450.0f;
 	auto y = 350.0f;
 	Position position(x,y);
@@ -79,12 +79,12 @@ TEST_CASE("y position setter function returns expected value"){
 TEST_CASE("XY position Setter function effective"){
 	auto x = 550.0f;
 	auto y = 550.0f;
-	Position set_position(x,y);
-	auto[oldXPosition,oldYPosition] = set_position.getXYPosition();
+	Position _position(x,y);
+	auto[oldXPosition,oldYPosition] = _position.getXYPosition();
 	auto new_x = 800.0f;
 	auto new_y = 600.0f;
-	set_position.setXYPosition(new_x,new_y);
-	auto[newXPosition,newYPosition] = set_position.getXYPosition();
+	_position.setXYPosition(new_x,new_y);
+	auto[newXPosition,newYPosition] = _position.getXYPosition();
 	
 	CHECK(doctest::Approx(new_x) == newXPosition);
 	CHECK(doctest::Approx(new_y) == newYPosition);
