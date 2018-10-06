@@ -522,6 +522,22 @@ TEST_CASE("Mushrooms not generated at the top of the screen"){
 		++mush_iterator;
 	}
 }
+TEST_CASE("field creates a mushroom whenever instructed to do so"){
+	auto fieldSize = 1;
+	Field field(fieldSize);
+	auto mush_x = 4.0f;
+	auto mush_y = 32.0f;
+	field.createMushroom(mush_x,mush_y);
+	auto mush_iterator = begin(field.getMushrooms());
+	auto number_of_mushrooms = 0;
+	while(mush_iterator != end(field.getMushrooms())){
+		++mush_iterator;
+		++number_of_mushrooms;
+	}
+	auto newFieldSize = 2;
+	CHECK(number_of_mushrooms == newFieldSize);
+	CHECK_FALSE(number_of_mushrooms == fieldSize);
+}
 
 //***************************Segment Tests****************************************
 TEST_CASE("Cannot construct Segment with an invalid EntityID"){
@@ -1162,7 +1178,81 @@ TEST_CASE("While going up, Centipede moves a segment up and right when it is at 
 	CHECK(doctest::Approx(new_x) == new_seg_x);
 	
 }//67-143assert
-//************************************************************************************
+//
+TEST_CASE("while moving up and at left border, Centipede moves a segment down when it reaches a set vertical limit"){
+	auto centipedeSize = 1;
+	Centipede centipede(centipedeSize);
+	auto centipede_iterator = begin(centipede.getCentipede());
+	auto x_i = 4.0;
+	auto y_i = 450.0f;
+	(*centipede_iterator)->entityAttribute()->position()->setXYPosition(x_i,y_i);
+	(*centipede_iterator)->faceLeft();
+	(*centipede_iterator)->faceUp();
+	centipede.move();
+	auto y_f = (*centipede_iterator)->entityAttribute()->position()->getYPosition();
+	auto false_y_f = y_i - 4.0*Constants::SEGMENT_SPEED_;
+	auto true_y_f = y_i + 4.0*Constants::SEGMENT_SPEED_;
+	CHECK(doctest::Approx(y_f) == true_y_f);
+	CHECK_FALSE(doctest::Approx(y_f) == false_y_f);
+}
+//
+TEST_CASE("while moving up and at right border, Centipede moves a segment down when it reaches a set vertical limit"){
+	auto centipedeSize = 1;
+	Centipede centipede(centipedeSize);
+	auto centipede_iterator = begin(centipede.getCentipede());
+	auto x_i = 776.0f;
+	auto y_i = 450.0f;
+	
+	(*centipede_iterator)->entityAttribute()->position()->setXYPosition(x_i,y_i);
+	(*centipede_iterator)->faceRight();
+	(*centipede_iterator)->faceUp();
+	centipede.move();
+	
+	auto y_f = (*centipede_iterator)->entityAttribute()->position()->getYPosition();
+	auto false_y_f = y_i - 4.0*Constants::SEGMENT_SPEED_;
+	auto true_y_f = y_i + 4.0*Constants::SEGMENT_SPEED_;
+	
+	CHECK(doctest::Approx(y_f) == true_y_f);
+	CHECK_FALSE(doctest::Approx(y_f) == 0.0);
+}
+//
+TEST_CASE("while moving down and at bottom left corner, Centipede moves a segment up"){
+	auto centipedeSize = 1;
+	Centipede centipede(centipedeSize);
+	auto centipede_iterator = begin(centipede.getCentipede());
+	auto x_i = 4.0f;
+	auto y_i = 584.0f;
+	
+	(*centipede_iterator)->entityAttribute()->position()->setXYPosition(x_i,y_i);
+	(*centipede_iterator)->faceLeft();
+	(*centipede_iterator)->faceDown();
+	centipede.move();
+	auto y_f = (*centipede_iterator)->entityAttribute()->position()->getYPosition();
+	auto true_y_f = y_i - 4.0*Constants::SEGMENT_SPEED_;
+	
+	CHECK(doctest::Approx(y_f) == true_y_f);
+	CHECK_FALSE(doctest::Approx(y_f) == y_i);
+	
+}
+//
+TEST_CASE("while moving down and at bottom right corner, Centipede moves a segment up"){
+	auto centipedeSize = 1;
+	Centipede centipede(centipedeSize);
+	auto centipede_iterator = begin(centipede.getCentipede());
+	auto x_i = 776.0f;
+	auto y_i = 584.0f;
+	
+	(*centipede_iterator)->entityAttribute()->position()->setXYPosition(x_i,y_i);
+	(*centipede_iterator)->faceRight();
+	(*centipede_iterator)->faceDown();
+	centipede.move();
+	auto y_f = (*centipede_iterator)->entityAttribute()->position()->getYPosition();
+	auto true_y_f = y_i - 4.0*Constants::SEGMENT_SPEED_;
+	
+	CHECK(doctest::Approx(y_f) == true_y_f);
+	CHECK_FALSE(doctest::Approx(y_f) == y_i);
+}
+//*********************************************************************************************
 //************************Segment-Player Collision Tests****************************************
 TEST_CASE("Top right corner of player collides with bottom left corner of segment"){
 	auto player_x = 250.0f;
