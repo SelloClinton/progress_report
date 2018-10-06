@@ -28,7 +28,7 @@ class Update{
 		void updatePlayer(shared_ptr<Player> player, Pressed key); //player movement and shooting
 		void updateCentipede(shared_ptr<Centipede> centipede, shared_ptr<Field> field);//centipede movement
 		void checkLaserSegmentCollision(list<shared_ptr<Segment>>& segments, list<shared_ptr<Laser>>& lasers);
-		void handleLaserSegmentCollision(list<shared_ptr<Segment>>& segments,list<shared_ptr<Laser>>& lasers, list<shared_ptr<Mushroom>>& mushrooms);
+		void handleLaserSegmentCollision(list<shared_ptr<Segment>>& segments,list<shared_ptr<Laser>>& lasers,shared_ptr<Field> field);
 		void checkLaserMushroomCollision(list<shared_ptr<Laser>>& lasers, list<shared_ptr<Mushroom>>& mushrooms);
 		void handleLaserMushroomsCollision(list<shared_ptr<Laser>>& laser, list<shared_ptr<Mushroom>>& mushrooms);
 		void checkSegmentPlayerCollision(list<shared_ptr<Segment>>& segments, shared_ptr<Player> player);

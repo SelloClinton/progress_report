@@ -5,6 +5,7 @@
 #include "Segment.h"
 #include "Mushroom.h"
 #include "Position.h"
+#include "Field.h"
 
 #include <list>
 #include <memory>
@@ -18,7 +19,7 @@ class CollisionReaction{
 public:
 			CollisionReaction();
 			void updateLasers(list<shared_ptr<Laser>>& lasers);
-			void updateSegments(list<shared_ptr<Segment>>& segments, list<shared_ptr<Mushroom>>& mushrooms);
+			void updateSegments(list<shared_ptr<Segment>>& segments, shared_ptr<Field> field);
 			void updateMushrooms(list<shared_ptr<Mushroom>>& mushrooms);
 };
 #endif

@@ -8,7 +8,8 @@
 #include "Mover.h"
 #include "Entity.h"
 
-#include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include <list>
 using namespace std;
 
@@ -25,6 +26,7 @@ class Field{
 public:
 	Field(int numberOfMushrooms);
 	Mushrooms& getMushrooms();
+	void createMushroom(float x_position, float y_position);
 private:
 	Mushrooms mushrooms_;
 	list<float>xPositions_;

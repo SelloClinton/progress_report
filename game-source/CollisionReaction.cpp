@@ -12,16 +12,15 @@ void CollisionReaction::updateLasers(list<shared_ptr<Laser>>& lasers){
 	}
 }
 
-void CollisionReaction::updateSegments(list<shared_ptr<Segment>>& segments, list<shared_ptr<Mushroom>>& field){
+void CollisionReaction::updateSegments(list<shared_ptr<Segment>>& segments, shared_ptr<Field> field){
 
 	for(auto segments_iterator = begin(segments); segments_iterator != end(segments); segments_iterator++){
 	
 		if (!((*segments_iterator)->entityAttribute()->isLive())){
 			auto[mush_x,mush_y] = (*segments_iterator)->entityAttribute()->position()->getXYPosition();
-//			auto mush_position = make_shared<Position>(mush_x,mush_y);
-			auto mushroom = make_shared<Mushroom>(mush_x,mush_y,EntityID::MUSHROOM);
-			field.push_back(mushroom);
+			field->createMushroom(mush_x,mush_y);
 			segments_iterator = segments.erase(segments_iterator);
+			
 			
 		}
 	}

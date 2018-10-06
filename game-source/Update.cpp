@@ -8,7 +8,7 @@ void Update::updateGame(shared_ptr<Player>player,Pressed key,shared_ptr<Centiped
 	updatePlayer(player,key);
 	updateCentipede(centipede,field);
 	checkLaserSegmentCollision(centipede->getCentipede(),player->getLasers());
-	handleLaserSegmentCollision(centipede->getCentipede(), player->getLasers(), field->getMushrooms());
+	handleLaserSegmentCollision(centipede->getCentipede(), player->getLasers(), field);
 	checkLaserMushroomCollision(player->getLasers(),field->getMushrooms());
 	handleLaserMushroomsCollision(player->getLasers(),field->getMushrooms());
 	checkSegmentPlayerCollision(centipede->getCentipede(),player);
@@ -62,9 +62,9 @@ void Update::checkLaserSegmentCollision(list<shared_ptr<Segment>>& segments, lis
 	}
 		
 }
-void Update::handleLaserSegmentCollision(list<shared_ptr<Segment>>& segments,list<shared_ptr<Laser>>& lasers, list<shared_ptr<Mushroom>>& mushrooms){
+void Update::handleLaserSegmentCollision(list<shared_ptr<Segment>>& segments,list<shared_ptr<Laser>>& lasers, shared_ptr<Field> field){
 	collision_reactor_->updateLasers(lasers);
-	collision_reactor_->updateSegments(segments,mushrooms);
+	collision_reactor_->updateSegments(segments,field);
 }
 void Update::checkLaserMushroomCollision(list<shared_ptr<Laser>>& lasers,list<shared_ptr<Mushroom>>& mushrooms){
 		

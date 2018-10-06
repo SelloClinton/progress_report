@@ -9,7 +9,12 @@ Field::Field(int numberOfMushrooms)
 }
 
 Mushrooms& Field::getMushrooms(){
-		return mushrooms_;
+	return mushrooms_;
+}
+
+void Field::createMushroom(float x_pos, float y_pos){
+	auto mushroom = make_shared<Mushroom>(x_pos,y_pos,EntityID::MUSHROOM);
+	mushrooms_.push_back(mushroom);
 }
 
 void Field::createMushrooms(int numberOfMushrooms){
@@ -57,9 +62,9 @@ void Field::generateYPositions(int numberOfMushrooms){
 	srand(time(NULL));
 	while(valid_y_positions != numberOfMushrooms){
 		
-			auto random_multiple_of_16 = rand() %(static_cast<int>(Constants::DISPLAY_HEIGHT_)-50)+1;
-			if ((random_multiple_of_16%multiple == 0)&&(random_multiple_of_16 >=minimum_y_position)){
-				auto y_pos = static_cast<float>(random_multiple_of_16);
+			auto random_multiple_of_4 = rand() %(static_cast<int>(Constants::DISPLAY_HEIGHT_)-50)+1;
+			if ((random_multiple_of_4%multiple == 0)&&(random_multiple_of_4 >=minimum_y_position)){
+				auto y_pos = static_cast<float>(random_multiple_of_4);
 				yPositions_.push_back(y_pos);
 				valid_y_positions++;	
 		}

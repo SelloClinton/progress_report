@@ -1,11 +1,8 @@
 #ifndef MUSHROOM_H
 #define MUSHROOM_H
 
-#include "Position.h"
 #include "Entity.h"
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
+
 #include <memory>
 using std::shared_ptr;
 using std::make_shared;
