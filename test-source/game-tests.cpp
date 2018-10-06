@@ -13,6 +13,7 @@
 #include "../game-source/Field.h"
 #include "../game-source/Box.h"
 #include "../game-source/CollisionDetection.h"
+#include "../game-source/CollisionReaction.h"
 
 
 //***********************Position tests*******************************
@@ -188,6 +189,18 @@ TEST_CASE("Cannot construct A Laser with a wrong Entity ID"){
 		CHECK_THROWS_AS(Laser(400,250,EntityID::SEGMENT,4.0),IncorrectLaserEntityID);
 }//16-42ASSERT
 //
+TEST_CASE("Valid laser position is returned"){
+	auto x = 250.0f;
+	auto y = 330.0f;
+	auto id = EntityID::LASER;
+	auto speed = 4.0f;
+	Laser laser(x,y,id,speed);
+	auto[returned_x,returned_y] = laser.entityAttribute()->position()->getXYPosition();
+	CHECK(doctest::Approx(x) == returned_x);
+	CHECK_FALSE(doctest::Approx(x) == returned_y);
+	CHECK(doctest::Approx(y) == returned_y);
+	CHECK_FALSE(doctest::Approx(y) == returned_x);
+}
 TEST_CASE("Laser movement can be updated"){
 	auto x = 250.0f;
 	auto y = 330.0f;
@@ -201,18 +214,6 @@ TEST_CASE("Laser movement can be updated"){
 	CHECK_FALSE(doctest::Approx(new_y) == old_y);
 }//17-43assert
 //
-//TEST_CASE("Cannot update Laser movement if it is out of bound"){
-//	auto x = 250.0f;
-//	auto y = 0.0f;
-//	auto id = EntityID::LASER;
-//	auto speed = 4.0f;
-//	Laser laser(x,y,id,speed);
-//	auto old_y = laser.entityAttribute()->position()->getYPosition();
-//	laser.updatePosition();
-//	auto new_y = laser.entityAttribute()->position()->getYPosition(); 
-//	CHECK(doctest::Approx(new_y) == old_y);
-//	CHECK_FALSE(doctest::Approx(new_y) == old_y-speed);
-//}//18-45aseert
 TEST_CASE("Laser's live state changes when it goes out of screen bound"){
 	auto x = 250.0f;
 	auto y = 10.0f;
@@ -223,6 +224,7 @@ TEST_CASE("Laser's live state changes when it goes out of screen bound"){
 	laser.updatePosition();
 	CHECK_FALSE(laser.entityAttribute()->isLive());
 }//19-47assert
+//
 TEST_CASE("Laser only moves vertically upwards"){
 	auto x = 250.0f;
 	auto y = 350.0f;
@@ -255,10 +257,27 @@ TEST_CASE("Player is constructed with a correct speed"){
 	
 }//22-55assert
 //
+TEST_CASE("Player constructed with a valid Position"){
+	CHECK_THROWS(Player(-1.0,-1.0,EntityID::PLAYER,Constants::PLAYER_SPEED_));
+	CHECK_THROWS(Player(801.0,601.0,EntityID::PLAYER,Constants::PLAYER_SPEED_));
+}
 TEST_CASE("Player cannot be constructed above its movement region"){
 	CHECK_THROWS_AS(Player(50,Constants::PLAYER_VERTICAL_LIMIT-1.0,EntityID::PLAYER,Constants::PLAYER_SPEED_),IncorrectPlayerPosition);
 }
 //
+TEST_CASE("valid player position is returned"){
+	auto x = 450.0f;
+	auto y = 550.0f;
+	auto id = EntityID::PLAYER;
+	auto speed = Constants::PLAYER_SPEED_;
+	Player player(x,y,id,speed);
+	auto[returned_x,returned_y] = player.entityAttribute()->position()->getXYPosition();
+	CHECK(doctest::Approx(x) == returned_x);
+	CHECK_FALSE(doctest::Approx(x) == returned_y);
+	CHECK(doctest::Approx(y) == returned_y);
+	CHECK_FALSE(doctest::Approx(y) == returned_x);
+}
+
 TEST_CASE("Player can move right"){
 	auto x = 450.0f;
 	auto y = 550.0f;
@@ -396,6 +415,14 @@ TEST_CASE("A laser gets created when a player shoots"){
 	
 }
 //
+TEST_CASE("Laser gets constructed with a valid position"){
+	auto x = 50.0f;
+	auto y = 550.0f;
+	
+	Player player(x,y,EntityID::PLAYER,Constants::PLAYER_SPEED_);
+	//Position would throw an exception for invalid position
+	CHECK_NOTHROW(player.shoot());
+}
 TEST_CASE("The number of lasers created corresponds to the number of times a player shoots"){
 	auto x = 50.0f;
 	auto y = 550.0f;
@@ -438,13 +465,21 @@ TEST_CASE("A Shot laser's position can be updated"){
 }
 //*************************************************************************
 //**************************Mushroom Tests**********************************
+TEST_CASE("valid Mushroom position is returned"){
+	auto x = 205.0f;
+	auto y = 150.0f;
+	Mushroom mushroom(x,y,EntityID::MUSHROOM);
+	auto[returned_x,returned_y] = mushroom.entityAttribute()->position()->getXYPosition();
+	CHECK(doctest::Approx(x) == returned_x);
+	CHECK_FALSE(doctest::Approx(x) == returned_y);
+	CHECK(doctest::Approx(y) == returned_y);
+	CHECK_FALSE(doctest::Approx(y) == returned_x);
+}
 TEST_CASE("Mushroom's live state chsnges after being weakened four times"){
 	auto mushroom_x_position = 320.0f;
 	auto mushroom_y_position = 250.0f;
 	auto mushroom_entity = EntityID::MUSHROOM;
 	auto mushroom = make_shared<Mushroom>(mushroom_x_position,mushroom_y_position,mushroom_entity);
-	
-	auto hits = 4;
 	
 	mushroom->weaken();
 	mushroom->weaken();
@@ -554,6 +589,20 @@ TEST_CASE("Cannot construct Segment with an invalid speed"){
 	CHECK_THROWS_AS(Segment(50,50,EntityID::SEGMENT,3.9),InvalidSegmentSpeed);
 }//34-79ASSERT
 //
+TEST_CASE("valid segment position is returned"){
+	auto x = 250.0f;
+	auto y = 350.0f;
+	auto id = EntityID::SEGMENT;
+	auto speed = Constants::SEGMENT_SPEED_;
+	Segment segment(x,y,id,speed);	
+	
+	auto[returned_x,returned_y] = segment.entityAttribute()->position()->getXYPosition();
+	
+	CHECK(doctest::Approx(x) == returned_x);
+	CHECK_FALSE(doctest::Approx(x) == returned_y);
+	CHECK(doctest::Approx(y) == returned_y);
+	CHECK_FALSE(doctest::Approx(y) == returned_x);
+}
 TEST_CASE("Segment can move right"){
 	
 	auto x = 250.0f;
@@ -1422,4 +1471,167 @@ TEST_CASE("Bottom right corner of segment collides with top left corner mushroom
 	
 	CHECK(collision_detector.collided());
 	CHECK_FALSE(!collision_detector.collided());
+}
+//*********************************************************************************************
+//*******************************Collision-Reaction Tests**************************************
+//
+TEST_CASE("Collided lasers get erased"){
+	
+	auto x = 50.0f;
+	auto y = 150.0f;
+	
+	auto laser = make_shared<Laser>(x,y,EntityID::LASER,Constants::LASER_SPEED_);
+	laser->entityAttribute()->destroy();
+	auto laser_2 = laser;
+	auto laser_3 = laser;
+	
+	list<shared_ptr<Laser>>lasers;
+	lasers.push_back(laser);
+	lasers.push_back(laser_2);
+	lasers.push_back(laser_3);
+	
+	CollisionReaction collision_reactor;
+	collision_reactor.updateLasers(lasers);
+	auto lasers_iterator = begin(lasers);
+	auto lasersSize = 0;
+	while(lasers_iterator != end(lasers)){
+		++lasers_iterator;
+		++lasersSize;
+	}
+	
+	CHECK_EQ(lasersSize,0);
+}
+//
+TEST_CASE("uncollided lasers do not get erased"){
+	auto x = 50.0f;
+	auto y = 150.0f;
+	
+	auto laser = make_shared<Laser>(x,y,EntityID::LASER,Constants::LASER_SPEED_);
+
+	auto laser_2 = laser;
+	auto laser_3 = laser;
+	
+	list<shared_ptr<Laser>>lasers;
+	lasers.push_back(laser);
+	lasers.push_back(laser_2);
+	lasers.push_back(laser_3);
+	
+	CollisionReaction collision_reactor;
+	collision_reactor.updateLasers(lasers);
+	auto lasers_iterator = begin(lasers);
+	auto lasersSize = 0;
+	while(lasers_iterator != end(lasers)){
+		++lasers_iterator;
+		++lasersSize;
+	}
+		
+	CHECK_NE(lasersSize,0);	
+}
+//
+TEST_CASE("Collided segments get erased"){
+	
+	auto x = 150.0f;
+	auto y = 205.0f;
+	
+	auto segment = make_shared<Segment>(x,y,EntityID::SEGMENT,Constants::SEGMENT_SPEED_);
+	segment->entityAttribute()->destroy();
+	auto segment_2 = segment;
+	auto segment_3 = segment;
+	
+	list<shared_ptr<Segment>>segments;
+	segments.push_back(segment);
+	segments.push_back(segment_2);
+	segments.push_back(segment_3);
+	auto field = make_shared<Field>(1);
+	
+	CollisionReaction collision_reactor;
+	collision_reactor.updateSegments(segments,field);
+	
+	auto seg_iterator = begin(segments);
+	auto segmentsSize = 0;
+	while(seg_iterator != end(segments)){
+		++seg_iterator;
+		++segmentsSize;
+	}
+	
+	CHECK_EQ(segmentsSize,0);
+}
+//
+TEST_CASE("uncollided segments do not get erased"){
+	auto x = 150.0f;
+	auto y = 205.0f;
+	
+	auto segment = make_shared<Segment>(x,y,EntityID::SEGMENT,Constants::SEGMENT_SPEED_);
+
+	auto segment_2 = segment;
+	auto segment_3 = segment;
+	
+	list<shared_ptr<Segment>>segments;
+	segments.push_back(segment);
+	segments.push_back(segment_2);
+	segments.push_back(segment_3);
+	auto field = make_shared<Field>(1);
+	
+	CollisionReaction collision_reactor;
+	collision_reactor.updateSegments(segments,field);
+	
+	auto seg_iterator = begin(segments);
+	auto segmentsSize = 0;
+	while(seg_iterator != end(segments)){
+		++seg_iterator;
+		++segmentsSize;
+	}
+	
+	CHECK_NE(segmentsSize,0);
+}
+//
+TEST_CASE("destroyed mushrooms get destroyed"){
+	
+	auto x = 100.0f;
+	auto y = 36.0f;
+	
+	auto mushroom = make_shared<Mushroom>(x,y,EntityID::MUSHROOM);
+	mushroom->entityAttribute()->destroy();
+	auto mushroom_2 = mushroom;
+	auto mushroom_3 = mushroom;
+	list<shared_ptr<Mushroom>>mushrooms;
+	mushrooms.push_back(mushroom);
+	mushrooms.push_back(mushroom_2);
+	mushrooms.push_back(mushroom_3);
+	
+	CollisionReaction collision_reactor;
+	collision_reactor.updateMushrooms(mushrooms);
+	auto mush_iterator = begin(mushrooms);
+	auto numberOfMushrooms = 0;
+	while(mush_iterator != end(mushrooms)){
+		++mush_iterator;
+		++numberOfMushrooms;
+	}
+	
+	CHECK_EQ(numberOfMushrooms,0);
+}
+//
+TEST_CASE("Mushrooms not erased if not destroyed"){
+	auto x = 100.0f;
+	auto y = 36.0f;
+	
+	auto mushroom = make_shared<Mushroom>(x,y,EntityID::MUSHROOM);
+
+	auto mushroom_2 = mushroom;
+	auto mushroom_3 = mushroom;
+	list<shared_ptr<Mushroom>>mushrooms;
+	mushrooms.push_back(mushroom);
+	mushrooms.push_back(mushroom_2);
+	mushrooms.push_back(mushroom_3);
+	
+	CollisionReaction collision_reactor;
+	collision_reactor.updateMushrooms(mushrooms);
+	auto mush_iterator = begin(mushrooms);
+	auto numberOfMushrooms = 0;
+	while(mush_iterator != end(mushrooms)){
+		++mush_iterator;
+		++numberOfMushrooms;
+	}
+	
+	CHECK_NE(numberOfMushrooms,0);	
 }

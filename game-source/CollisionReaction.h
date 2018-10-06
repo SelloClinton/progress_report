@@ -17,9 +17,9 @@ using namespace std;
 class CollisionReaction{
 
 public:
-			CollisionReaction();
-			void updateLasers(list<shared_ptr<Laser>>& lasers);
-			void updateSegments(list<shared_ptr<Segment>>& segments, shared_ptr<Field> field);
-			void updateMushrooms(list<shared_ptr<Mushroom>>& mushrooms);
+	CollisionReaction();
+	void updateLasers(list<shared_ptr<Laser>>& lasers);
+	void updateSegments(list<shared_ptr<Segment>>& segments, shared_ptr<Field> field);
+	void updateMushrooms(list<shared_ptr<Mushroom>>& mushrooms);
 };
 #endif
