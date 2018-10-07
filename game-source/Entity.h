@@ -2,16 +2,11 @@
 #define ENTITY_H
 
 #include "Position.h"
+#include "Enums.h"
 #include <memory>
 using std::shared_ptr;
 using std::make_shared;
 
-enum class EntityID{
-		PLAYER,
-		LASER,
-		MUSHROOM,
-		SEGMENT
-};
 class Entity{
 public:
 		Entity(float x, float y, const EntityID& id);

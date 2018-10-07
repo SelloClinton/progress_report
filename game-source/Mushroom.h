@@ -7,6 +7,8 @@
 using std::shared_ptr;
 using std::make_shared;
 
+class IncorrectMushroomEntityID{};
+
 class Mushroom{
 
 public:	

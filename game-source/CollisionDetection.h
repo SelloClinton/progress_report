@@ -11,6 +11,8 @@ using std::make_shared;
 #include <tuple>
 using std::get;
 
+class ObjectsNotCollidable{};
+
 class CollisionDetection{
 public:
         CollisionDetection(float x_position_A,float y_position_A,const EntityID& objectA,
@@ -34,6 +36,7 @@ private:
 	float max_y_B_;
     
     void createBoxes();
+	bool isCollidable(const EntityID& objectA, const EntityID& objectB);
     
 };
 #endif

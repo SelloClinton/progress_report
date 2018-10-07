@@ -66,7 +66,7 @@ void GameEngine::drawObjects(){
 	drawer_->drawField(field_);
     drawer_->drawPlayer(player_);
     drawer_->drawCentipede(centipede_);
-	drawer_->drawBullets(player_);
+	drawer_->drawLasers(player_);
 
 }
 void GameEngine::displayPauseMessage(){

@@ -3,7 +3,10 @@
 Mushroom::Mushroom(float x_position, float y_position, const EntityID& id):
 		  entity_attribute_(make_shared<Entity>(x_position,y_position,id))
 		  ,number_of_lives(4)
-		  {}
+{
+	if (id != EntityID::MUSHROOM)
+			throw IncorrectMushroomEntityID();
+}
 		  
 shared_ptr<Entity> Mushroom::entityAttribute(){
 	return entity_attribute_;

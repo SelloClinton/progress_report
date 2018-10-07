@@ -5,7 +5,6 @@ SplashScreen::SplashScreen(shared_ptr<sf::RenderWindow> window):
 			window_(window),
 			data_(make_unique<DataBank>()),
 			font_(data_->getFont()),
-			logo_(data_->getSprites()),
 			start_(false)
 {
 	loadInstructions();

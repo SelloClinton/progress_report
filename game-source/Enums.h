@@ -1,9 +1,9 @@
 #ifndef ENUMS_H
 #define ENUMS_H
 
-enum class Object{
+enum class EntityID{
 		PLAYER,
-		BULLET,
+		LASER,
 		SEGMENT,
 		MUSHROOM
 };
@@ -19,12 +19,12 @@ enum class Pressed{
 		ESCAPE,
 		NONE
 };
-//enum class Direction{
-//		LEFT,
-//		RIGHT,
-//		UP,
-//		DOWN
-//};
+enum class Direction{
+		LEFT,
+		RIGHT,
+		UP,
+		DOWN
+};
 enum class Body_Part{
 		HEAD,
 		MIDSECTION

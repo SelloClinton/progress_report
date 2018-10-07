@@ -29,12 +29,12 @@ void Drawer::drawCentipede(shared_ptr<Centipede> centipede){
         
 }
 
-void Drawer::drawBullets(shared_ptr<Player>player){
+void Drawer::drawLasers(shared_ptr<Player>player){
     
     auto lasers = player->getLasers();
     
     for(const auto& laser:lasers){
-            drawBullet(laser);
+            drawLaser(laser);
     }	
 		
 }
@@ -86,7 +86,7 @@ void Drawer::drawSegment(shared_ptr<Segment> segment){
 
 }
 
-void Drawer::drawBullet(shared_ptr<Laser>laser){
+void Drawer::drawLaser(shared_ptr<Laser>laser){
 	auto[x_position,y_position] = laser->entityAttribute()->position()->getXYPosition();
 //	auto laser_sprite = make_shared<DrawableLoader>(EntityID::LASER);
 	auto laser_sprite = object_sprites_.at(2);

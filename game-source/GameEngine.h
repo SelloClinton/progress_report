@@ -41,20 +41,16 @@ private:
 	Pressed key_;
 	bool playing_;
 	bool game_over_;
-
 	
 	void splashScreen();
 	void update();
-    void updateCentipede(shared_ptr<Field> field);
 	void checkInput();
 	void handleInput();
 	void drawObjects();
 	void displayPauseMessage();
 	void displayGameOverMessage();
-	bool checkCollision();
-	void checkPlayerCollision();
 	void gameStatus();
-	void checkBulletMushroomCollision();
+
 };
 
 #endif

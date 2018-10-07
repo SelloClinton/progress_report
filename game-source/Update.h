@@ -25,8 +25,8 @@ class Update{
 		void updateGame(shared_ptr<Player>player,Pressed key,shared_ptr<Centipede> centipede,shared_ptr<Field> field);
 	private:
 		shared_ptr<CollisionReaction> collision_reactor_;
-		void updatePlayer(shared_ptr<Player> player, Pressed key); //player movement and shooting
-		void updateCentipede(shared_ptr<Centipede> centipede, shared_ptr<Field> field);//centipede movement
+		void updatePlayer(shared_ptr<Player> player, Pressed key);
+		void updateCentipede(shared_ptr<Centipede> centipede, shared_ptr<Field> field);
 		void checkLaserSegmentCollision(list<shared_ptr<Segment>>& segments, list<shared_ptr<Laser>>& lasers);
 		void handleLaserSegmentCollision(list<shared_ptr<Segment>>& segments,list<shared_ptr<Laser>>& lasers,shared_ptr<Field> field);
 		void checkLaserMushroomCollision(list<shared_ptr<Laser>>& lasers, list<shared_ptr<Mushroom>>& mushrooms);

@@ -8,6 +8,8 @@ CollisionDetection::CollisionDetection(float xPositionA,float yPositionA,const E
 			,y_position_B_(yPositionB)
 			,object_B_(objectB)
 {
+	if (!isCollidable(objectA,objectB))
+		throw ObjectsNotCollidable();
 	createBoxes();
 }
 	
@@ -47,4 +49,14 @@ void CollisionDetection::createBoxes(){
     min_y_B_ = minYB;					
     max_x_B_ = maxXB;				
 	max_y_B_= maxYB;						
+}
+
+bool CollisionDetection::isCollidable(const EntityID& objectA, const EntityID& objectB){
+	if (objectA == objectB)
+		return false;
+	if ((objectA == EntityID::PLAYER)&&(objectB == EntityID::LASER))
+		return false;
+	if ((objectA == EntityID::PLAYER)&&(objectB == EntityID::MUSHROOM))
+		return false;
+	return true;
 }

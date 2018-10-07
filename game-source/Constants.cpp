@@ -16,7 +16,7 @@ const float Constants::PLAYER_VERTICAL_LIMIT = 450.0f;
 const float Constants::LASER_SPEED_ = 4.0f;
 const float Constants::X_LEFT_LIMIT_ = 4.0f;
 const float Constants::X_RIGHT_LIMIT_ = 776.0f;
-const int Constants::INITIAL_SIZE_OF_CENTIPEDE_ = 25; //maximum possible is 26
+const int Constants::INITIAL_SIZE_OF_CENTIPEDE_ = 26;
 const int Constants::NUMBER_OF_MUSHROOMS = 25;  
 
 

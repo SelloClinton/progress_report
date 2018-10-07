@@ -21,7 +21,6 @@ private:
 	shared_ptr<sf::RenderWindow> window_;
 	unique_ptr<DataBank> data_;
 	sf::Font font_;
-	Sprites logo_;
 	Texts instructions_;
 	void loadInstructions();
 	void loadName();
